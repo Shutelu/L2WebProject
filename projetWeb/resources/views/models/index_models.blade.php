@@ -14,11 +14,32 @@
     </head>
     <body>
         <div class="index-container">
+
+            {{-- Barre de navigation --}}
             <nav class="index-navigation">
                 <ul>
-                    <li><a href="">Accueil</a></li>
+                    <li><a href="{{route('pageIndex')}}">Accueil</a></li>
                 </ul>
             </nav>
+
+            {{-- message flash --}}
+            @if (session()->has('etat'))
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{session()->get('etat')}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- Le contenu --}}
             <div class="index-content">
                 @yield('content')
             </div>

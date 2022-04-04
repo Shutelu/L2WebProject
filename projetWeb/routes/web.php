@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProjectController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+======================
+    Page principale
+======================
+*/
+//la route racine pour tout les utilisateurs
+Route::get('/',[ProjectController::class,'pageIndex'])->name('pageIndex');
