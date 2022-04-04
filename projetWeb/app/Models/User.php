@@ -8,37 +8,32 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Cour;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    public $timestamps = false; //enlever les dates
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['mdp']; //cacher mdp pour les controllers et vues
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $fillable = ['nom','prenom','login','mdp','type']; //constructeur
+
+    protected $attributes = ['type' => null]; //type par defaut a null
+
+    //renvoie le mdp
+    public function getAuthPassword(){
+        return $this->mdp;
+    }
+
+    //test si l'utilisateur est un admin
+    public function isAdmin(){
+        return $this->type == 'admin';
+    }
+
+    //relation *:* avec cour
+    public function cours(){
+        return $this->belongsToMany(Cour::class);//pas de pivot
+    }
 }
