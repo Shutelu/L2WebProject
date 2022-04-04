@@ -19,6 +19,15 @@
             <nav class="index-navigation">
                 <ul>
                     <li><a href="{{route('pageIndex')}}">Accueil</a></li>
+
+                    @guest
+                        <li><a href="{{route('user.login_form')}}">Se connecter</a></li>
+                        <li><a href="{{route('user.register_form')}}">S'inscrire</a></li>
+                    @endguest
+
+                    @auth
+                        <li><a href="{{route('logout')}}">Se déconnecter</a></li>
+                    @endauth
                 </ul>
             </nav>
 

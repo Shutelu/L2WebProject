@@ -9,7 +9,7 @@ class ProjectController extends Controller
     /*
     ====================================================================
         Ce controlleur serviva de controlleur general (non specifique)
-            - pageIndex()
+            = pageIndex()
     ====================================================================
     */
 
