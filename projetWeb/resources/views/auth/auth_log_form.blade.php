@@ -9,8 +9,10 @@
     
     <form method="POST">
         @csrf
-        Login: <input type="text" name="login" value="{{old('login')}}">
-        MDP: <input type="password" name="mdp">
+        <label for="login">Login :</label>
+        <input type="text" id="login" name="login" value="{{old('login')}}">
+        <label for="mdp">MDP :</label>
+        <input type="password" id="mdp" name="mdp">
         <input type="submit" value="Envoyer">
     </form>
             

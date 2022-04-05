@@ -26,6 +26,7 @@
                     @endguest
 
                     @auth
+                        <li><a href="{{route('user.page_mon_compte')}}">Mon compte</a></li>
                         <li><a href="{{route('logout')}}">Se déconnecter</a></li>
                     @endauth
                 </ul>

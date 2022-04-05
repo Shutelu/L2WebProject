@@ -28,9 +28,9 @@ use App\Http\Controllers\CompteController;
 Route::get('/',[ProjectController::class,'pageIndex'])->name('pageIndex');
 
 /*
-=======================
-    L'enregistrement
-=======================
+==================================
+    L'enregistrement de comptes
+==================================
 */
 
 //enregistrement des nouveaux utilisateurs
@@ -48,11 +48,23 @@ Route::post('/user_login',[AuthenticatedSessionController::class,'user_login']);
 Route::get('/user_logout',[AuthenticatedSessionController::class,'logout'])->middleware('auth')->name('logout');
 
 /*
-============
-    Admin
-============
+===============================
+    Utilisateur authentifier
+===============================
 */
 
-Route::middleware(['auth','is_admin'])->group(function(){
-    Route::get('/admin_index',[CompteController::class,'admin_index'])->name('admin.index');
+//authentifier
+Route::middleware(['auth'])->group(function(){
+
+    //user authentifier
+    Route::get('/user/mon_compte',[CompteController::class,'user_mon_compte'])->name('user.page_mon_compte');//accèder aux informations du compte
+    Route::get('/user/mon_compte/edit_informations_form',[CompteController::class,'user_edit_informations_form'])->name('user.edit_informations_form');//formulaire d'édition des informations
+    Route::post('/user/mon_compte/edit_informations_form',[CompteController::class,'user_edit_informations']);
+    Route::get('/user/mon_compte/changer_mot_de_passe',[CompteController::class,'user_change_mdp_form'])->name('user.change_mdp_form');//formulaire de changement de mot de passe
+    Route::post('/user/mon_compte/changer_mot_de_passe',[CompteController::class,'user_change_mdp']);
+    
+    //groupe admin
+    Route::middleware(['is_admin'])->group(function(){
+        Route::get('/admin_index',[CompteController::class,'admin_index'])->name('admin.index');
+    });
 });

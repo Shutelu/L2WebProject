@@ -13,7 +13,7 @@ class ProjectController extends Controller
     ====================================================================
     */
 
-    public function pageIndex(){
+    public function pageIndex(){//affichage de la page index
         return view('index');
     }
 }

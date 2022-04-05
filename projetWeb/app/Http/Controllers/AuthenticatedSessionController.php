@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->validate([
             'login' => 'required|string|max:40|min:1',
-            'mdp' => 'required|string|max:40|min:1',
+            'mdp' => 'required|max:40|min:1',
         ]);
 
         //on sauvegarde le login et le mot de passe

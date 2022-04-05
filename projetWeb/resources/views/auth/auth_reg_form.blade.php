@@ -11,10 +11,14 @@
         @csrf
         <label for="nom">Nom :</label>
         <input type="text" id="nom" name="nom" value="{{old('nom')}}">
-        Prenom: <input type="text" name="prenom" value="{{old('prenom')}}">
-        Login: <input type="text" name="login" value="{{old('login')}}">
-        MDP: <input type="password" name="mdp">
-        Confirmation MDP: : <input type="password" name="mdp_confirmation">
+        <label for="prenom">Prenom :</label>
+        <input type="text" id="prenom" name="prenom" value="{{old('prenom')}}">
+        <label for="login">Login :</label>
+        <input type="text" id="login" name="login" value="{{old('login')}}">
+        <label for="mdp">MDP :</label>
+        <input type="password" id="mdp" name="mdp">
+        <label for="mdp_conf">Confirmation MDP :</label>
+        <input type="password" id="mdp_conf" name="mdp_confirmation">
         <input type="submit" value="Envoyer">
     </form>
 @endsection
