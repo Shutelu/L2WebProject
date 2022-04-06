@@ -6,6 +6,7 @@
 
 @section('content')
     @auth
+    <h1>Bonjour !</h1>
     <p>Vous êtes authentifié Administrateur</p>
 
     @endauth  

@@ -26,6 +26,9 @@
                     @endguest
 
                     @auth
+                        @if (Auth::user()->type == 'admin')
+                            <li><a href="{{route('admin.page_gestion')}}">Gestion</a></li>
+                        @endif
                         <li><a href="{{route('user.page_mon_compte')}}">Mon compte</a></li>
                         <li><a href="{{route('logout')}}">Se déconnecter</a></li>
                     @endauth

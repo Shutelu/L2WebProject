@@ -23,6 +23,9 @@ class CompteController extends Controller
                     = user_change_mdp(request)
                 Pour Admin :
                     = admin_index()
+                    = admin_page_gestion()
+                    = admin_user_liste()
+                    = gestion_user_liste_filtrage(request)
     ===========================================================================
     */
 
@@ -86,5 +89,36 @@ class CompteController extends Controller
     
     public function admin_index(){//affichage de la page index de l'administrateur
         return view('admin.admin_index');
+    }
+
+    public function admin_page_gestion(){//affiche la page de gestion pour l'admin
+        return view('admin.gestion.admin_gestion'); 
+    }
+
+    public function admin_user_liste(){//affichage de la liste de tout les utlisateurs (intégrale)
+        $users_liste = User::paginate(5);
+        $choix = 'defaut';
+        return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+    }
+
+    public function gestion_user_liste_filtrage(Request $request){//affichage de la liste des utilisateurs filtrer
+        $request->validate([
+            'filtreType' => 'required|in:defaut,enseignant,gestionnaire'//"defaut" non utilisé mais doit etre present
+        ]);
+
+        $choix = $request->filtreType;
+
+        if($request->filtreType == 'enseignant'){
+            $users_liste = User::where('type','=','enseignant')->paginate(5);
+            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+        }
+        else if($request->filtreType == 'gestionnaire'){
+            $users_liste = User::where('type','=','gestionnaire')->paginate(5);
+            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+        }
+        else{
+            $users_liste = User::paginate(5);
+            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+        }
     }
 }
