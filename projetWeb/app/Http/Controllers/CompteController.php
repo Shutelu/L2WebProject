@@ -26,6 +26,10 @@ class CompteController extends Controller
                     = admin_page_gestion()
                     = admin_user_liste()
                     = gestion_user_liste_filtrage(request)
+                    = gestion_user_recherche(request)
+                    = gestion_user_refus(id)
+                    = gestion_user_accepter_form(id)
+                    = gestions_user_accepter(request,id)
     ===========================================================================
     */
 
@@ -220,5 +224,35 @@ class CompteController extends Controller
         else{//rien est saisi pour la recherche
             return redirect()->route('admin.gestion.user_liste')->with('etat','Aucun information n\'a été entrée !');
         }
+    }
+
+    public function gestion_user_refus($id){//refus de la demander (suppression)
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->route('admin.gestion.user_liste')->with('etat','La demande de l\'utilisateur a été refuser, son compte a été supprimé !');
+    }
+
+    public function gestion_user_accepter_form($id){//formulaire d'acceptation
+        $user = User::findOrFail($id);
+        return view('admin.gestion.utilisateurs.gestion_accepter_form',['user'=>$user]);
+    }
+
+    public function gestions_user_accepter(Request $request, $id){//fonction d'acceptation
+        $request->validate([
+            'userAcceptation' => 'required|in:defaut,enseignant,gestionnaire',
+        ]);
+        $user = User::findOrFail($id);
+
+        // //pour les personnes qui veulent tester ce que ca fait de laisser le choix par defaut
+        // if($request->userAcceptation == 'defaut'){
+        //     return view('admin.gestion.utilisateurs.gestion_accepter_form',['user'=>$user])->with('etat','Vous n\avez pas encore choisi le type de l\'utilisateur');
+        // }
+
+        $user->type = $request->userAcceptation;
+        $user->save();
+        
+        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a bien été accepté !');
     }
 }

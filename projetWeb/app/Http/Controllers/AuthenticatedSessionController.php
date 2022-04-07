@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,6 +35,12 @@ class AuthenticatedSessionController extends Controller
             'login'=>$request->input('login'),
             'password'=>$request->input('mdp')
         ];
+        
+        //empecher les utilisateurs de type null de se connecter
+        $user = User::where('login','=',$request->login)->first();
+        if($user->type == null){
+            return redirect()->route('pageIndex')->with('etat','L\'administrateur ne vous a pas encore accepter, vous ne pouvez pas encore vous connectez !');
+        }
 
         //si authentification reussi
         if(Auth::attempt($credit)){
@@ -49,7 +56,7 @@ class AuthenticatedSessionController extends Controller
 
         //si fail renvoie page precedente
         return back()->withErrors([
-            'login'=>'Les informations saisis ne sont pas correctes',
+            'login'=>'Les informations saisis ne sont pas correctes ou bien votre compte a été supprimé !',
         ]);
 
     }

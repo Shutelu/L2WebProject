@@ -15,6 +15,10 @@ p,h1,label{
     min-height: 100vh;
     position: relative;
     background-image: url('/img/bg_school_img.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .index-navigation{

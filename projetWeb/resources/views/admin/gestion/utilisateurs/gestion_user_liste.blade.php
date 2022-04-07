@@ -31,25 +31,11 @@
     <hr>
     <p>
         Notice d'utilisation : <br>
-        le filtrage et la recherche marche à part (chacun de son coté) <br>
-        tout les champs de la recherche ne sont pas obligatoire.
+        Le filtrage et la recherche marche à part (chacun de son coté). <br>
+        Tout les champs de la recherche ne sont pas obligatoirement à saisir.
 
     </p>
-    {{-- <form action="" method="POST" class="search">
-        @csrf
-        <input type="text" id="nom" name="nom" placeholder="Nom">
-        <button type="submit">Rechercher</button>
-    </form>
-    <form action="" method="POST" class="search">
-        @csrf
-        <input type="text" id="prenom" name="prenom" placeholder="Prenom">
-        <button type="submit">Rechercher</button>
-    </form>
-    <form action="" method="POST" class="search">
-        @csrf
-        <input type="text" id="login" name="login"  placeholder="Login">
-        <button type="submit">Rechercher</button>
-    </form> --}}
+    
 @endsection
 
 @section('content')
@@ -98,7 +84,16 @@
                 <td>{{$ul->type}}</td>
                 @if ($choix == 'defaut')
                     @if ($ul->type == null)
-                        <td>Accepter/refuser</td>
+                        <td>
+                            <form action="{{route('admin.gestion.user_accepter_form',['id'=>$ul->id])}}" method="POST">
+                                @csrf
+                                <button type="submit">Accepter</button>
+                            </form>
+                            <form action="{{route('admin.gestion.user_refus',['id'=>$ul->id])}}" method="POST">
+                                @csrf
+                                <button type="submit">Refuser</button>
+                            </form>
+                        </td>
                     @else
                         <td>Déjà accepté</td>
                     @endif   
@@ -112,4 +107,5 @@
             </tr>
         @endforeach
     </table>
+    {{$users_liste->links()}}
 @endsection
