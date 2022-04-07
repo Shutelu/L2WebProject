@@ -2,6 +2,56 @@
 
 @section('title','Liste des utilisateurs pour l\'administrateur')
 
+@section('outils')
+    <h2>Outils d'édition</h2>
+    <hr style="border: 1px solid rgb(76, 186, 206);">
+    {{-- options de filtrage --}}
+    <form action="{{route('admin.gestion.user_liste_filtrage')}}"  method="POST">
+        @csrf
+        <label for="filtre">Filtrage par type :</label><br>
+        <select name="filtreType" id="filtre-type">
+            <option value="defaut">Défaut</option>
+            <option value="enseignant">Enseignant</option>
+            <option value="gestionnaire">Gestionnaire</option>
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+    <hr>
+    <p>Recherche :</p>
+    {{-- methode de recherche brut --}}
+    <form action="{{route('admin.gestion.user_recherche')}}" method="POST">
+        @csrf
+        <input type="text" id="nom" name="nom" placeholder="Nom">
+        <input type="text" id="prenom" name="prenom" placeholder="Prenom">
+        <input type="text" id="login" name="login"  placeholder="Login"><br>
+        <button type="submit">Rechercher</button>
+    </form>
+    <hr>
+    <a id="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a>
+    <hr>
+    <p>
+        Notice d'utilisation : <br>
+        le filtrage et la recherche marche à part (chacun de son coté) <br>
+        tout les champs de la recherche ne sont pas obligatoire.
+
+    </p>
+    {{-- <form action="" method="POST" class="search">
+        @csrf
+        <input type="text" id="nom" name="nom" placeholder="Nom">
+        <button type="submit">Rechercher</button>
+    </form>
+    <form action="" method="POST" class="search">
+        @csrf
+        <input type="text" id="prenom" name="prenom" placeholder="Prenom">
+        <button type="submit">Rechercher</button>
+    </form>
+    <form action="" method="POST" class="search">
+        @csrf
+        <input type="text" id="login" name="login"  placeholder="Login">
+        <button type="submit">Rechercher</button>
+    </form> --}}
+@endsection
+
 @section('content')
 
     {{-- choix pour le titre --}}
@@ -27,18 +77,6 @@
     @endif
     {{-- br temporaire a remplacer par du css --}}
     <br>
-
-    {{-- options de filtrage --}}
-    <form action="{{route('admin.gestion.user_liste_filtrage')}}"  method="GET">
-        @csrf
-        <label for="filtre">Filtrage par type :</label>
-        <select name="filtreType" id="filtre-type">
-            <option value="defaut">Défaut</option>
-            <option value="enseignant">Enseignant</option>
-            <option value="gestionnaire">Gestionnaire</option>
-        </select>
-        <button type="submit">Filtrer</button>
-    </form>
 
     {{-- affichage des données --}}
     <table  class="table-affichage-donnee">

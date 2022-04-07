@@ -121,4 +121,104 @@ class CompteController extends Controller
             return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
     }
+
+    public function gestion_user_recherche(Request $request){//recherche utilisateurs (attention code très long car 8 possibilités utilisé les fleches (vscode) pour reduire)
+        $request->validate([
+            'nom' => 'max:40',
+            'prenom' =>'max:40',
+            'login' => 'max:30',
+        ]);
+
+        // 8 possibilités (2^3)
+        if(strlen($request->nom) > 0 && strlen($request->prenom) > 0 && strlen($request->login) > 0){//tout les info sont entrees
+
+            $users_liste = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->where('login','=',$request->login)->paginate(5);
+            $users_liste_verif = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->where('login','=',$request->login)->get();
+            
+            if($users_liste_verif){//si existe
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->login) == 0){//seulement le nom est entre
+
+            $users_liste = User::where('nom','=',$request->nom)->paginate(5);
+            $users_liste_verif = User::where('nom','=',$request->nom)->get();
+
+            if($users_liste_verif){
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->login) == 0){//seulement le prenom est entre
+
+            $users_liste = User::where('prenom','=',$request->prenom)->paginate(5);
+            $users_liste_verif = User::where('prenom','=',$request->prenom)->get();
+
+            if($users_liste_verif){//si existe
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) == 0 && strlen($request->login) > 0){//seulement le login est entre
+            $users_liste = User::where('login','=',$request->login)->paginate(5);
+            $users_liste_verif = User::where('login','=',$request->login)->get();
+
+            if($users_liste_verif){//si existe
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) > 0 && strlen($request->login) == 0){//seulement nom et prenom
+            $users_liste = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->paginate(5);
+            $users_liste_verif = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->get();
+
+            if($users_liste_verif){//si existe
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->login) > 0){//seulement nom et login
+            $users_liste = User::where('nom','=',$request->nom)->where('login','=',$request->login)->paginate(5);
+            $users_liste_verif = User::where('nom','=',$request->nom)->where('login','=',$request->login)->get();
+
+            if($users_liste_verif){//si existe
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->login) > 0){//seulement prenom et login
+            $users_liste = User::where('prenom','=',$request->prenom)->where('login','=',$request->login)->paginate(5);
+            $users_liste_verif = User::where('prenom','=',$request->prenom)->where('login','=',$request->login)->get();
+
+            if($users_liste_verif){//si existe
+                $choix = 'default';
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+            }
+            else{
+                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else{//rien est saisi pour la recherche
+            return redirect()->route('admin.gestion.user_liste')->with('etat','Aucun information n\'a été entrée !');
+        }
+    }
 }

@@ -1,0 +1,17 @@
+.search{
+    margin-bottom: 5px;
+}
+
+#a_gestion_user_retour_listes{
+    border: 1px solid aliceblue;
+    color: aliceblue;
+    border-radius: 5px;
+    padding: 5px;
+    transition: 0.2s;
+}
+
+#a_gestion_user_retour_listes:hover{
+    color: rgb(231, 231, 28);
+    border-color: rgb(231, 231, 28);
+    text-decoration: none;
+}

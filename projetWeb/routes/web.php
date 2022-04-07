@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/admin_index',[CompteController::class,'admin_index'])->name('admin.index');//accès page admin
         Route::get('/admin/page_de_gestion',[CompteController::class,'admin_page_gestion'])->name('admin.page_gestion');//accès page de gestion de l'admin
         Route::get('/admin/gestion/user_list',[CompteController::class,'admin_user_liste'])->name('admin.gestion.user_liste');//affichage liste des utilisateurs pour la gestion
-        Route::get('/admin/gestion/user_list_filtre',[CompteController::class,'gestion_user_liste_filtrage'])->name('admin.gestion.user_liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
+        Route::post('/admin/gestion/user_list_filtre',[CompteController::class,'gestion_user_liste_filtrage'])->name('admin.gestion.user_liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
+        Route::post('/admin/gestion/user_recherche',[CompteController::class,'gestion_user_recherche'])->name('admin.gestion.user_recherche');
     });
 });

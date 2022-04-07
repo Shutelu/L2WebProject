@@ -8,6 +8,7 @@
 
         {{-- section pour l'ajout de style --}}
         <link rel="stylesheet" href="/styles/index_style.css">
+        <link rel="stylesheet" href="/styles/outils_style.css">
         {{--ajout bootstrap--}}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         
@@ -52,10 +53,17 @@
                 </div>
             @endif
 
-            {{-- Le contenu --}}
-            <div class="index-content">
-                @yield('content')
+            <div class="second-index-container">
+                {{-- outils --}}
+                <div class="outils-div">
+                    @yield('outils')
+                </div>
+                {{-- Le contenu --}}
+                <div class="index-content">
+                    @yield('content')
+                </div>
             </div>
+            
         </div>
     </body>
 </html>
