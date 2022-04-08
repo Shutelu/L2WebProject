@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    //use SoftDeletes;//a voir avec le prof --> (pas de soft delete)
+
     public $timestamps = false; //enlever les dates
 
     protected $hidden = ['mdp']; //cacher mdp pour les controllers et vues

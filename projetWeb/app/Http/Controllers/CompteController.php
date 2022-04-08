@@ -255,4 +255,28 @@ class CompteController extends Controller
         
         return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a bien été accepté !');
     }
+
+    public function gestions_user_create_form(){
+        return view('admin.gestion.utilisateurs.gestion_user_create_form');
+    }
+
+    public function gestion_user_create(Request $request){
+        $request->validate([
+            'nom' => 'required|string|min:1|max:40',
+            'prenom' => 'required|string|min:1|max:40',
+            'login' => 'required|string|min:1|max:30|unique:users',
+            'mdp' => 'required|confirmed|min:1|max:60',
+            'typeSelect' => 'required|in:enseignant,gestionnaire',
+        ]);
+
+        $user = new User();
+        $user->nom = $request->nom;
+        $user->prenom =$request->prenom;
+        $user->login = $request->login;
+        $user->mdp = Hash::make($request->mdp);
+        $user->type = $request->typeSelect;
+        $user->save();
+
+        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été crée avec succès !');
+    }
 }

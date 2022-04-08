@@ -25,6 +25,9 @@
         <br><br>
         <button type="submit">Accepter l'utilisateur</button>
     </form>
-    <a href="{{route('admin.gestion.user_refus',['id'=>$user->id])}}">Refuser l'utilisateur</a>
+    <form action="{{route('admin.gestion.user_refus',['id'=>$user->id])}}" method="POST">
+        @csrf
+        <button type="submit">Refuser</button>
+    </form>
 
 @endsection

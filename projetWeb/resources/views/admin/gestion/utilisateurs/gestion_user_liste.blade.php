@@ -63,7 +63,8 @@
     @endif
     {{-- br temporaire a remplacer par du css --}}
     <br>
-
+    <span id="admin_gestion_user_create"><a href="{{route('admin.gestion.user_create_form')}}">Crée un utilisateur</a></span>
+    <br>
     {{-- affichage des données --}}
     <table  class="table-affichage-donnee">
         <tr>
@@ -99,11 +100,10 @@
                     @endif   
                 @endif
 
-                @if ($ul->type == 'admin')
+                {{-- @if ($ul->type == 'admin')
                     <td>Non disponible</td>
-                @else
+                @else --}}
                     <td>modifier/supprimer</td>
-                @endif
             </tr>
         @endforeach
     </table>

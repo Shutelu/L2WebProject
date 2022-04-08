@@ -62,5 +62,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/admin/gestion/user_refus/{id}',[CompteController::class,'gestion_user_refus'])->name('admin.gestion.user_refus');
         Route::post('/admin/gestion/user_accepter_form/{id}',[CompteController::class,'gestion_user_accepter_form'])->name('admin.gestion.user_accepter_form');
         Route::post('/admin/gestion/user_accepter/{id}',[CompteController::class,'gestions_user_accepter'])->name('admin.gestion.user_accepter');
+        Route::get('/admin/gestion/user_create_form',[CompteController::class,'gestions_user_create_form'])->name('admin.gestion.user_create_form');
+        Route::post('/admin/gestion/user_create_form',[CompteController::class,'gestion_user_create']);
     });
 });
