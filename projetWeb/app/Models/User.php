@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->type == 'admin';
     }
 
+    //si user est gestionnaire ou admin
+    public function isGestionnaire(){
+        return $this->type == 'gestionnaire' || $this->type == 'admin';
+    }
+
     //relation *:* avec cour
     public function cours(){
         return $this->belongsToMany(Cour::class);//pas de pivot

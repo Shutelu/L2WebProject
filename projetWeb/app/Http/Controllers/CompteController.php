@@ -15,7 +15,7 @@ class CompteController extends Controller
     /*
     ===========================================================================
         Ce controlleur servira :
-            - Pour la gestion du compte de User (auth), Admin :
+            - Pour la gestion du compte de User (auth), Admin, Gestionnaire:
                 Pour User (utilisateurs connectés):
                     = user_mon_compte()
                     = user_edit_informations_forms()
@@ -31,6 +31,11 @@ class CompteController extends Controller
                     = gestion_user_refus(id)
                     = gestion_user_accepter_form(id)
                     = gestions_user_accepter(request,id)
+                    = gestions_user_create_form()
+                    = gestion_user_create(request)
+                    = gestion_cours_liste()
+                    = gestion_cours_create(request)
+                Pour Gestionnaire :
     ===========================================================================
     */
 
@@ -281,12 +286,12 @@ class CompteController extends Controller
         return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été crée avec succès !');
     }
 
-    public function gestion_cours_liste(){
+    public function gestion_cours_liste(){//affiche la liste des cours
         $cours_liste = Cour::paginate(5);
         return view('admin.gestion.cours.gestion_cours_liste',['cours_liste'=>$cours_liste]);
     }
 
-    public function gestion_cours_create(Request $request){
+    public function gestion_cours_create(Request $request){//cree un cours
         $request->validate([
             'intitule' => 'required|min:1|max:50'
         ]);
@@ -297,4 +302,19 @@ class CompteController extends Controller
 
         return redirect()->route('admin.gestion.cours_liste')->with('etat','Le cours a bien été crée !');
     }
+
+    /*
+    ===============================
+        Codes pour Gestionnaire :
+    ===============================
+    */
+
+    public function gestionnaire_page_gestion(){
+        return view('comptes.gestionnaire.gestionnaire_gestion');
+    }
+
+
+
+
+
 }

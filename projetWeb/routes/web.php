@@ -58,13 +58,18 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/admin/page_de_gestion',[CompteController::class,'admin_page_gestion'])->name('admin.page_gestion');//accès page de gestion de l'admin
         Route::get('/admin/gestion/user_list',[CompteController::class,'admin_user_liste'])->name('admin.gestion.user_liste');//affichage liste des utilisateurs pour la gestion
         Route::post('/admin/gestion/user_list_filtre',[CompteController::class,'gestion_user_liste_filtrage'])->name('admin.gestion.user_liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
-        Route::post('/admin/gestion/user_recherche',[CompteController::class,'gestion_user_recherche'])->name('admin.gestion.user_recherche');
-        Route::post('/admin/gestion/user_refus/{id}',[CompteController::class,'gestion_user_refus'])->name('admin.gestion.user_refus');
-        Route::post('/admin/gestion/user_accepter_form/{id}',[CompteController::class,'gestion_user_accepter_form'])->name('admin.gestion.user_accepter_form');
-        Route::post('/admin/gestion/user_accepter/{id}',[CompteController::class,'gestions_user_accepter'])->name('admin.gestion.user_accepter');
-        Route::get('/admin/gestion/user_create_form',[CompteController::class,'gestions_user_create_form'])->name('admin.gestion.user_create_form');
-        Route::post('/admin/gestion/user_create_form',[CompteController::class,'gestion_user_create']);
-        Route::get('/admin/gestion/cours_list',[CompteController::class,'gestion_cours_liste'])->name('admin.gestion.cours_liste');
-        Route::post('/admin/gestion/cours_list_create',[CompteController::class,'gestion_cours_create'])->name('admin.gestion.cours_create');
+        Route::post('/admin/gestion/user_recherche',[CompteController::class,'gestion_user_recherche'])->name('admin.gestion.user_recherche');//recherche
+        Route::post('/admin/gestion/user_refus/{id}',[CompteController::class,'gestion_user_refus'])->name('admin.gestion.user_refus');//refuser une inscription
+        Route::post('/admin/gestion/user_accepter_form/{id}',[CompteController::class,'gestion_user_accepter_form'])->name('admin.gestion.user_accepter_form');//formulaire acceptation
+        Route::post('/admin/gestion/user_accepter/{id}',[CompteController::class,'gestions_user_accepter'])->name('admin.gestion.user_accepter');//fonction accepter
+        Route::get('/admin/gestion/user_create_form',[CompteController::class,'gestions_user_create_form'])->name('admin.gestion.user_create_form');//formulaire creation user
+        Route::post('/admin/gestion/user_create_form',[CompteController::class,'gestion_user_create']);// fonction creation user
+        Route::get('/admin/gestion/cours_list',[CompteController::class,'gestion_cours_liste'])->name('admin.gestion.cours_liste');//affichage de la liste de cours
+        Route::post('/admin/gestion/cours_list_create',[CompteController::class,'gestion_cours_create'])->name('admin.gestion.cours_create');//creation de cours
+    });
+
+    //===== groupe gestionnaire () =====
+    Route::middleware(['is_gestionnaire'])->group(function(){
+        Route::get('/gestionnaire/page_de_gestion',[CompteController::class,'gestionnaire_page_gestion'])->name('gestionnaire.page_gestion');
     });
 });
