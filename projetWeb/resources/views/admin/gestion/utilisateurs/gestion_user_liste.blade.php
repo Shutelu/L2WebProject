@@ -13,6 +13,7 @@
             <option value="defaut">Défaut</option>
             <option value="enseignant">Enseignant</option>
             <option value="gestionnaire">Gestionnaire</option>
+            <option value="admin">Admin</option>
         </select>
         <button type="submit">Filtrer</button>
     </form>
@@ -28,7 +29,7 @@
     </form>
     <hr>
     <a class="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a><br><br>
-    <a class="a_gestion_user_retour_listes" href="{{route('admin.page_gestion')}}">Page de gestion</a>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.page_gestion')}}">Page de gestion admin</a>
     <hr>
     <p>
         Notice d'utilisation : <br>

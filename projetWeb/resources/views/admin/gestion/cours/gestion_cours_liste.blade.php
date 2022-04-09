@@ -12,7 +12,7 @@
     <br>
     <form action="{{route('admin.gestion.cours_create')}}" method="POST">
         @csrf
-        <label for="intitule">Intitulé</label>
+        <label for="intitule">Veillez saisir l'Intitulé (nom du cours) :</label>
         <input type="text" id="intitule" name="intitule">
         <button type="submit">Crée le cours</button>
     </form>

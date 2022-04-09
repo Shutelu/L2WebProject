@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Cour;
+use App\Models\Etudiant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -113,7 +114,7 @@ class CompteController extends Controller
 
     public function gestion_user_liste_filtrage(Request $request){//affichage de la liste des utilisateurs filtrer
         $request->validate([
-            'filtreType' => 'required|in:defaut,enseignant,gestionnaire'//"defaut" non utilisé mais doit etre present
+            'filtreType' => 'required|in:defaut,enseignant,gestionnaire,admin'//"defaut" non utilisé mais doit etre present
         ]);
 
         $choix = $request->filtreType;
@@ -124,6 +125,10 @@ class CompteController extends Controller
         }
         else if($request->filtreType == 'gestionnaire'){
             $users_liste = User::where('type','=','gestionnaire')->paginate(5);
+            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+        }
+        else if($request->filtreType == 'admin'){
+            $users_liste = User::where('type','=','admin')->paginate(5);
             return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else{
@@ -272,7 +277,7 @@ class CompteController extends Controller
             'prenom' => 'required|string|min:1|max:40',
             'login' => 'required|string|min:1|max:30|unique:users',
             'mdp' => 'required|confirmed|min:1|max:60',
-            'typeSelect' => 'required|in:enseignant,gestionnaire',
+            'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
         ]);
 
         $user = new User();
@@ -309,8 +314,17 @@ class CompteController extends Controller
     ===============================
     */
 
-    public function gestionnaire_page_gestion(){
+    public function gestionnaire_page_gestion(){//affiche page de gestion pour les gestionnaires ainsi que pour les admins
         return view('comptes.gestionnaire.gestionnaire_gestion');
+    }
+
+    public function gestionnaire_gestion_etudiants(){//page sur la gestion des etudiants
+        $etudiants_liste = Etudiant::paginate(5);
+        return view('comptes.gestionnaire.gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+    }
+
+    public function gestionnaire_create_etudiant_form(){//creation d'un etudiant
+        return view('comptes.gestionnaire.gestionnaire_create_etudiant_form');
     }
 
 
