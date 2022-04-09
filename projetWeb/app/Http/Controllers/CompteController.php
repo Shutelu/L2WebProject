@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Cour;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -256,11 +257,11 @@ class CompteController extends Controller
         return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a bien été accepté !');
     }
 
-    public function gestions_user_create_form(){
+    public function gestions_user_create_form(){//affiche la page de creation d'un user
         return view('admin.gestion.utilisateurs.gestion_user_create_form');
     }
 
-    public function gestion_user_create(Request $request){
+    public function gestion_user_create(Request $request){//fonction de creation de user par l'admin
         $request->validate([
             'nom' => 'required|string|min:1|max:40',
             'prenom' => 'required|string|min:1|max:40',
@@ -278,5 +279,22 @@ class CompteController extends Controller
         $user->save();
 
         return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été crée avec succès !');
+    }
+
+    public function gestion_cours_liste(){
+        $cours_liste = Cour::paginate(5);
+        return view('admin.gestion.cours.gestion_cours_liste',['cours_liste'=>$cours_liste]);
+    }
+
+    public function gestion_cours_create(Request $request){
+        $request->validate([
+            'intitule' => 'required|min:1|max:50'
+        ]);
+
+        $cour = new Cour();
+        $cour->intitule = $request->intitule;
+        $cour->save();
+
+        return redirect()->route('admin.gestion.cours_liste')->with('etat','Le cours a bien été crée !');
     }
 }

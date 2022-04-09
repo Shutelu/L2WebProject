@@ -3,7 +3,7 @@
 @section('title','Formulaire d\'acceptation')
 
 @section('outils')
-    <a id="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a>
 @endsection
 
 @section('content')

@@ -27,7 +27,8 @@
         <button type="submit">Rechercher</button>
     </form>
     <hr>
-    <a id="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a><br><br>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.page_gestion')}}">Page de gestion</a>
     <hr>
     <p>
         Notice d'utilisation : <br>
@@ -63,7 +64,7 @@
     @endif
     {{-- br temporaire a remplacer par du css --}}
     <br>
-    <span id="admin_gestion_user_create"><a href="{{route('admin.gestion.user_create_form')}}">Crée un utilisateur</a></span>
+    <span class="admin_gestion_user_create"><a href="{{route('admin.gestion.user_create_form')}}">Crée un utilisateur</a></span>
     <br>
     {{-- affichage des données --}}
     <table  class="table-affichage-donnee">

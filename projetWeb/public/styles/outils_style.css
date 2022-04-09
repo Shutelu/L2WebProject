@@ -2,7 +2,7 @@
     margin-bottom: 5px;
 }
 
-#a_gestion_user_retour_listes{
+.a_gestion_user_retour_listes{
     border: 1px solid aliceblue;
     color: aliceblue;
     border-radius: 5px;
@@ -11,13 +11,13 @@
     background-color: rgb(141, 86, 192);
 }
 
-#a_gestion_user_retour_listes:hover{
+.a_gestion_user_retour_listes:hover{
     color: rgb(231, 231, 28);
     border-color: rgb(231, 231, 28);
     text-decoration: none;
 }
 
-#admin_gestion_user_create a{
+.admin_gestion_user_create a{
     color: aliceblue;
     padding: 5px;
     background-color: rgb(141, 86, 192);
@@ -26,7 +26,7 @@
     transition: 0.2s;
 }
 
-#admin_gestion_user_create a:hover{
+.admin_gestion_user_create a:hover{
     text-decoration: none;
     color: rgb(231, 231, 28);
     border-color: rgb(219, 223, 33);
