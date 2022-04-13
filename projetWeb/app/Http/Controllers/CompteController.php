@@ -37,6 +37,10 @@ class CompteController extends Controller
                     = gestion_cours_liste()
                     = gestion_cours_create(request)
                 Pour Gestionnaire :
+                    = gestionnaire_page_gestion()
+                    = gestionnaire_gestion_etudiants()
+                    = gestionnaire_create_etudiant_form()
+                    = gestionnaire_create_etudiant(request)
     ===========================================================================
     */
 
@@ -325,6 +329,28 @@ class CompteController extends Controller
 
     public function gestionnaire_create_etudiant_form(){//creation d'un etudiant
         return view('comptes.gestionnaire.gestionnaire_create_etudiant_form');
+    }
+
+    public function gestionnaire_create_etudiant(Request $request){
+        $request->validate([
+            'nom' => 'required|string|min:1|max:40',
+            'prenom' => 'required|string|min:1|max:40',
+            'noet' => 'numeric|digits:8|nullable|unique:etudiants'//non requis on utilisera le random
+        ]);
+
+        $etudiant = new Etudiant();
+        $etudiant->nom = $request->nom;
+        $etudiant->prenom = $request->prenom;
+        if($request->noet){
+            $etudiant->noet = $request->noet; 
+        }
+        else{
+            $etudiant->noet = (string) rand(10000000,99999999);//numero etudiant random
+        }
+        //dd($etudiant->noet);
+        $etudiant->save();
+
+        return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) a été enregistré(e) !');
     }
 
 

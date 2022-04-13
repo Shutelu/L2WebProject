@@ -72,6 +72,7 @@ Route::middleware(['auth'])->group(function(){
     Route::middleware(['is_gestionnaire'])->group(function(){
         Route::get('/gestionnaire/page_de_gestion',[CompteController::class,'gestionnaire_page_gestion'])->name('gestionnaire.page_gestion');
         Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');
-        Route::get('/gestionnaire/etudiant_create_form',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');
+        Route::get('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');
+        Route::post('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant']);
     });
 });

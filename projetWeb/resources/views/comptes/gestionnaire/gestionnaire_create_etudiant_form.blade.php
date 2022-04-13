@@ -16,14 +16,14 @@
 @section('content')
     <h1>Formulaire d'ajout d'un(e) etudiant(e)</h1>
 
-    <form action="">
+    <form method="POST">
         @csrf
         <label for="nom">Nom* :</label>
-        <input type="text" id="nom" name="nom"><br>
+        <input type="text" id="nom" name="nom" value="{{old('nom')}}"><br>
         <label for="prenom">Prenom* :</label>
-        <input type="text" id="prenom" name="prenom"><br>
+        <input type="text" id="prenom" name="prenom" value="{{old('prenom')}}"><br>
         <label for="noet">Numero etudiant (8 chiffres):</label>
-        <input type="number" id="noet" name="noet" min="10000000" max="99999999"><br>
+        <input type="number" id="noet" name="noet" min="10000000" max="99999999" value="{{old('noet')}}"><br>
         <button type="submit">Ajouter</button>
     </form>
 @endsection
