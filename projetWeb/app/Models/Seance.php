@@ -12,11 +12,14 @@ class Seance extends Model
 {
     use HasFactory;
 
-    public $timestamps = false; //enlever les dates 
+    public $timestamps = false;
+    protected $dates = ['date_debut','date_fin'];
+
+    
 
     // relation 1:* cote multiple
     public function cour(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Cour::class,'cours_id');//pas de pivot
     }
 
     //relation *:* avec etudiant

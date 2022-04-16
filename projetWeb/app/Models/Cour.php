@@ -15,7 +15,7 @@ class Cour extends Model
 
     //relation 1:* coté principal
     public function seances(){
-        return $this->hasMany(Seance::class);
+        return $this->hasMany(Seance::class,'cours_id');
     }
 
     //relation *:* avec user

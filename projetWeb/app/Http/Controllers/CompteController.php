@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cour;
 use App\Models\Etudiant;
+use App\Models\Seance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -41,13 +42,17 @@ class CompteController extends Controller
                     = gestionnaire_gestion_etudiants()
                     = gestionnaire_create_etudiant_form()
                     = gestionnaire_create_etudiant(request)
+                    = gestionnaire_gestion_seances()
+                    = public function gestionnaire_create_seance_form(id)
+                    = gestionnaire_create_seance(request,id)
+                    = public function gestionnaire_gestion_cours()
     ===========================================================================
     */
 
     /*
-    ========================
+    ==============================
         Codes pour User (auth) :
-    ========================
+    ==============================
     */
 
     public function user_mon_compte(){//affichage de la page de gestion du compte  
@@ -324,14 +329,14 @@ class CompteController extends Controller
 
     public function gestionnaire_gestion_etudiants(){//page sur la gestion des etudiants
         $etudiants_liste = Etudiant::paginate(5);
-        return view('comptes.gestionnaire.gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+        return view('comptes.gestionnaire..statistiques.gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
     }
 
     public function gestionnaire_create_etudiant_form(){//creation d'un etudiant
         return view('comptes.gestionnaire.gestionnaire_create_etudiant_form');
     }
 
-    public function gestionnaire_create_etudiant(Request $request){
+    public function gestionnaire_create_etudiant(Request $request){//fonction de creation de l'etudiant
         $request->validate([
             'nom' => 'required|string|min:1|max:40',
             'prenom' => 'required|string|min:1|max:40',
@@ -351,6 +356,44 @@ class CompteController extends Controller
         $etudiant->save();
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) a été enregistré(e) !');
+    }
+
+    public function gestionnaire_gestion_seances(){//affichage des la liste de seances de cours
+        $liste_seances = Seance::paginate(5);
+        // $liste_test = Seance::all();
+        // dd($liste_test[0]->cour->intitule);
+        return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_seance',['liste_seances'=>$liste_seances]);
+    }
+
+    public function gestionnaire_create_seance_form($id){
+        $cours = Cour::findOrFail($id);
+        return view('comptes.gestionnaire.gestionnaire_create_seances_form',['cours'=>$cours]);
+    }
+
+    public function gestionnaire_create_seance(Request $request, $id){//fonction de creation d'une seance de cours
+        $request->validate([
+            'ddebut' => 'required|date|after:yesterday',
+            'dfin' => 'required|date|after:ddebut',
+            // 'ddebutHeure' => 'required|numeric|max:23|min:0',
+            // 'ddebutMin' => 'required|numeric|max:59|min:0',
+            // 'dfinHeure' => 'required|numeric|max:23|min:0',
+            // 'dfinMin' => 'required|numeric|max:59|min:0',
+            
+        ]);
+
+        $cours = Cour::findOrFail($id);
+        $seances = new Seance();
+        $seances->date_debut = $request->ddebut;
+        $seances->date_fin = $request->dfin;
+        $cours->seances()->save($seances);
+        $seances->cour()->associate($cours);//cette ligne ne sert a rien a enlever
+
+        return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','La seance a été crée !');
+    }
+
+    public function gestionnaire_gestion_cours(){//affichage de la liste des cours
+        $liste_cours = Cour::paginate(5);
+        return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_cours',['liste_cours'=>$liste_cours]);
     }
 
 

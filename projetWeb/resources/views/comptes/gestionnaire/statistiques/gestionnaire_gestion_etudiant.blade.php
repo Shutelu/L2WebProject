@@ -3,17 +3,19 @@
 @section('title','Gestion des etudiants')
 
 @section('outils')
-    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.page_gestion')}}">Page de gestion gestionnaire</a><br>
+    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.page_gestion')}}">Page de gestion gestionnaire</a><hr>
+    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_cours')}}">Liste des cours</a><br><br>
+    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_seances')}}">Liste des séances</a><br>
 @endsection
 
 @section('content')
     <h1>Gestion des etudiants</h1>
     <p>
-        Description : Vous etes sur la liste de tout les etudiants, cette liste facilitera vos operation.
+        Description : Vous êtes sur la liste de tout les etudiants, cette liste facilitera vos operations.
     </p>
 
     <br>
-    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_etudiant_form')}}">Ajouter un étudiant</a></span>
+    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_etudiant_form')}}">Ajouter un(e) étudiant(e)</a></span>
     <br>
     <table class="table-affichage-donnee">
         <tr>
