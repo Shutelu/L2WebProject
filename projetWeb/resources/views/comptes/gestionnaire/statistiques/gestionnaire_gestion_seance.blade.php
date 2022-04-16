@@ -14,7 +14,7 @@
     <p>Description : Vous êtes sur la liste de tout les séances de cours, cette liste facilitera vos operation. </p>
 
     <br>
-    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.gestion_cours')}}">Ajouter une séance</a></span>
+    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.gestion_cours')}}">Ajouter une séance de cours</a></span>
     <br>
     <table class="table-affichage-donnee">
         <tr>

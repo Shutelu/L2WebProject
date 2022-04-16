@@ -13,4 +13,6 @@
     <br>
 
     <p>Buttons pour envoyer vers les ajouts</p>
+    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_etudiant_form')}}">Ajouter un(e) étudiant(e)</a></span><br><br>
+    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.gestion_cours')}}">Ajouter une séance de cours</a></span><br>
 @endsection
