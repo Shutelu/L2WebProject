@@ -19,6 +19,6 @@ class Etudiant extends Model
 
     //relation *:* avec cour
     public function cours(){
-        return $this->belongsToMany(Cour::class);
+        return $this->belongsToMany(Cour::class,'cours_etudiants','etudiant_id','cours_id');
     }
 }

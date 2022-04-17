@@ -33,7 +33,18 @@
                 <td>{{$el->noet}}</td>
                 <td>{{$el->created_at}}</td>
                 <td>{{$el->updated_at}}</td>
-                <td>modif/supp</td>
+                <td>
+                    <form action="{{route('gestionnaire.gestion.associer_etudiant_cours',['id'=>$el->id])}}" method="POST">
+                        @csrf
+                        <button type="submit">Associer un cours</button>
+                    </form>
+                    <form action="{{route('gestionnaire.gestion.desassocier_etudiant_cours',['id'=>$el->id])}}" method="POST">
+                        @csrf
+                        <button type="submit">Desassocier un cours</button>
+                    </form>
+                    modif/supp
+
+                </td>
             </tr>
         @endforeach
     </table>

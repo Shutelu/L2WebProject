@@ -25,6 +25,6 @@ class Cour extends Model
 
     //relation *:* avec etudiant
     public function etudiants(){
-        return $this->belongsToMany(Etudiant::class);//pas de pivot
+        return $this->belongsToMany(Etudiant::class,'cours_etudiants','cours_id','etudiant_id');//pas de pivot
     }
 }

@@ -27,7 +27,10 @@
                 <td>{{$lc->intitule}}</td>
                 <td>{{$lc->created_at}}</td>
                 <td>{{$lc->updated_at}}</td>
-                <td><span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_seances',['id'=>$lc->id])}}">Ajouter une séance</a></span></td>
+                <td>
+                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_seances',['id'=>$lc->id])}}">Ajouter une séance</a></span><br>
+                    liste des etudiants associe a ce cours(lien)
+                </td>
             </tr>
         @endforeach
     </table>

@@ -43,9 +43,13 @@ class CompteController extends Controller
                     = gestionnaire_create_etudiant_form()
                     = gestionnaire_create_etudiant(request)
                     = gestionnaire_gestion_seances()
-                    = public function gestionnaire_create_seance_form(id)
+                    = gestionnaire_create_seance_form(id)
                     = gestionnaire_create_seance(request,id)
-                    = public function gestionnaire_gestion_cours()
+                    = gestionnaire_gestion_cours()
+                    = gestionnaire_gestion_association_cours_etudiant(id)
+                    = gestionnaire_gestion_asso_association_cours_etudiant(eid,cid)
+                    = gestionnaire_gestion_desassociation_cours_etudiant(id)
+                    = gestionnarie_gestion_desa_desassociation_cours_etudiant(eid,cid)
     ===========================================================================
     */
 
@@ -394,6 +398,37 @@ class CompteController extends Controller
     public function gestionnaire_gestion_cours(){//affichage de la liste des cours
         $liste_cours = Cour::paginate(5);
         return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_cours',['liste_cours'=>$liste_cours]);
+    }
+
+    public function gestionnaire_gestion_association_cours_etudiant($id){//liste des cours pour association
+        $liste_cours = Cour::paginate(5);
+        return view('comptes.gestionnaire.associations.gestionnaire_associer_cours_etudiant',['liste_cours'=>$liste_cours,'etudiant_id'=>$id]);
+    }
+
+    public function gestionnaire_gestion_asso_association_cours_etudiant($eid,$cid){//association
+        $cours = Cour::findOrFail($cid);
+        $etudiant = Etudiant::findOrFail($eid);
+
+        $etudiant->cours()->attach($cours);
+
+        return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'association a été effectué !');
+    }
+
+    public function gestionnaire_gestion_desassociation_cours_etudiant($id){//liste des cours pour desassociation
+        $etudiant = Etudiant::findOrFail($id);
+
+        $liste_cours = $etudiant->cours;
+
+        return view('comptes.gestionnaire.associations.gestionnaire_desassocier_cours_etudiant',['liste_cours'=>$liste_cours,'etudiant_id'=>$id]);
+    }
+
+    public function gestionnarie_gestion_desa_desassociation_cours_etudiant($eid, $cid){//desassociation
+        $etudiant = Etudiant::findOrFail($eid);
+        $cours = Cour::findOrFail($cid);
+
+        $etudiant->cours()->detach($cours);
+
+        return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','Le cours a été désassocié à l\'étudiant(e) !');
     }
 
 
