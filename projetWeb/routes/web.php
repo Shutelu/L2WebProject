@@ -82,5 +82,6 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/gestionnaire/gestion/associer/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_asso_association_cours_etudiant'])->name('gestionnaire.gestion.associer.associer_etudiant_cours');//associer
         Route::post('/gestionnaire/gestion/desassocier/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier_etudiant_cours');//liste cours a desassocier
         Route::post('/gestionnaire/gestion/desassocier/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnarie_gestion_desa_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier.desassocier_etudiant_cours');//desassocier
+        Route::get('/gestionnaire/gestion/liste/cours_etudiants/{id}',[CompteController::class,'gestionnaire_gestion_liste_cours_etudiants'])->name('gestionnaire.gestion.liste_cours_etudiants');//liste des etudiants associer a un cours
     });
 });

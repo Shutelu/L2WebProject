@@ -50,6 +50,7 @@ class CompteController extends Controller
                     = gestionnaire_gestion_asso_association_cours_etudiant(eid,cid)
                     = gestionnaire_gestion_desassociation_cours_etudiant(id)
                     = gestionnarie_gestion_desa_desassociation_cours_etudiant(eid,cid)
+                    = gestionnaire_gestion_liste_cours_etudiants(id)
     ===========================================================================
     */
 
@@ -150,6 +151,7 @@ class CompteController extends Controller
         }
     }
 
+    //à réduire si assez de temps
     public function gestion_user_recherche(Request $request){//recherche utilisateurs (attention code très long car 8 possibilités utilisé les fleches (vscode) pour reduire)
         $request->validate([
             'nom' => 'max:40',
@@ -392,7 +394,7 @@ class CompteController extends Controller
         $cours->seances()->save($seances);
         $seances->cour()->associate($cours);//cette ligne ne sert a rien a enlever
 
-        return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','La seance a été crée !');
+        return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','La séance a été crée !');
     }
 
     public function gestionnaire_gestion_cours(){//affichage de la liste des cours
@@ -429,6 +431,13 @@ class CompteController extends Controller
         $etudiant->cours()->detach($cours);
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','Le cours a été désassocié à l\'étudiant(e) !');
+    }
+
+    public function gestionnaire_gestion_liste_cours_etudiants($id){//liste des etudiants associer au cours $id
+        $cours = Cour::findOrFail($id);
+        $liste_etudiants = $cours->etudiants;
+
+        return view('comptes.gestionnaire.associations.gestionnaire_liste_cours_etudiant',['liste_etudiants'=>$liste_etudiants,'cours'=>$cours]);
     }
 
 
