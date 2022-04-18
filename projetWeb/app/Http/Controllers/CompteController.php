@@ -51,6 +51,12 @@ class CompteController extends Controller
                     = gestionnaire_gestion_desassociation_cours_etudiant(id)
                     = gestionnarie_gestion_desa_desassociation_cours_etudiant(eid,cid)
                     = gestionnaire_gestion_liste_cours_etudiants(id)
+                    = gestionnaire_gestion_liste_enseignants()
+                    = gestionnaire_gestion_association_cours_enseignant(id)
+                    = gestionnaire_gestion_asso_association_cours_enseignant(eid,cid)
+                    = gestionnaire_gestion_desassociation_cours_enseignant(id)
+                    = gestionnaire_gestion_desa_desassociation_cours_enseignant(eid,cid)
+                    = gestionnaire_gestion_liste_cours_enseignants(id)
     ===========================================================================
     */
 
@@ -134,15 +140,18 @@ class CompteController extends Controller
         $choix = $request->filtreType;
 
         if($request->filtreType == 'enseignant'){
-            $users_liste = User::where('type','=','enseignant')->paginate(5);
+            // $users_liste = User::where('type','=','enseignant')->paginate(5);
+            $users_liste = User::where('type','=','enseignant')->get();
             return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else if($request->filtreType == 'gestionnaire'){
-            $users_liste = User::where('type','=','gestionnaire')->paginate(5);
+            // $users_liste = User::where('type','=','gestionnaire')->paginate(5);
+            $users_liste = User::where('type','=','gestionnaire')->get();
             return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else if($request->filtreType == 'admin'){
-            $users_liste = User::where('type','=','admin')->paginate(5);
+            // $users_liste = User::where('type','=','admin')->paginate(5);
+            $users_liste = User::where('type','=','admin')->get();
             return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else{
@@ -440,6 +449,47 @@ class CompteController extends Controller
         return view('comptes.gestionnaire.associations.gestionnaire_liste_cours_etudiant',['liste_etudiants'=>$liste_etudiants,'cours'=>$cours]);
     }
 
+    public function gestionnaire_gestion_liste_enseignants(){//affichage liste des enseignants
+        $liste_enseignants = User::where('type','=','enseignant')->paginate(5);
+        return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_liste_enseignants',['liste_enseignants'=>$liste_enseignants]);
+    }
+
+    public function gestionnaire_gestion_association_cours_enseignant($id){//liste des cours pour association
+        $liste_cours = Cour::paginate(5);
+        return view('comptes.gestionnaire.associations.gestionnaire_associer_cours_enseignant',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
+    }
+
+    public function gestionnaire_gestion_asso_association_cours_enseignant($eid, $cid){//association
+        $cours = Cour::findOrFail($cid);
+        $enseignant = User::findOrFail($eid);
+
+        $enseignant->cours()->attach($cours);
+
+        return redirect()->route('gestionnaire.gestion.gestion_enseignants')->with('etat','L\'association a été effectué !');
+    }
+
+    public function gestionnaire_gestion_desassociation_cours_enseignant($id){//liste des cours pour desassociation
+        $enseignant = User::findOrFail($id);
+        $liste_cours = $enseignant->cours;
+
+        return view('comptes.gestionnaire.associations.gestionnaire_desassocier_cours_enseignant',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
+    }
+
+    public function gestionnaire_gestion_desa_desassociation_cours_enseignant($eid, $cid){//desassociation
+        $enseignant = User::findOrFail($eid);
+        $cours = Cour::findOrFail($cid);
+
+        $enseignant->cours()->detach($cours);
+
+        return redirect()->route('gestionnaire.gestion.gestion_enseignants')->with('etat','Le cours a été désassocié à l\'enseignant !');
+    }
+
+    public function gestionnaire_gestion_liste_cours_enseignants($id){//liste des enseignants associer au cours $id
+        $cours = Cour::findOrFail($id);
+        $liste_enseignants = $cours->users;
+
+        return view('comptes.gestionnaire.associations.gestionnaire_liste_cours_enseignant',['liste_enseignants'=>$liste_enseignants,'cours'=>$cours]);
+    }
 
 
 

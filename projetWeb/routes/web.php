@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/admin_index',[CompteController::class,'admin_index'])->name('admin.index');//accès page admin
         Route::get('/admin/page_de_gestion',[CompteController::class,'admin_page_gestion'])->name('admin.page_gestion');//accès page de gestion de l'admin
         Route::get('/admin/gestion/user_list',[CompteController::class,'admin_user_liste'])->name('admin.gestion.user_liste');//affichage liste des utilisateurs pour la gestion
-        Route::post('/admin/gestion/user_list_filtre',[CompteController::class,'gestion_user_liste_filtrage'])->name('admin.gestion.user_liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
+        Route::post('/admin/gestion/user_list',[CompteController::class,'gestion_user_liste_filtrage'])->name('admin.gestion.user_liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
         Route::post('/admin/gestion/user_recherche',[CompteController::class,'gestion_user_recherche'])->name('admin.gestion.user_recherche');//recherche
         Route::post('/admin/gestion/user_refus/{id}',[CompteController::class,'gestion_user_refus'])->name('admin.gestion.user_refus');//refuser une inscription
         Route::post('/admin/gestion/user_accepter_form/{id}',[CompteController::class,'gestion_user_accepter_form'])->name('admin.gestion.user_accepter_form');//formulaire acceptation
@@ -72,16 +72,27 @@ Route::middleware(['auth'])->group(function(){
     Route::middleware(['is_gestionnaire'])->group(function(){
         Route::get('/gestionnaire/page_de_gestion',[CompteController::class,'gestionnaire_page_gestion'])->name('gestionnaire.page_gestion');//page de gestion pour le gestionnaire
         Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');//liste de tout les etudiants
+
         Route::get('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');//formulaire de creation etudiant
         Route::post('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant']);//fonction de creation etudiant
+
         Route::get('/gestionnaire/gestion/seances_de_cours',[CompteController::class,'gestionnaire_gestion_seances'])->name('gestionnaire.gestion.gestion_seances');//liste des seances de cours
         Route::get('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance_form'])->name('gestionnaire.gestion.create_seances');//formulaire de creation de seances de cours
         Route::post('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance'])->name('gestionnaire.gestion.create_seances');//fonction de creation de seance de cours
+
         Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
+
         Route::post('/gestionnaire/gestion/associer/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_association_cours_etudiant'])->name('gestionnaire.gestion.associer_etudiant_cours');//liste cours a associer
         Route::post('/gestionnaire/gestion/associer/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_asso_association_cours_etudiant'])->name('gestionnaire.gestion.associer.associer_etudiant_cours');//associer
         Route::post('/gestionnaire/gestion/desassocier/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier_etudiant_cours');//liste cours a desassocier
         Route::post('/gestionnaire/gestion/desassocier/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnarie_gestion_desa_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier.desassocier_etudiant_cours');//desassocier
         Route::get('/gestionnaire/gestion/liste/cours_etudiants/{id}',[CompteController::class,'gestionnaire_gestion_liste_cours_etudiants'])->name('gestionnaire.gestion.liste_cours_etudiants');//liste des etudiants associer a un cours
+
+        Route::get('/gestionnaire/gestion/liste/enseignants',[CompteController::class,'gestionnaire_gestion_liste_enseignants'])->name('gestionnaire.gestion.gestion_enseignants');//liste des enseignants
+        Route::post('/gestionnaire/gestion/associer/{id}/enseignant_cours',[CompteController::class,'gestionnaire_gestion_association_cours_enseignant'])->name('gestionnaire.gestion.associer_enseignant_cours');//liste cours a associer
+        Route::post('/gestionnaire/gestion/associer/{eid}/enseignant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_asso_association_cours_enseignant'])->name('gestionnaire.gestion.associer.associer_enseignant_cours');//associer
+        Route::post('/gestionnaire/gestion/desassocier/{id}/enseignant_cours',[CompteController::class,'gestionnaire_gestion_desassociation_cours_enseignant'])->name('gestionnaire.gestion.desassocier_enseignant_cours');//liste cours a desassocier
+        Route::post('/gestionnaire/gestion/desassocier/{eid}/enseignant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_desa_desassociation_cours_enseignant'])->name('gestionnaire.gestion.desassocier.desassocier_enseignant_cours');//desassocier
+        Route::get('/gestionnaire/gestion/liste/cours_enseignants/{id}',[CompteController::class,'gestionnaire_gestion_liste_cours_enseignants'])->name('gestionnaire.gestion.liste_cours_enseignants');//liste dse enseignants associer a un cours
     });
 });

@@ -109,5 +109,8 @@
             </tr>
         @endforeach
     </table>
-    {{$users_liste->links()}}
+    @if ($choix == 'defaut')
+        {{$users_liste->links()}}
+        
+    @endif
 @endsection

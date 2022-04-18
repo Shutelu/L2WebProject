@@ -5,7 +5,8 @@
 @section('outils')
     <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.page_gestion')}}">Page de gestion gestionnaire</a><hr>
     <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_etudiant')}}">Liste des étudiants</a><br><br>
-    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_seances')}}">Liste des séances</a><br>
+    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_seances')}}">Liste des séances</a><br><br>
+    <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_enseignants')}}">Liste des enseignants</a><br>
 @endsection
 
 @section('content')
@@ -29,7 +30,8 @@
                 <td>{{$lc->updated_at}}</td>
                 <td>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_seances',['id'=>$lc->id])}}">Ajouter une séance</a></span><br><br>
-                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_cours_etudiants',['id'=>$lc->id])}}">Liste des etudiants associe a ce cours</a></span>
+                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_cours_etudiants',['id'=>$lc->id])}}">Liste des etudiants associés à ce cours</a></span><br><br>
+                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_cours_enseignants',['id'=>$lc->id])}}">Liste des enseignants associés à ce cours</a></span>
                 </td>
             </tr>
         @endforeach

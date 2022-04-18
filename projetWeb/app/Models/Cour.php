@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Cour;
+
+use App\Models\User;
 use App\Models\Seance;
 use App\Models\Etudiant;
 
@@ -20,7 +21,7 @@ class Cour extends Model
 
     //relation *:* avec user
     public function users(){
-        return $this->belongsToMany(Cour::class);
+        return $this->belongsToMany(User::class,'cours_users','cours_id','user_id');
     }
 
     //relation *:* avec etudiant

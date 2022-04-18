@@ -41,6 +41,6 @@ class User extends Authenticatable
 
     //relation *:* avec cour
     public function cours(){
-        return $this->belongsToMany(Cour::class);//pas de pivot
+        return $this->belongsToMany(Cour::class,'cours_users','user_id','cours_id');//pas de pivot
     }
 }
