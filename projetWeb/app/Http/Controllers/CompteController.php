@@ -17,13 +17,15 @@ class CompteController extends Controller
     /*
     ===========================================================================
         Ce controlleur servira :
-            - Pour la gestion du compte de User (auth), Admin, Gestionnaire:
+            - Pour la gestion du compte de User (auth), Enseignant, Admin, Gestionnaire:
                 Pour User (utilisateurs connectés):
                     = user_mon_compte()
                     = user_edit_informations_forms()
                     = user_edit_informations(request)
                     = user_change_mdp_form()
                     = user_change_mdp(request)
+                Pour Enseignant :
+                    = enseignant_liste_cours_associer(id)
                 Pour Admin :
                     = admin_index()
                     = admin_page_gestion()
@@ -110,6 +112,19 @@ class CompteController extends Controller
         }
 
         return redirect()->route('user.change_mdp_form')->with('etat','Il semble que l\'ancien mot de passe n\'est pas correcte');
+    }
+
+    /*
+    ============================
+        Codes pour Enseignant :
+    ============================
+    */
+
+    public function enseignant_liste_cours_associer($id){//liste dse cours associer sans pagination 
+        $enseignant = User::findOrFail($id);
+        $liste_cours = $enseignant->cours;
+
+        return view('comptes.enseignant.enseignant_liste_cours_associer',['liste_cours'=>$liste_cours]);
     }
 
     /*

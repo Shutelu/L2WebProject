@@ -34,6 +34,10 @@
                         @if (Auth::user()->type == 'gestionnaire' || Auth::user()->type == 'admin')
                             <li><a href="{{route('gestionnaire.page_gestion')}}">Gestion Gestionnaire</a></li>
                         @endif
+                        @if (Auth::user()->type == 'enseignant')
+                            <li><a href="{{route('enseignant.page_gestion',['id'=>Auth::user()->id])}}">Liste de vos cours associés</a></li>
+                        @endif
+
                         <li><a href="{{route('user.page_mon_compte')}}">Mon compte</a></li>
                         <li><a href="{{route('logout')}}">Se déconnecter</a></li>
                     @endauth

@@ -52,6 +52,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/user/mon_compte/changer_mot_de_passe',[CompteController::class,'user_change_mdp_form'])->name('user.change_mdp_form');//formulaire de changement de mot de passe
     Route::post('/user/mon_compte/changer_mot_de_passe',[CompteController::class,'user_change_mdp']);
     
+    //===== groupe enseignant =====
+    Route::get('/enseignant/liste/cours_associer/{id}',[CompteController::class,'enseignant_liste_cours_associer'])->name('enseignant.page_gestion');//liste des cours associés
+
+
     //===== groupe admin =====
     Route::middleware(['is_admin'])->group(function(){
         Route::get('/admin_index',[CompteController::class,'admin_index'])->name('admin.index');//accès page admin
@@ -69,7 +73,7 @@ Route::middleware(['auth'])->group(function(){
     });
 
     //===== groupe gestionnaire () =====
-    Route::middleware(['is_gestionnaire'])->group(function(){
+    Route::middleware(['is_gestionnaire'])->group(function(){//(ou admin)
         Route::get('/gestionnaire/page_de_gestion',[CompteController::class,'gestionnaire_page_gestion'])->name('gestionnaire.page_gestion');//page de gestion pour le gestionnaire
         Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');//liste de tout les etudiants
 
