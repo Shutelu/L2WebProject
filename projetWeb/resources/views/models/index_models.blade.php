@@ -34,7 +34,7 @@
                         @if (Auth::user()->type == 'gestionnaire' || Auth::user()->type == 'admin')
                             <li><a href="{{route('gestionnaire.page_gestion')}}">Gestion Gestionnaire</a></li>
                         @endif
-                        @if (Auth::user()->type == 'enseignant')
+                        @if (Auth::user()->type == 'enseignant' || Auth::user()->type == 'admin')
                             <li><a href="{{route('enseignant.page_gestion',['id'=>Auth::user()->id])}}">Liste de vos cours associés</a></li>
                         @endif
 

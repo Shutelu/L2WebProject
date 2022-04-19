@@ -122,9 +122,24 @@ class CompteController extends Controller
 
     public function enseignant_liste_cours_associer($id){//liste dse cours associer sans pagination 
         $enseignant = User::findOrFail($id);
+
+        //gestion pour admin
+        if($enseignant->type == 'admin'){
+            $liste_cours = Cour::all();
+            return view('comptes.enseignant.enseignant_liste_cours_associer',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
+        }
+
         $liste_cours = $enseignant->cours;
 
-        return view('comptes.enseignant.enseignant_liste_cours_associer',['liste_cours'=>$liste_cours]);
+        return view('comptes.enseignant.enseignant_liste_cours_associer',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
+    }
+
+    public function enseignant_liste_inscrit_cours($cid, $eid){
+        // $enseingnant = User::findOrFail
+        $cours = Cour::findOrFail($cid);
+        $liste_etudiants = $cours->etudiants;
+
+        return view('comptes.enseignant.enseignant_liste_inscrit_cours',['liste_etudiants'=>$liste_etudiants,'enseignant_id'=>$eid,'cours'=>$cours]);
     }
 
     /*

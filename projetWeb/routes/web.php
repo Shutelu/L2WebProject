@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function(){
     
     //===== groupe enseignant =====
     Route::get('/enseignant/liste/cours_associer/{id}',[CompteController::class,'enseignant_liste_cours_associer'])->name('enseignant.page_gestion');//liste des cours associés
+    Route::post('/enseignant/liste/{cid}/etudiants_inscrits_au_cours/{eid}',[CompteController::class,'enseignant_liste_inscrit_cours'])->name('enseignant.liste.inscrit_au_cours');
 
 
     //===== groupe admin =====

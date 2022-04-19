@@ -12,7 +12,12 @@
         @foreach ($liste_cours as $cours)
             <tr>
                 <td>{{$cours->intitule}}</td>
-                <td>Action</td>
+                <td>
+                    <form action="{{route('enseignant.liste.inscrit_au_cours',['cid'=>$cours->id,'eid'=>$enseignant_id])}}" method="post">
+                        @csrf
+                        <button type="submit">Liste des inscrits à ce cours</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </table>
