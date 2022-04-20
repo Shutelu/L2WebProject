@@ -26,6 +26,10 @@ class CompteController extends Controller
                     = user_change_mdp(request)
                 Pour Enseignant :
                     = enseignant_liste_cours_associer(id)
+                    = enseignant_liste_inscrit_cours(cid,eid)
+                    = enseignant_liste_seances_cours(cid)
+                    = enseignant_liste_etudiant_seance(cid,sid)
+                    = enseignant_pointage_seance_etudiant(cid,sid,eid)
                 Pour Admin :
                     = admin_index()
                     = admin_page_gestion()
@@ -134,12 +138,51 @@ class CompteController extends Controller
         return view('comptes.enseignant.enseignant_liste_cours_associer',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
     }
 
-    public function enseignant_liste_inscrit_cours($cid, $eid){
+    public function enseignant_liste_inscrit_cours($cid, $eid){//liste des etudiants inscrit au cours 
         // $enseingnant = User::findOrFail
         $cours = Cour::findOrFail($cid);
         $liste_etudiants = $cours->etudiants;
 
         return view('comptes.enseignant.enseignant_liste_inscrit_cours',['liste_etudiants'=>$liste_etudiants,'enseignant_id'=>$eid,'cours'=>$cours]);
+    }
+
+    public function enseignant_liste_seances_cours($cid){//liste des seances de ce cours cid
+        $cours = Cour::findOrFail($cid);
+        $liste_seances = $cours->seances;
+
+        return view('comptes.enseignant.enseignant_liste_seances_cours',['liste_seances'=>$liste_seances,'cours'=>$cours]);
+    }
+
+    public function enseignant_liste_etudiant_seance($cid,$sid){//liste des etudiants pour cette seance
+        $cours = Cour::findOrFail($cid);
+        $liste_etudiants = $cours->etudiants;
+
+        return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
+    }
+
+    public function enseignant_pointage_seance_etudiant($cid, $sid, $eid){//fonction de pointage seance et etudiant
+        $cours = Cour::findOrFail($cid);
+        $liste_etudiants = $cours->etudiants;
+
+        $seance = Seance::findOrFail($sid);
+        $etudiant = Etudiant::findOrFail($eid);
+
+        //si existe deja
+        if($seance->etudiants()->where('id','=',$eid)->first()){
+            // dump($eid);
+            // dd($seance->etudiants()->where('id','=',$eid)->first());
+            session()->flash('etat','L\'étudiant(e) a deja été pointé(e) !');
+
+            return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
+            // return redirect()->back()->with('etat','ok');// marche pas car get method not supported
+            // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
+    
+        }
+        $seance->etudiants()->attach($etudiant);
+        
+        session()->flash('etat','L\'étudiant(e) à été pointé(e) (marqué présent(e)) pour cette séance !');
+        return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
+        // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
     }
 
     /*

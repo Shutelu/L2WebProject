@@ -24,6 +24,6 @@ class Seance extends Model
 
     //relation *:* avec etudiant
     public function etudiants(){
-        return $this->belongsToMany(Etudiant::class);
+        return $this->belongsToMany(Etudiant::class,'presences','seance_id','etudiant_id');
     }
 }

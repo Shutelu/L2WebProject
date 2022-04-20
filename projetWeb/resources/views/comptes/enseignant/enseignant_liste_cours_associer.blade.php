@@ -17,6 +17,10 @@
                         @csrf
                         <button type="submit">Liste des inscrits à ce cours</button>
                     </form>
+                    <form action="{{route('enseignant.liste.seances_ce_cours',['cid'=>$cours->id])}}" method="POST">
+                        @csrf
+                        <button>Liste des séances pour ce cours</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
