@@ -493,6 +493,10 @@ class CompteController extends Controller
         $cours = Cour::findOrFail($cid);
         $etudiant = Etudiant::findOrFail($eid);
 
+        //si existe deja
+        if($cours->etudiants()->where('id','=',$eid)->first()){
+            return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'association a déjà était effectué !');
+        }
         $etudiant->cours()->attach($cours);
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'association a été effectué !');
@@ -536,6 +540,10 @@ class CompteController extends Controller
         $cours = Cour::findOrFail($cid);
         $enseignant = User::findOrFail($eid);
 
+        //si existe deja
+        if($cours->users()->where('id','=',$eid)->first()){
+            return redirect()->route('gestionnaire.gestion.gestion_enseignants')->with('etat','L\'association a déjà était effectué !');
+        }
         $enseignant->cours()->attach($cours);
 
         return redirect()->route('gestionnaire.gestion.gestion_enseignants')->with('etat','L\'association a été effectué !');
