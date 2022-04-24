@@ -30,6 +30,7 @@ class CompteController extends Controller
                     = enseignant_liste_seances_cours(cid)
                     = enseignant_liste_etudiant_seance(cid,sid)
                     = enseignant_pointage_seance_etudiant(cid,sid,eid)
+                    = enseignant_liste_presents_absents(cid,sid)
                 Pour Admin :
                     = admin_index()
                     = admin_page_gestion()
@@ -178,11 +179,28 @@ class CompteController extends Controller
             // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
     
         }
+
         $seance->etudiants()->attach($etudiant);
         
         session()->flash('etat','L\'étudiant(e) à été pointé(e) (marqué présent(e)) pour cette séance !');
         return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
         // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
+    }
+
+    public function enseignant_liste_presents_absents($cid, $sid){//liste des presents absents
+        $cours = Cour::findOrFail($cid);
+        $seance = Seance::findOrFail($sid);
+
+        $liste_etudiants = $cours->etudiants;
+        $liste_presents = $seance->etudiants;//liste etudiant present
+        // $tab = [];
+        // $i = 0;
+        // foreach($liste_presents as $present){
+        //     $tab[$i] = $present;
+        //     $i+=1;
+        // }
+
+        return view('comptes.enseignant.enseignant_liste_present_absent',['liste_etudiants'=>$liste_etudiants,'liste_presents'=>$liste_presents]);
     }
 
     /*

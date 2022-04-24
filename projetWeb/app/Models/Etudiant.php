@@ -14,7 +14,7 @@ class Etudiant extends Model
 
     //relation *:* avec seance
     public function seances(){
-        return $this->belongsToMany(Seance::class,'presences','seance_id','etudiant_id');//pas de pivot
+        return $this->belongsToMany(Seance::class,'presences','etudiant_id','seance_id');//pas de pivot
     }
 
     //relation *:* avec cour

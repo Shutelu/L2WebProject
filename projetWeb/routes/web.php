@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/enseignant/liste/{cid}/seances_de_ce_cours',[CompteController::class,'enseignant_liste_seances_cours'])->name('enseignant.liste.seances_ce_cours');//liste des seances de ce cours
     Route::post('/enseignant/liste/{cid}/etudiant_pour_cette_seance/{sid}',[CompteController::class,'enseignant_liste_etudiant_seance'])->name('enseignant_liste_etudiants_de_ce_seance');//liste des etudiants pour la seance
     Route::post('/enseignant/pointage/{cid}/seance_etudiant/{sid}/{eid}',[CompteController::class,'enseignant_pointage_seance_etudiant'])->name('enseignant.pointage.etudiant_seance');//pointage simple
+    Route::post('/enseignant/liste/{cid}/presents_absents/{sid}',[CompteController::class,'enseignant_liste_presents_absents'])->name('enseignant_liste_present_absent');//liste present absent
 
 
     //===== groupe admin =====

@@ -28,7 +28,15 @@
                 <td>
                     <form action="{{route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cours->id,'sid'=>$seance->id])}}" method="post">
                         @csrf
-                        <button>Pointage simple des étudiants pour cette séance</button>
+                        <button type="submit">Pointage simple des étudiants pour cette séance</button>
+                    </form>
+                    <form action="" method="POST">
+                        @csrf
+                        <button type="submit">Pointage multiple des étudiants pour cette séance</button>
+                    </form>
+                    <form action="{{route('enseignant_liste_present_absent',['cid'=>$cours->id,'sid'=>$seance->id])}}" method="POST">
+                        @csrf
+                        <button type="submit">Liste des presents/absents</button>
                     </form>
                 </td>
             </tr>
