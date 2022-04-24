@@ -17,17 +17,26 @@
                 <td>{{$etudiant->prenom}}</td>
                 <td>{{$etudiant->noet}}</td>
 
-                <?php $bool = false;?>
+                @php
+                    $bool = false;
+                @endphp
                 @foreach ($liste_presents as $present)
                     @if ($present->id == $etudiant->id)
                         <td>present</td>
-                        <?php $bool = true?>
+                        @php
+                            $bool = true;
+                        @endphp
                         @break
                     @else  
                         @continue
                     @endif
                 @endforeach
-                <?php if(!$bool){echo "<td>absent</td>";} $bool = false;?>
+                @php
+                    if(!$bool){
+                        echo "<td>absent</td>";
+                    } 
+                    $bool = false;
+                @endphp
             </tr>
         @endforeach
     </table>
