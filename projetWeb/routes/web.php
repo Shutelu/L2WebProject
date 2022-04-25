@@ -86,11 +86,12 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');//formulaire de creation etudiant
         Route::post('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant']);//fonction de creation etudiant
 
+        //seance
         Route::get('/gestionnaire/gestion/liste/seance_de_ce_cours/{id}',[CompteController::class,'gestionnaire_seance_de_ce_cours'])->name('gestionnaire.gestion.liste_seance_de_ce_cours');//liste des seance d'un cours en particuliers
         Route::get('/gestionnaire/gestion/seances_de_cours',[CompteController::class,'gestionnaire_gestion_seances'])->name('gestionnaire.gestion.gestion_seances');//liste de tout les seances
         Route::get('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance_form'])->name('gestionnaire.gestion.create_seances');//formulaire de creation de seances de cours
         Route::post('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance'])->name('gestionnaire.gestion.create_seances');//fonction de creation de seance de cours
-
+        Route::post('/gestionnaire/liste/seance/{sid}/presence_etudiant_par_seance',[CompteController::class,'gestionnaire_liste_presence_etudiant_par_seance'])->name('gestionnaire.liste.presence_etudiant_par_seance');
         Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
 
         //etudiants

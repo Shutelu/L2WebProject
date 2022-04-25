@@ -22,12 +22,19 @@
             <th>Intitule</th>
             <th>Date de debut</th>
             <th>Date de fin</th>
+            <th>Action</th>
         </tr>
         @foreach ($liste_seances as $ls)
             <tr>
                 <td>{{$ls->cour->intitule}}</td>
                 <td>{{$ls->date_debut}}</td>
                 <td>{{$ls->date_fin}}</td>
+                <td>
+                    <form action="{{route('gestionnaire.liste.presence_etudiant_par_seance',['sid'=>$ls->id])}}" method="POST">
+                        @csrf
+                        <button>Liste des présences</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </table>
