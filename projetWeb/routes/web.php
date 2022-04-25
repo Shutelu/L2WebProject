@@ -80,12 +80,9 @@ Route::middleware(['auth'])->group(function(){
     //===== groupe gestionnaire () =====
     Route::middleware(['is_gestionnaire'])->group(function(){//(ou admin)
         Route::get('/gestionnaire/page_de_gestion',[CompteController::class,'gestionnaire_page_gestion'])->name('gestionnaire.page_gestion');//page de gestion pour le gestionnaire
-        Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');//liste de tout les etudiants
         Route::post('/gestionnaire/gestion/filtrage_etudiants',[CompteController::class,'gestionnaire_gestion_filtrage_etudiants'])->name('gestionnaire.gestion.filtrage_etudiants');
-
-        Route::get('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');//formulaire de creation etudiant
-        Route::post('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant']);//fonction de creation etudiant
-
+        
+        
         //seance
         Route::get('/gestionnaire/gestion/liste/seance_de_ce_cours/{id}',[CompteController::class,'gestionnaire_seance_de_ce_cours'])->name('gestionnaire.gestion.liste_seance_de_ce_cours');//liste des seance d'un cours en particuliers
         Route::get('/gestionnaire/gestion/seances_de_cours',[CompteController::class,'gestionnaire_gestion_seances'])->name('gestionnaire.gestion.gestion_seances');//liste de tout les seances
@@ -93,14 +90,25 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance'])->name('gestionnaire.gestion.create_seances');//fonction de creation de seance de cours
         Route::post('/gestionnaire/liste/seance/{sid}/presence_etudiant_par_seance',[CompteController::class,'gestionnaire_liste_presence_etudiant_par_seance'])->name('gestionnaire.liste.presence_etudiant_par_seance');
         Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
-
+        
         //etudiants
+        Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');//liste de tout les etudiants
         Route::post('/gestionnaire/gestion/associer/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_association_cours_etudiant'])->name('gestionnaire.gestion.associer_etudiant_cours');//liste cours a associer
         Route::post('/gestionnaire/gestion/associer/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_asso_association_cours_etudiant'])->name('gestionnaire.gestion.associer.associer_etudiant_cours');//associer
         Route::post('/gestionnaire/gestion/desassocier/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier_etudiant_cours');//liste cours a desassocier
         Route::post('/gestionnaire/gestion/desassocier/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnarie_gestion_desa_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier.desassocier_etudiant_cours');//desassocier
         Route::get('/gestionnaire/gestion/liste/cours_etudiants/{id}',[CompteController::class,'gestionnaire_gestion_liste_cours_etudiants'])->name('gestionnaire.gestion.liste_cours_etudiants');//liste des etudiants associer a un cours
         Route::post('/gestionnaire/gestion/etudiant/{eid}/liste/liste_presence_detailler',[CompteController::class,'gestionnaire_gestion_etudiant_liste_presence_detailler'])->name('gestionnaire.gestion.etudiant.liste_presence_detailler');
+            //gestion des etudiants
+            Route::get('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');//formulaire de creation etudiant
+            Route::post('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant']);//fonction de creation etudiant
+            Route::post('/gestionnaire/etudiant/{eid}/modification_form',[CompteController::class,'gestionnaire_etudiant_modification_form'])->name('gestionnaire.etudiant.modification_form');//formulaire de modification etudiant
+            Route::post('/gestionnaire/etudiant/{eid}/modifier',[CompteController::class,'gestionnaire_etudiant_modifier'])->name('gestionnaire.etudiant.modifier');//fonction de modification etudiant
+            Route::post('/gestionnaire/etudiant/{eid}/suppression_form',[CompteController::class,'gestionnaire_etudiant_suppression_form'])->name('gestionnaire.etudiant.suppression_form');//formulaire de confirmation suppression etudiant
+            Route::post('/gestionnaire/etudiant/{eid}/suppression',[CompteController::class,'gestionnaire_etudiant_supprimer'])->name('gestionnaire.etudiant.supprimer');//fonction de suppression etudiant
+
+        //Demander l'explication du prof pour le 2.6.3
+        // Route::get('/gestionnaire/cours/{cid}/liste/presence_etudiant',[CompteController::class,'gestionnaire_cours_liste_presence_etudiant'])->name('gestionnaire.liste.presence_etudiant_par_cours');
 
         //enseignants
         Route::get('/gestionnaire/gestion/liste/enseignants',[CompteController::class,'gestionnaire_gestion_liste_enseignants'])->name('gestionnaire.gestion.gestion_enseignants');//liste des enseignants

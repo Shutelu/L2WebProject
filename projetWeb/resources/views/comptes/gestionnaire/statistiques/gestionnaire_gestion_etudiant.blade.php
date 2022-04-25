@@ -43,27 +43,34 @@
             <th>Modifié le</th>
             <th>Actions</th>
         </tr>
-        @foreach ($etudiants_liste as $el)
+        @foreach ($etudiants_liste as $etudiant)
             <tr>
-                <td>{{$el->nom}}</td>
-                <td>{{$el->prenom}}</td>
-                <td>{{$el->noet}}</td>
-                <td>{{$el->created_at}}</td>
-                <td>{{$el->updated_at}}</td>
+                <td>{{$etudiant->nom}}</td>
+                <td>{{$etudiant->prenom}}</td>
+                <td>{{$etudiant->noet}}</td>
+                <td>{{$etudiant->created_at}}</td>
+                <td>{{$etudiant->updated_at}}</td>
                 <td>
-                    <form action="{{route('gestionnaire.gestion.associer_etudiant_cours',['id'=>$el->id])}}" method="POST">
+                    <form action="{{route('gestionnaire.gestion.associer_etudiant_cours',['id'=>$etudiant->id])}}" method="POST">
                         @csrf
                         <button type="submit">Associer un cours</button>
                     </form>
-                    <form action="{{route('gestionnaire.gestion.desassocier_etudiant_cours',['id'=>$el->id])}}" method="POST">
+                    <form action="{{route('gestionnaire.gestion.desassocier_etudiant_cours',['id'=>$etudiant->id])}}" method="POST">
                         @csrf
                         <button type="submit">Desassocier un cours</button>
                     </form>
-                    <form action="{{route('gestionnaire.gestion.etudiant.liste_presence_detailler',['eid'=>$el->id])}}" method="POST">
+                    <form action="{{route('gestionnaire.gestion.etudiant.liste_presence_detailler',['eid'=>$etudiant->id])}}" method="POST">
                         @csrf
                         <button>Liste de présence détaillée</button>
                     </form>
-                    modif/supp
+                    <form action="{{route('gestionnaire.etudiant.modification_form',['eid'=>$etudiant])}}" method="POST">
+                        @csrf
+                        <button>Modifier</button>
+                    </form>
+                    <form action="{{route('gestionnaire.etudiant.suppression_form',['eid'=>$etudiant])}}" method="POST">
+                        @csrf
+                        <button>Supprimer</button>
+                    </form>
 
                 </td>
             </tr>

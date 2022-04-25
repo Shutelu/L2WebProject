@@ -677,6 +677,16 @@ class CompteController extends Controller
         return view('comptes.gestionnaire.liste_des_presences.gestionnaire_liste_presence_par_seance',['liste_etudiants'=>$liste_etudiants_present,'seance'=>$seance]);
     }
 
+    //Demander l'explication du prof pour le 2.6.3
+    // public function gestionnaire_cours_liste_presence_etudiant($cid){
+    //     $cours = Cour::findOrFail($cid);
+    //     $liste_seances = $cours->seances;
+    //     foreach($li){
+
+    //     }
+    //     $liste_etudiants_present = $cours->etudiant()->where()->get();
+    // }
+
     public function gestionnaire_gestion_association_cours_enseignant($id){//liste des cours pour association
         $liste_cours = Cour::paginate(5);
         return view('comptes.gestionnaire.associations.gestionnaire_associer_cours_enseignant',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
@@ -716,6 +726,38 @@ class CompteController extends Controller
         $liste_enseignants = $cours->users;
 
         return view('comptes.gestionnaire.associations.gestionnaire_liste_cours_enseignant',['liste_enseignants'=>$liste_enseignants,'cours'=>$cours]);
+    }
+
+    public function gestionnaire_etudiant_modification_form($eid){//formulaire de modification d'un etudiant
+        $etudiant = Etudiant::findOrFail($eid);
+        return view('comptes.gestionnaire.gestion_des_etudiants.gestionnaire_etudiant_modif_form',['etudiant'=>$etudiant]);
+    }
+
+    public function gestionnaire_etudiant_modifier(Request $request,$eid){//fonction de modification d'un etudiant
+        $request->validate([
+            'nom' => 'required|string|min:1|max:40',
+            'prenom' => 'required|string|min:1|max:40',
+        ]);
+        
+        $etudiant = Etudiant::findOrFail($eid);
+        $etudiant->nom = $request->nom;
+        $etudiant->prenom = $request->prenom;
+        $etudiant->save();
+
+        return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) à été modifié(e)');
+
+    }
+
+    public function gestionnaire_etudiant_suppression_form($eid){//formulaire de suppression d'un etudiant
+        $etudiant = Etudiant::findOrFail($eid);
+        return view('comptes.gestionnaire.gestion_des_etudiants.gestionnaire_etudiant_supp_form',['etudiant'=>$etudiant]);
+    }
+
+    public function gestionnaire_etudiant_supprimer($eid){//fonction de suppresion d'un etudiant
+        $etudiant = Etudiant::findOrFail($eid);
+        $etudiant->delete();
+
+        return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) à été supprimé(e)');
     }
 
 

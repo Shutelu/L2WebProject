@@ -31,7 +31,14 @@
                         @csrf
                         <button type="submit">Desassocier un cours</button>
                     </form>
-                    modif/supp
+                    <form action="" method="POST">
+                        @csrf
+                        <button>Modifier</button>
+                    </form>
+                    <form action="">
+                        @csrf
+                        <button>Supprimer</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
