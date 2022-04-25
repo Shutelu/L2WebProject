@@ -54,6 +54,7 @@ class CompteController extends Controller
                     = gestionnaire_create_seance_form(id)
                     = gestionnaire_create_seance(request,id)
                     = gestionnaire_gestion_cours()
+                    = gestionnaire_seance_de_ce_cours(id)
                     = gestionnaire_gestion_association_cours_etudiant(id)
                     = gestionnaire_gestion_asso_association_cours_etudiant(eid,cid)
                     = gestionnaire_gestion_desassociation_cours_etudiant(id)
@@ -608,6 +609,12 @@ class CompteController extends Controller
     public function gestionnaire_gestion_cours(){//affichage de la liste des cours
         $liste_cours = Cour::paginate(5);
         return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_cours',['liste_cours'=>$liste_cours]);
+    }
+
+    public function gestionnaire_seance_de_ce_cours($id){//liste des seances du cours
+        $cours = Cour::findOrFail($id);
+        $liste_seances = $cours->seances;
+        return view('/comptes/gestionnaire/associations/gestionnaire_liste_cours_seance',['cours'=>$cours,'liste_seances'=>$liste_seances]);
     }
 
     public function gestionnaire_gestion_association_cours_etudiant($id){//liste des cours pour association

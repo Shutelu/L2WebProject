@@ -18,7 +18,7 @@
             <th>Numéro étudiant</th>
             <th>Ajouté le</th>
             <th>Modifié le</th>
-            <th>Action</th>
+
         </tr>
         @foreach ($liste_etudiants as $etudiant)
             <tr>

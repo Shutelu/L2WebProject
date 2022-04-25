@@ -15,7 +15,7 @@
         <tr>
             <th>Nom</th>
             <th>Prenom</th>
-            <th>Action</th>
+
         </tr>
         @foreach ($liste_enseignants as $enseignant)
             <tr>

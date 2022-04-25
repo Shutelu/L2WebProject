@@ -30,6 +30,7 @@
                 <td>{{$lc->updated_at}}</td>
                 <td>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_seances',['id'=>$lc->id])}}">Ajouter une séance</a></span><br><br>
+                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_seance_de_ce_cours',['id'=>$lc->id])}}">Liste de séance pour ce cours</a></span><br><br>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_cours_etudiants',['id'=>$lc->id])}}">Liste des etudiants associés à ce cours</a></span><br><br>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_cours_enseignants',['id'=>$lc->id])}}">Liste des enseignants associés à ce cours</a></span>
                 </td>
