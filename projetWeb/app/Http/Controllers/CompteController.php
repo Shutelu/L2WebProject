@@ -60,6 +60,7 @@ class CompteController extends Controller
                     = gestionnaire_gestion_desassociation_cours_etudiant(id)
                     = gestionnarie_gestion_desa_desassociation_cours_etudiant(eid,cid)
                     = gestionnaire_gestion_liste_cours_etudiants(id)
+                    = gestionnaire_gestion_etudiant_liste_presence_detailler(eid)
                     = gestionnaire_gestion_liste_enseignants()
                     = gestionnaire_gestion_association_cours_enseignant(id)
                     = gestionnaire_gestion_asso_association_cours_enseignant(eid,cid)
@@ -657,6 +658,12 @@ class CompteController extends Controller
         $liste_etudiants = $cours->etudiants;
 
         return view('comptes.gestionnaire.associations.gestionnaire_liste_cours_etudiant',['liste_etudiants'=>$liste_etudiants,'cours'=>$cours]);
+    }
+
+    public function gestionnaire_gestion_etudiant_liste_presence_detailler($eid){
+        $etudiant = Etudiant::findOrFail($eid);
+        $liste_seance_present = $etudiant->seances;
+        return view('comptes.gestionnaire.statistiques.gestionnaire_liste_etudiant_presence_detailler',['liste_seances'=>$liste_seance_present,'etudiant'=>$etudiant]);
     }
 
     public function gestionnaire_gestion_liste_enseignants(){//affichage liste des enseignants

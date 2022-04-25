@@ -93,12 +93,15 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
 
+        //etudiants
         Route::post('/gestionnaire/gestion/associer/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_association_cours_etudiant'])->name('gestionnaire.gestion.associer_etudiant_cours');//liste cours a associer
         Route::post('/gestionnaire/gestion/associer/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_asso_association_cours_etudiant'])->name('gestionnaire.gestion.associer.associer_etudiant_cours');//associer
         Route::post('/gestionnaire/gestion/desassocier/{id}/etudiant_cours',[CompteController::class,'gestionnaire_gestion_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier_etudiant_cours');//liste cours a desassocier
         Route::post('/gestionnaire/gestion/desassocier/{eid}/etudiant_cours/{cid}',[CompteController::class,'gestionnarie_gestion_desa_desassociation_cours_etudiant'])->name('gestionnaire.gestion.desassocier.desassocier_etudiant_cours');//desassocier
         Route::get('/gestionnaire/gestion/liste/cours_etudiants/{id}',[CompteController::class,'gestionnaire_gestion_liste_cours_etudiants'])->name('gestionnaire.gestion.liste_cours_etudiants');//liste des etudiants associer a un cours
+        Route::post('/gestionnaire/gestion/etudiant/{eid}/liste/liste_presence_detailler',[CompteController::class,'gestionnaire_gestion_etudiant_liste_presence_detailler'])->name('gestionnaire.gestion.etudiant.liste_presence_detailler');
 
+        //enseignants
         Route::get('/gestionnaire/gestion/liste/enseignants',[CompteController::class,'gestionnaire_gestion_liste_enseignants'])->name('gestionnaire.gestion.gestion_enseignants');//liste des enseignants
         Route::post('/gestionnaire/gestion/associer/{id}/enseignant_cours',[CompteController::class,'gestionnaire_gestion_association_cours_enseignant'])->name('gestionnaire.gestion.associer_enseignant_cours');//liste cours a associer
         Route::post('/gestionnaire/gestion/associer/{eid}/enseignant_cours/{cid}',[CompteController::class,'gestionnaire_gestion_asso_association_cours_enseignant'])->name('gestionnaire.gestion.associer.associer_enseignant_cours');//associer

@@ -59,6 +59,10 @@
                         @csrf
                         <button type="submit">Desassocier un cours</button>
                     </form>
+                    <form action="{{route('gestionnaire.gestion.etudiant.liste_presence_detailler',['eid'=>$el->id])}}" method="POST">
+                        @csrf
+                        <button>Liste de présence détaillée</button>
+                    </form>
                     modif/supp
 
                 </td>
