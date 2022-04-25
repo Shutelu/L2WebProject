@@ -33,8 +33,9 @@
     <hr>
     <p>
         Notice d'utilisation : <br>
-        Le filtrage et la recherche marche à part (chacun de son coté). <br>
-        Tout les champs de la recherche ne sont pas obligatoirement à saisir.
+         - Le filtrage et la recherche marche à part (chacun de son coté). <br>
+         - Tout les champs de la recherche ne sont pas obligatoirement à saisir. <br>
+         - Sensible à la casse (majuscule/minuscule).
 
     </p>
     

@@ -81,6 +81,7 @@ Route::middleware(['auth'])->group(function(){
     Route::middleware(['is_gestionnaire'])->group(function(){//(ou admin)
         Route::get('/gestionnaire/page_de_gestion',[CompteController::class,'gestionnaire_page_gestion'])->name('gestionnaire.page_gestion');//page de gestion pour le gestionnaire
         Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');//liste de tout les etudiants
+        Route::post('/gestionnaire/gestion/filtrage_etudiants',[CompteController::class,'gestionnaire_gestion_filtrage_etudiants'])->name('gestionnaire.gestion.filtrage_etudiants');
 
         Route::get('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant_form'])->name('gestionnaire.gestion.create_etudiant_form');//formulaire de creation etudiant
         Route::post('/gestionnaire/etudiant_create',[CompteController::class,'gestionnaire_create_etudiant']);//fonction de creation etudiant

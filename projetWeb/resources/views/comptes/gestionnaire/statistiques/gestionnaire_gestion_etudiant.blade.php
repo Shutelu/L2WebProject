@@ -7,6 +7,22 @@
     <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_cours')}}">Liste des cours</a><br><br>
     <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_seances')}}">Liste des séances</a><br><br>
     <a class="a_gestion_user_retour_listes" href="{{route('gestionnaire.gestion.gestion_enseignants')}}">Liste des enseignants</a><br>
+    <hr>
+    <h2>Recherche : </h2>
+    <form action="{{route('gestionnaire.gestion.filtrage_etudiants')}}" method="POST">
+        @csrf
+        <input type="text" id="nom" name="nom" placeholder="Nom">
+        <input type="text" id="prenom" name="prenom" placeholder="Prenom">
+        <input type="text" id="noet" name="noet"  placeholder="Numéro"><br>
+        <button type="submit">Rechercher</button>
+    </form>
+    <hr>
+    <p>
+        Notice d'utilisation : <br>
+         - Tout les champs de la recherche ne sont pas obligatoirement à saisir. <br>
+         - Sensible à la casse (majuscule/minuscule).
+
+    </p>
 @endsection
 
 @section('content')

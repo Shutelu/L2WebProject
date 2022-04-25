@@ -49,6 +49,7 @@ class CompteController extends Controller
                     = gestionnaire_gestion_etudiants()
                     = gestionnaire_create_etudiant_form()
                     = gestionnaire_create_etudiant(request)
+                    = gestionnaire_gestion_filtrage_etudiants(request)
                     = gestionnaire_gestion_seances()
                     = gestionnaire_create_seance_form(id)
                     = gestionnaire_create_seance(request,id)
@@ -265,9 +266,10 @@ class CompteController extends Controller
             $users_liste = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->where('login','=',$request->login)->paginate(5);
             $users_liste_verif = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->where('login','=',$request->login)->get();
             
-            if($users_liste_verif){//si existe
+            if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -278,9 +280,10 @@ class CompteController extends Controller
             $users_liste = User::where('nom','=',$request->nom)->paginate(5);
             $users_liste_verif = User::where('nom','=',$request->nom)->get();
 
-            if($users_liste_verif){
+            if(count($users_liste_verif) > 0){
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -291,9 +294,10 @@ class CompteController extends Controller
             $users_liste = User::where('prenom','=',$request->prenom)->paginate(5);
             $users_liste_verif = User::where('prenom','=',$request->prenom)->get();
 
-            if($users_liste_verif){//si existe
+            if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -303,9 +307,10 @@ class CompteController extends Controller
             $users_liste = User::where('login','=',$request->login)->paginate(5);
             $users_liste_verif = User::where('login','=',$request->login)->get();
 
-            if($users_liste_verif){//si existe
+            if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -315,9 +320,10 @@ class CompteController extends Controller
             $users_liste = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->paginate(5);
             $users_liste_verif = User::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->get();
 
-            if($users_liste_verif){//si existe
+            if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -327,9 +333,10 @@ class CompteController extends Controller
             $users_liste = User::where('nom','=',$request->nom)->where('login','=',$request->login)->paginate(5);
             $users_liste_verif = User::where('nom','=',$request->nom)->where('login','=',$request->login)->get();
 
-            if($users_liste_verif){//si existe
+            if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -339,9 +346,10 @@ class CompteController extends Controller
             $users_liste = User::where('prenom','=',$request->prenom)->where('login','=',$request->login)->paginate(5);
             $users_liste_verif = User::where('prenom','=',$request->prenom)->where('login','=',$request->login)->get();
 
-            if($users_liste_verif){//si existe
+            if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix])->with('etat','La recherche a été accepté');
+                session()->flash('etat','La recherche a été accepté');
+                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
                 return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
@@ -462,6 +470,106 @@ class CompteController extends Controller
         $etudiant->save();
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) a été enregistré(e) !');
+    }
+
+    public function gestionnaire_gestion_filtrage_etudiants(Request $request){
+        $request->validate([
+            'nom' => 'max:40',
+            'prenom' =>'max:40',
+            'noet' => 'numeric|digits:8|nullable'//8 chiffres
+        ]);
+
+        //meme code que pour le filtrage des utilisateurs pour admin
+        if(strlen($request->nom) > 0 && strlen($request->prenom) > 0 && strlen($request->noet) > 0){//tout les info sont entrees
+
+            $etudiants_liste = Etudiant::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->where('noet','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->where('noet','=',$request->noet)->get();//paginate ne permet pas le verif
+            
+            if(count($etudiants_liste_verif) > 0){//si existe
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->noet) == 0){//seulement le nom est entre
+
+            $etudiants_liste = Etudiant::where('nom','=',$request->nom)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('nom','=',$request->nom)->get();
+
+            if(count($etudiants_liste_verif) > 0){
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->noet) == 0){//seulement le prenom est entre
+
+            $etudiants_liste = Etudiant::where('prenom','=',$request->prenom)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('prenom','=',$request->prenom)->get();
+
+            if(count($etudiants_liste_verif) > 0){//si existe
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) == 0 && strlen($request->noet) > 0){//seulement le numero etudiant est entre
+            $etudiants_liste = Etudiant::where('login','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('login','=',$request->noet)->get();
+
+            if(count($etudiants_liste_verif) > 0){//si existe
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) > 0 && strlen($request->noet) == 0){//seulement nom et prenom
+            $etudiants_liste = Etudiant::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('nom','=',$request->nom)->where('prenom','=',$request->prenom)->get();
+
+            if(count($etudiants_liste_verif) > 0){//si existe
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->noet) > 0){//seulement nom et login
+            $etudiants_liste = Etudiant::where('nom','=',$request->nom)->where('login','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('nom','=',$request->nom)->where('login','=',$request->noet)->get();
+
+            if(count($etudiants_liste_verif) > 0){//si existe
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->noet) > 0){//seulement prenom et login
+            $etudiants_liste = Etudiant::where('prenom','=',$request->prenom)->where('login','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('prenom','=',$request->prenom)->where('login','=',$request->noet)->get();
+
+            if(count($etudiants_liste_verif) > 0){//si existe
+                session()->flash('etat','La recherche a été accepté');
+                return view('/comptes/gestionnaire/statistiques/gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+            }
+            else{
+                return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
+            }
+        }
+        else{//rien est saisi pour la recherche
+            return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','Aucun information n\'a été entrée !');
+        }
     }
 
     public function gestionnaire_gestion_seances(){//affichage des la liste de seances de cours
