@@ -760,6 +760,35 @@ class CompteController extends Controller
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) à été supprimé(e)');
     }
 
+    public function gestionnaire_seance_modification_form($sid){//formulaire de modif seance
+        $seance = Seance::findOrFail($sid);
+
+        return view('comptes.gestionnaire.gestion_des_seances_de_cours.gestionnaire_seance_modif_form',['seance'=>$seance]);////icicicicicic
+    }
+
+    public function gestionnaire_seance_modifier(Request $request, $sid){//fonction modif seance
+        $request->validate([
+            'debut' => 'required|date|after:yesterday',
+            'fin' => 'required|date|after:debut',
+        ]);
+
+        $seance = Seance::findOrFail($sid);
+        $seance->date_debut = $request->debut;
+        $seance->date_fin = $request->fin;
+        $seance->save();
+
+        return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été modifiée !');
+    }
+
+    public function gestionnaire_seance_suppression_form($sid){//formulaire supp seance
+        return view('comptes.gestionnaire.gestion_des_seances_de_cours.gestionnaire_seance_supp_form',['sid'=>$sid]);
+    }
+
+    public function gestionnaire_seance_supprimer($sid){//fonction supp seance
+        $seance  = Seance::findOrFail($sid)->delete();
+        return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été supprimée !');
+    }
+
 
 
 

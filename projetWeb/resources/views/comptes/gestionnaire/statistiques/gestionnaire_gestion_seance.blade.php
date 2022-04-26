@@ -24,15 +24,23 @@
             <th>Date de fin</th>
             <th>Action</th>
         </tr>
-        @foreach ($liste_seances as $ls)
+        @foreach ($liste_seances as $seance)
             <tr>
-                <td>{{$ls->cour->intitule}}</td>
-                <td>{{$ls->date_debut}}</td>
-                <td>{{$ls->date_fin}}</td>
+                <td>{{$seance->cour->intitule}}</td>
+                <td>{{$seance->date_debut}}</td>
+                <td>{{$seance->date_fin}}</td>
                 <td>
-                    <form action="{{route('gestionnaire.liste.presence_etudiant_par_seance',['sid'=>$ls->id])}}" method="POST">
+                    <form action="{{route('gestionnaire.liste.presence_etudiant_par_seance',['sid'=>$seance->id])}}" method="POST">
                         @csrf
                         <button>Liste des présences</button>
+                    </form>
+                    <form action="{{route('gestionnaire.seance.modification_form',['sid'=>$seance->id])}}" method="POST">
+                        @csrf
+                        <button>Modifier</button>
+                    </form>
+                    <form action="{{route('gestionnaire.seance.suppression_form',['sid'=>$seance->id])}}" method="POST">
+                        @csrf
+                        <button>Supprimer</button>
                     </form>
                 </td>
             </tr>

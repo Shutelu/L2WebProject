@@ -90,6 +90,11 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance'])->name('gestionnaire.gestion.create_seances');//fonction de creation de seance de cours
         Route::post('/gestionnaire/liste/seance/{sid}/presence_etudiant_par_seance',[CompteController::class,'gestionnaire_liste_presence_etudiant_par_seance'])->name('gestionnaire.liste.presence_etudiant_par_seance');
         Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
+            //gestion des seances de cours
+            Route::post('/gestionnaire/seance/{sid}/modification_form',[CompteController::class,'gestionnaire_seance_modification_form'])->name('gestionnaire.seance.modification_form');//formulaire de modification seance
+            Route::post('/gestionnaire/seance/{sid}/modifier',[CompteController::class,'gestionnaire_seance_modifier'])->name('gestionnaire.seance.modifier');//fonction de modification seance
+            Route::post('/gestionnaire/seance/{sid}/suppression_form',[CompteController::class,'gestionnaire_seance_suppression_form'])->name('gestionnaire.seance.suppression_form');//formulaire de suppression seance
+            Route::post('/gestionnaire/seance/{sid}/supprimer',[CompteController::class,'gestionnaire_seance_supprimer'])->name('gestionnaire.seance.supprimer');//fonction de suppression seance
         
         //etudiants
         Route::get('/gestionnaire/gestion_etudiants',[CompteController::class,'gestionnaire_gestion_etudiants'])->name('gestionnaire.gestion.gestion_etudiant');//liste de tout les etudiants
