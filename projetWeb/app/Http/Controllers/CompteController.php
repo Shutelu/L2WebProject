@@ -433,6 +433,62 @@ class CompteController extends Controller
         return redirect()->route('admin.gestion.cours_liste')->with('etat','Le cours a bien été crée !');
     }
 
+    public function admin_user_modification_form($uid){//formulaire de modification user
+        $user = User::findOrFail($uid);
+        return view('admin.gestion.utilisateurs.admin_user_modification_form',['user'=>$user]);
+    }
+
+    public function admin_user_modifier(Request $request, $uid){//fonction de mofif user
+        //probleme de get method not supported
+        // $check = Validator::make($request->all(),[
+        //     'nom' => 'required|string|min:1|max:40',
+        //     'prenom' => 'required|string|min:1|max:40',
+        //     'login' => 'string|nullable|max:30|unique:users',
+        //     'mdp' => 'confirmed|nullable|min:1|max:60',
+        //     'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
+        // ]);
+        $request->validate([
+            'nom' => 'nullable|string|min:1|max:40',
+            'prenom' => 'nullable|string|min:1|max:40',
+            'login' => 'string|nullable|min:1|max:30|unique:users',
+            'mdp' => 'confirmed|nullable|min:1|max:60',
+            'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
+        ]);
+        // if($check->fails()){
+        //     return redirect()->back();
+        // }
+        
+        $user = User::findOrFail($uid);
+        if($request->nom != null){
+            $user->nom = $request->nom;
+        }
+        if($request->prenom != null){
+            $user->prenom =$request->prenom;
+        }
+        if($request->login != null){
+            $user->login = $request->login;
+        }
+        if($request->mdp != null){
+            $user->mdp = Hash::make($request->mdp);
+        }
+        $user->type = $request->typeSelect;
+        $user->save();
+
+        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été modifié !');
+        // session()->flash('etat','L\'utilisateur a été modifié !');
+        // return view('admin.gestion.utilisateurs.gestion_user_liste');
+    }
+
+    public function admin_user_suppression_form($uid){
+        $user = User::findOrFail($uid);
+        return view('admin.gestion.utilisateurs.admin_user_supp_form',['user'=>$user]);
+    }
+
+    public function admin_user_supprimer($uid){
+        $user = User::findOrFail($uid)->delete();
+        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'Utilisateur a été supprimé !');
+    }
+
     /*
     ===============================
         Codes pour Gestionnaire :
@@ -671,7 +727,7 @@ class CompteController extends Controller
         return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_liste_enseignants',['liste_enseignants'=>$liste_enseignants]);
     }
 
-    public function gestionnaire_liste_presence_etudiant_par_seance($sid){
+    public function gestionnaire_liste_presence_etudiant_par_seance($sid){//liste des etudiants present par seance
         $seance = Seance::findOrFail($sid);
         $liste_etudiants_present = $seance->etudiants;
         return view('comptes.gestionnaire.liste_des_presences.gestionnaire_liste_presence_par_seance',['liste_etudiants'=>$liste_etudiants_present,'seance'=>$seance]);
@@ -735,13 +791,17 @@ class CompteController extends Controller
 
     public function gestionnaire_etudiant_modifier(Request $request,$eid){//fonction de modification d'un etudiant
         $request->validate([
-            'nom' => 'required|string|min:1|max:40',
-            'prenom' => 'required|string|min:1|max:40',
+            'nom' => 'nullable|string|min:1|max:40',
+            'prenom' => 'nullable|string|min:1|max:40',
         ]);
         
         $etudiant = Etudiant::findOrFail($eid);
-        $etudiant->nom = $request->nom;
-        $etudiant->prenom = $request->prenom;
+        if($request->nom != null){
+            $etudiant->nom = $request->nom;
+        }
+        if($request->prenom != null){
+            $etudiant->prenom = $request->prenom;
+        }
         $etudiant->save();
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) à été modifié(e)');
@@ -768,13 +828,17 @@ class CompteController extends Controller
 
     public function gestionnaire_seance_modifier(Request $request, $sid){//fonction modif seance
         $request->validate([
-            'debut' => 'required|date|after:yesterday',
-            'fin' => 'required|date|after:debut',
+            'debut' => 'nullable|date|after:yesterday',
+            'fin' => 'nullable|date|after:debut',
         ]);
 
         $seance = Seance::findOrFail($sid);
-        $seance->date_debut = $request->debut;
-        $seance->date_fin = $request->fin;
+        if($request->debut != null){
+            $seance->date_debut = $request->debut;
+        }
+        if($request->fin != null){
+            $seance->date_fin = $request->fin;
+        }
         $seance->save();
 
         return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été modifiée !');

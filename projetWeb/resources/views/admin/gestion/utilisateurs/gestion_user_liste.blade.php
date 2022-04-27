@@ -80,20 +80,20 @@
             @endif
             <th>Actions</th>
         </tr>
-        @foreach ($users_liste as $ul)
+        @foreach ($users_liste as $user)
             <tr>
-                <td>{{$ul->nom}}</td>
-                <td>{{$ul->prenom}}</td>
-                <td>{{$ul->login}}</td>
-                <td>{{$ul->type}}</td>
+                <td>{{$user->nom}}</td>
+                <td>{{$user->prenom}}</td>
+                <td>{{$user->login}}</td>
+                <td>{{$user->type}}</td>
                 @if ($choix == 'defaut')
-                    @if ($ul->type == null)
+                    @if ($user->type == null)
                         <td>
-                            <form action="{{route('admin.gestion.user_accepter_form',['id'=>$ul->id])}}" method="POST">
+                            <form action="{{route('admin.gestion.user_accepter_form',['id'=>$user->id])}}" method="POST">
                                 @csrf
                                 <button type="submit">Accepter</button>
                             </form>
-                            <form action="{{route('admin.gestion.user_refus',['id'=>$ul->id])}}" method="POST">
+                            <form action="{{route('admin.gestion.user_refus',['id'=>$user->id])}}" method="POST">
                                 @csrf
                                 <button type="submit">Refuser</button>
                             </form>
@@ -103,10 +103,16 @@
                     @endif   
                 @endif
 
-                {{-- @if ($ul->type == 'admin')
-                    <td>Non disponible</td>
-                @else --}}
-                    <td>modifier/supprimer</td>
+                <td>
+                    <form action="{{route('admin.user.modification_form',['uid'=>$user->id])}}" method="POST">
+                        @csrf
+                        <button type="submit">Modifier</button>
+                    </form>
+                    <form action="{{route('admin.user.suppression_form',['uid'=>$user->id])}}" method="POST">
+                        @csrf
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </table>

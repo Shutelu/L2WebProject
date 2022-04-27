@@ -8,7 +8,11 @@
 
 @section('content')
     <h1>Formulaire de modification</h1>
-    <p>Attention : Le numero d'etudiant n'est pas modifiable</p>
+    <p>
+        Attention : Le numero d'etudiant n'est pas modifiable. <br>
+        Si un champ n'est pas remplie il ne sera pas pris en compte.
+    
+    </p>
     <form action="{{route('gestionnaire.etudiant.modifier',['eid'=>$etudiant->id])}}" method="POST">
         @csrf
         <label for="nom">Nom</label>

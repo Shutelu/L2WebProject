@@ -75,6 +75,12 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/admin/gestion/user_create_form',[CompteController::class,'gestion_user_create']);// fonction creation user
         Route::get('/admin/gestion/cours_list',[CompteController::class,'gestion_cours_liste'])->name('admin.gestion.cours_liste');//affichage de la liste de cours
         Route::post('/admin/gestion/cours_list_create',[CompteController::class,'gestion_cours_create'])->name('admin.gestion.cours_create');//creation de cours
+        //gestion des utilisateurs
+        Route::post('/admin/user/{uid}/modification_form',[CompteController::class,'admin_user_modification_form'])->name('admin.user.modification_form');
+        Route::post('/admin/user/{uid}/modifier',[CompteController::class,'admin_user_modifier'])->name('admin.user.modifier');
+        Route::post('/admin/user/{uid}/suppression_form',[CompteController::class,'admin_user_suppression_form'])->name('admin.user.suppression_form');
+        Route::post('/admin/user/{uid}/supprimer',[CompteController::class,'admin_user_supprimer'])->name('admin.user.supprimer');
+
     });
 
     //===== groupe gestionnaire () =====
