@@ -35,14 +35,15 @@ class CompteController extends Controller
                     = admin_index()
                     = admin_page_gestion()
                     # gestion des utilisateurs :
-                        = admin_user_liste()
-                        = gestion_user_liste_filtrage(request)
+                        = admin_users_liste()
+                        = admin_users_liste_filtrage(request)
                         = gestion_user_recherche(request)
                         = gestion_user_refus(id)
                         = gestion_user_accepter_form(id)
                         = gestions_user_accepter(request,id)
                         = gestions_user_create_form()
                         = gestion_user_create(request)
+                        = etc
                     # gestion des cours :
                         = admin_cours_liste()
                         = admin_cours_create(request)
@@ -230,13 +231,13 @@ class CompteController extends Controller
     
     //gestion de utilisateurs :
 
-    public function admin_user_liste(){//affichage de la liste de tout les utlisateurs (intégrale)
+    public function admin_users_liste(){//affichage de la liste de tout les utlisateurs (intégrale)
         $users_liste = User::paginate(5);
         $choix = 'defaut';
-        return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+        return view('admin.gestion.utilisateurs.admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
     }
 
-    public function gestion_user_liste_filtrage(Request $request){//affichage de la liste des utilisateurs filtrer
+    public function admin_users_liste_filtrage(Request $request){//affichage de la liste des utilisateurs filtrer
         $request->validate([
             'filtreType' => 'required|in:defaut,enseignant,gestionnaire,admin'//"defaut" non utilisé mais doit etre present
         ]);
@@ -244,23 +245,22 @@ class CompteController extends Controller
         $choix = $request->filtreType;
 
         if($request->filtreType == 'enseignant'){
-            // $users_liste = User::where('type','=','enseignant')->paginate(5);
+
             $users_liste = User::where('type','=','enseignant')->get();
-            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+            return view('admin.gestion.utilisateurs.admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else if($request->filtreType == 'gestionnaire'){
-            // $users_liste = User::where('type','=','gestionnaire')->paginate(5);
+
             $users_liste = User::where('type','=','gestionnaire')->get();
-            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+            return view('admin.gestion.utilisateurs.admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else if($request->filtreType == 'admin'){
-            // $users_liste = User::where('type','=','admin')->paginate(5);
+
             $users_liste = User::where('type','=','admin')->get();
-            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+            return view('admin.gestion.utilisateurs.admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
         }
         else{
-            $users_liste = User::paginate(5);
-            return view('admin.gestion.utilisateurs.gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+            return redirect()->route('admin.users.liste');
         }
     }
 
@@ -281,10 +281,10 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->login) == 0){//seulement le nom est entre
@@ -295,10 +295,10 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->login) == 0){//seulement le prenom est entre
@@ -309,10 +309,10 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else if(strlen($request->nom) == 0 && strlen($request->prenom) == 0 && strlen($request->login) > 0){//seulement le login est entre
@@ -322,10 +322,10 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else if(strlen($request->nom) > 0 && strlen($request->prenom) > 0 && strlen($request->login) == 0){//seulement nom et prenom
@@ -335,10 +335,10 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->login) > 0){//seulement nom et login
@@ -348,10 +348,10 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->login) > 0){//seulement prenom et login
@@ -361,14 +361,14 @@ class CompteController extends Controller
             if(count($users_liste_verif) > 0){//si existe
                 $choix = 'default';
                 session()->flash('etat','La recherche a été accepté');
-                return view('/admin/gestion/utilisateurs/gestion_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
+                return view('/admin/gestion/utilisateurs/admin_user_liste',['users_liste'=>$users_liste,'choix'=>$choix]);
             }
             else{
-                return redirect()->route('admin.gestion.user_liste')->with('etat','La recherche a rien aboutie');
+                return redirect()->route('admin.users.liste')->with('etat','La recherche a rien aboutie');
             }
         }
         else{//rien est saisi pour la recherche
-            return redirect()->route('admin.gestion.user_liste')->with('etat','Aucun information n\'a été entrée !');
+            return redirect()->route('admin.users.liste')->with('etat','Aucun information n\'a été entrée !');
         }
     }
 
@@ -377,7 +377,7 @@ class CompteController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.gestion.user_liste')->with('etat','La demande de l\'utilisateur a été refuser, son compte a été supprimé !');
+        return redirect()->route('admin.users.liste')->with('etat','La demande de l\'utilisateur a été refuser, son compte a été supprimé !');
     }
 
     public function gestion_user_accepter_form($id){//formulaire d'acceptation
@@ -399,7 +399,7 @@ class CompteController extends Controller
         $user->type = $request->userAcceptation;
         $user->save();
         
-        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a bien été accepté !');
+        return redirect()->route('admin.users.liste')->with('etat','L\'utilisateur a bien été accepté !');
     }
 
     public function gestions_user_create_form(){//affiche la page de creation d'un user
@@ -423,7 +423,7 @@ class CompteController extends Controller
         $user->type = $request->typeSelect;
         $user->save();
 
-        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été crée avec succès !');
+        return redirect()->route('admin.users.liste')->with('etat','L\'utilisateur a été crée avec succès !');
     }
 
     
@@ -470,7 +470,7 @@ class CompteController extends Controller
         
         return redirect()->route('admin.cours.liste')->with('etat','L\'utilisateur a été modifié !');
         // session()->flash('etat','L\'utilisateur a été modifié !');
-        // return view('admin.gestion.utilisateurs.gestion_user_liste');
+        // return view('admin.gestion.utilisateurs.admin_user_liste');
     }
     
     public function admin_user_suppression_form($uid){

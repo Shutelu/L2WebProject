@@ -65,8 +65,10 @@ Route::middleware(['auth'])->group(function(){
     Route::middleware(['is_admin'])->group(function(){
         Route::get('/admin_index',[CompteController::class,'admin_index'])->name('admin.index');//accès page admin
         Route::get('/admin/page_de_gestion',[CompteController::class,'admin_page_gestion'])->name('admin.page_gestion');//accès page de gestion de l'admin
-        Route::get('/admin/gestion/user_list',[CompteController::class,'admin_user_liste'])->name('admin.gestion.user_liste');//affichage liste des utilisateurs pour la gestion
-        Route::post('/admin/gestion/user_list',[CompteController::class,'gestion_user_liste_filtrage'])->name('admin.gestion.user_liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
+        //gestion des utilisateurs
+        
+        Route::post('/admin/users/liste_filtrage',[CompteController::class,'admin_users_liste_filtrage'])->name('admin.users.liste_filtrage');//filtrage de la liste de utilisateur pour la gestion
+
         Route::post('/admin/gestion/user_recherche',[CompteController::class,'gestion_user_recherche'])->name('admin.gestion.user_recherche');//recherche
         Route::post('/admin/gestion/user_refus/{id}',[CompteController::class,'gestion_user_refus'])->name('admin.gestion.user_refus');//refuser une inscription
         Route::post('/admin/gestion/user_accepter_form/{id}',[CompteController::class,'gestion_user_accepter_form'])->name('admin.gestion.user_accepter_form');//formulaire acceptation
@@ -78,7 +80,9 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/admin/user/{uid}/modifier',[CompteController::class,'admin_user_modifier'])->name('admin.user.modifier');//fonction de modif user
         Route::post('/admin/user/{uid}/suppression_form',[CompteController::class,'admin_user_suppression_form'])->name('admin.user.suppression_form');//formulaire de suppression user
         Route::post('/admin/user/{uid}/supprimer',[CompteController::class,'admin_user_supprimer'])->name('admin.user.supprimer');//fonction de suppression user
-        
+        ////////
+        Route::get('/admin/users/liste',[CompteController::class,'admin_users_liste'])->name('admin.users.liste');//affichage liste des utilisateurs pour la gestion
+
         //gestion des cours
         Route::get('/admin/cours/liste',[CompteController::class,'admin_cours_liste'])->name('admin.cours.liste');//affichage de la liste de cours
         Route::post('/admin/cours/create',[CompteController::class,'admin_cours_create'])->name('admin.cours.create');//creation de cours

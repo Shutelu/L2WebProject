@@ -4,9 +4,11 @@
 
 @section('outils')
     <h2>Outils d'édition</h2>
+
     <hr style="border: 1px solid rgb(76, 186, 206);">
+
     {{-- options de filtrage --}}
-    <form action="{{route('admin.gestion.user_liste_filtrage')}}"  method="POST">
+    <form action="{{route('admin.users.liste_filtrage')}}"  method="POST">
         @csrf
         <label for="filtre">Filtrage par type :</label><br>
         <select name="filtreType" id="filtre-type">
@@ -17,9 +19,11 @@
         </select>
         <button type="submit">Filtrer</button>
     </form>
+
     <hr>
-    <p>Recherche :</p>
+
     {{-- methode de recherche brut --}}
+    <p>Recherche :</p>
     <form action="{{route('admin.gestion.user_recherche')}}" method="POST">
         @csrf
         <input type="text" id="nom" name="nom" placeholder="Nom">
@@ -28,15 +32,16 @@
         <button type="submit">Rechercher</button>
     </form>
     <hr>
-    <a class="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a><br><br>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.users.liste')}}">Revenir à la liste completes</a><br><br>
     <a class="a_gestion_user_retour_listes" href="{{route('admin.page_gestion')}}">Page de gestion admin</a>
+
     <hr>
+
     <p>
         Notice d'utilisation : <br>
          - Le filtrage et la recherche marche à part (chacun de son coté). <br>
          - Tout les champs de la recherche ne sont pas obligatoirement à saisir. <br>
          - Sensible à la casse (majuscule/minuscule).
-
     </p>
     
 @endsection
@@ -50,6 +55,9 @@
         @endif
         @if ($choix == 'enseignant')
             Enseignant
+        @endif
+        @if ($choix == 'admin')
+            Admin
         @endif
     </h1>
 

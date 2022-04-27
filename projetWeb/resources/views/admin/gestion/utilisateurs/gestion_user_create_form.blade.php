@@ -3,7 +3,7 @@
 @section('title','Creation d\'un utilisateur')
 
 @section('outils')
-    <a class="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Revenir à la liste completes</a>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.users.liste')}}">Revenir à la liste completes</a>
     <hr>
     <p>
         Notice d'utilisation : <br>

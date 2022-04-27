@@ -3,7 +3,7 @@
 @section('title','Formulaire de suppression')
 
 @section('outils')
-    <a class="a_gestion_user_retour_listes" href="{{route('admin.gestion.user_liste')}}">Retour</a>
+    <a class="a_gestion_user_retour_listes" href="{{route('admin.users.liste')}}">Retour</a>
 @endsection
 
 @section('content')

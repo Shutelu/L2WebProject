@@ -7,6 +7,7 @@
         <title>@yield('title')</title>
 
         {{-- section pour l'ajout de style --}}
+        @yield('links')
         <link rel="stylesheet" href="/styles/index_style.css">
         <link rel="stylesheet" href="/styles/outils_style.css">
         {{--ajout bootstrap--}}
