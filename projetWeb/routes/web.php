@@ -78,14 +78,13 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/admin/user/{uid}/modifier',[CompteController::class,'admin_user_modifier'])->name('admin.user.modifier');//fonction de modif user
         Route::post('/admin/user/{uid}/suppression_form',[CompteController::class,'admin_user_suppression_form'])->name('admin.user.suppression_form');//formulaire de suppression user
         Route::post('/admin/user/{uid}/supprimer',[CompteController::class,'admin_user_supprimer'])->name('admin.user.supprimer');//fonction de suppression user
+        
         //gestion des cours
+        Route::get('/admin/cours/liste',[CompteController::class,'admin_cours_liste'])->name('admin.cours.liste');//affichage de la liste de cours
         Route::post('/admin/cours/create',[CompteController::class,'admin_cours_create'])->name('admin.cours.create');//creation de cours
         Route::post('/admin/cours/recherche',[CompteController::class,'admin_cours_recherche'])->name('admin.cours.cours_recherche');//recherche de cours par intitule
         Route::post('/admin/cours/{cid}/modification_form',[CompteController::class,'admin_cours_modification_form'])->name('admin.cours.modification_form');//formulaire de modif cours
         Route::post('/admin/cours/{cid}/modifier',[CompteController::class,'admin_cours_modifier'])->name('admin.cours.modifier');//fonction de modif cours
-        ////
-        Route::get('/admin/cours/liste',[CompteController::class,'admin_cours_liste'])->name('admin.cours.liste');//affichage de la liste de cours
-
         Route::post('/admin/cours/{cid}/suppression_form',[CompteController::class,'admin_cours_suppression_form'])->name('admin.cours.suppression_form');//formulaire de suppression cours
         Route::post('/admin/cours/{cid}/supprimer',[CompteController::class,'admin_cours_supprimer'])->name('admin.cours.supprimer');//fonction de suppression cours
 
