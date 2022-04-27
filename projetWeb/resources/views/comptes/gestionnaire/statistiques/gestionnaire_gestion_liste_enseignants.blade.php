@@ -31,14 +31,14 @@
                         @csrf
                         <button type="submit">Desassocier un cours</button>
                     </form>
-                    <form action="" method="POST">
+                    {{-- <form action="" method="POST">
                         @csrf
                         <button>Modifier</button>
                     </form>
                     <form action="">
                         @csrf
                         <button>Supprimer</button>
-                    </form>
+                    </form> --}}
                 </td>
             </tr>
         @endforeach

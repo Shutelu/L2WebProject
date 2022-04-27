@@ -34,16 +34,23 @@ class CompteController extends Controller
                 Pour Admin :
                     = admin_index()
                     = admin_page_gestion()
-                    = admin_user_liste()
-                    = gestion_user_liste_filtrage(request)
-                    = gestion_user_recherche(request)
-                    = gestion_user_refus(id)
-                    = gestion_user_accepter_form(id)
-                    = gestions_user_accepter(request,id)
-                    = gestions_user_create_form()
-                    = gestion_user_create(request)
-                    = gestion_cours_liste()
-                    = gestion_cours_create(request)
+                    # gestion des utilisateurs :
+                        = admin_user_liste()
+                        = gestion_user_liste_filtrage(request)
+                        = gestion_user_recherche(request)
+                        = gestion_user_refus(id)
+                        = gestion_user_accepter_form(id)
+                        = gestions_user_accepter(request,id)
+                        = gestions_user_create_form()
+                        = gestion_user_create(request)
+                    # gestion des cours :
+                        = admin_cours_liste()
+                        = admin_cours_create(request)
+                        = admin_cours_recherche(request)
+                        = admin_cours_modification_form(cid)
+                        = admin_cours_modifier(request,cid)
+                        = admin_cours_suppression_form(cid)
+                        = admin_cours_supprimer(cid)
                 Pour Gestionnaire :
                     = gestionnaire_page_gestion()
                     = gestionnaire_gestion_etudiants()
@@ -212,13 +219,16 @@ class CompteController extends Controller
     ========================
     */
     
+    
     public function admin_index(){//affichage de la page index de l'administrateur
         return view('admin.admin_index');
     }
-
+    
     public function admin_page_gestion(){//affiche la page de gestion pour l'admin
         return view('admin.gestion.admin_gestion'); 
     }
+    
+    //gestion de utilisateurs :
 
     public function admin_user_liste(){//affichage de la liste de tout les utlisateurs (intégrale)
         $users_liste = User::paginate(5);
@@ -416,52 +426,36 @@ class CompteController extends Controller
         return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été crée avec succès !');
     }
 
-    public function gestion_cours_liste(){//affiche la liste des cours
-        $cours_liste = Cour::paginate(5);
-        return view('admin.gestion.cours.gestion_cours_liste',['cours_liste'=>$cours_liste]);
-    }
-
-    public function gestion_cours_create(Request $request){//cree un cours
-        $request->validate([
-            'intitule' => 'required|min:1|max:50'
-        ]);
-
-        $cour = new Cour();
-        $cour->intitule = $request->intitule;
-        $cour->save();
-
-        return redirect()->route('admin.gestion.cours_liste')->with('etat','Le cours a bien été crée !');
-    }
-
+    
     public function admin_user_modification_form($uid){//formulaire de modification user
         $user = User::findOrFail($uid);
         return view('admin.gestion.utilisateurs.admin_user_modification_form',['user'=>$user]);
     }
-
+    
     public function admin_user_modifier(Request $request, $uid){//fonction de mofif user
         //probleme de get method not supported
         // $check = Validator::make($request->all(),[
-        //     'nom' => 'required|string|min:1|max:40',
-        //     'prenom' => 'required|string|min:1|max:40',
-        //     'login' => 'string|nullable|max:30|unique:users',
-        //     'mdp' => 'confirmed|nullable|min:1|max:60',
-        //     'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
-        // ]);
-        $request->validate([
-            'nom' => 'nullable|string|min:1|max:40',
-            'prenom' => 'nullable|string|min:1|max:40',
-            'login' => 'string|nullable|min:1|max:30|unique:users',
-            'mdp' => 'confirmed|nullable|min:1|max:60',
-            'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
-        ]);
-        // if($check->fails()){
-        //     return redirect()->back();
-        // }
-        
-        $user = User::findOrFail($uid);
-        if($request->nom != null){
-            $user->nom = $request->nom;
-        }
+            //     'nom' => 'required|string|min:1|max:40',
+            //     'prenom' => 'required|string|min:1|max:40',
+            //     'login' => 'string|nullable|max:30|unique:users',
+            //     'mdp' => 'confirmed|nullable|min:1|max:60',
+            //     'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
+            // ]);
+            $request->validate([
+                'nom' => 'nullable|string|min:1|max:40',
+                'prenom' => 'nullable|string|min:1|max:40',
+                'login' => 'string|nullable|min:1|max:30|unique:users',
+                'mdp' => 'confirmed|nullable|min:1|max:60',
+                'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
+            ]);
+            // if($check->fails()){
+                //     return redirect()->back();
+                // }
+                
+                $user = User::findOrFail($uid);
+                if($request->nom != null){
+                    $user->nom = $request->nom;
+                }
         if($request->prenom != null){
             $user->prenom =$request->prenom;
         }
@@ -473,20 +467,91 @@ class CompteController extends Controller
         }
         $user->type = $request->typeSelect;
         $user->save();
-
-        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'utilisateur a été modifié !');
+        
+        return redirect()->route('admin.cours.liste')->with('etat','L\'utilisateur a été modifié !');
         // session()->flash('etat','L\'utilisateur a été modifié !');
         // return view('admin.gestion.utilisateurs.gestion_user_liste');
     }
-
+    
     public function admin_user_suppression_form($uid){
         $user = User::findOrFail($uid);
         return view('admin.gestion.utilisateurs.admin_user_supp_form',['user'=>$user]);
     }
-
+    
     public function admin_user_supprimer($uid){
         $user = User::findOrFail($uid)->delete();
-        return redirect()->route('admin.gestion.user_liste')->with('etat','L\'Utilisateur a été supprimé !');
+        return redirect()->route('admin.cours.liste')->with('etat','L\'Utilisateur a été supprimé !');
+    }
+    
+    //gestion des cours :
+
+    public function admin_cours_liste(){//affiche la liste des cours
+        $cours_liste = Cour::all();
+        return view('admin.gestion.cours.admin_cours_liste',['cours_liste'=>$cours_liste]);
+    }
+
+    public function admin_cours_create(Request $request){//cree un cours
+        $request->validate([
+            'intitule' => 'required|min:1|max:50'
+        ]);
+
+        $cours = new Cour();
+        $cours->intitule = $request->intitule;
+        $cours->save();
+
+        return redirect()->route('admin.cours.liste')->with('etat',"Le cours de {$cours->intitule} a bien été crée !");
+    }
+    
+    public function admin_cours_recherche(Request $request){//recherce un cours
+        $request->validate([
+            'intitule' => 'nullable|min:1|max:50|string',
+        ]);
+        
+        if($request->intitule != null){
+            $cours_liste = Cour::where('intitule','=',$request->intitule)->get();
+            if(count($cours_liste) > 0){
+                session()->flash('etat','Recherche effectuée !');
+                return view('admin.gestion.cours.admin_cours_liste',['cours_liste'=>$cours_liste]);
+            }
+        }
+
+        return redirect()->route('admin.cours.liste')->with('etat','La recherche n\'a rien aboutie !');
+    }
+
+    public function admin_cours_modification_form($cid){//formulaire de modification cours
+        $cours = Cour::findOrFail($cid);
+
+        return view('admin.gestion.cours.admin_cours_modification_form',['cours'=>$cours]);
+    }
+
+    public function admin_cours_modifier(Request $request, $cid){//fonction de modification cours
+        $request->validate([
+            'intitule' => 'nullable|string|min:1'
+        ]);
+
+        $cours = Cour::findOrFail($cid);
+        if($request->intitule != null){
+            //sinon avec max on a des erreurs
+            if(strlen($request->intitule) <= 50){
+                $cours->intitule = $request->intitule;
+                $cours->save();
+    
+                return redirect()->route('admin.cours.liste')->with('etat',"L'intitule du cours a été modifié en {$cours->intitule} !");
+            }
+            return redirect()->route('admin.cours.liste')->with('etat',"Le champ saisi est supérieur à 50 aucune modification n'a eu lieu pour le cours : {$cours->intitule} ");
+        }
+        
+        return redirect()->route('admin.cours.liste')->with('etat',"Le champ saisi est vide aucune modification n'a eu lieu pour le cours : {$cours->intitule} ");
+    }
+
+    public function admin_cours_suppression_form($cid){//formulaire de suppression cours
+        $cours = Cour::findOrFail($cid);
+        return view('admin.gestion.cours.admin_cours_suppression_form',['cours'=>$cours]);
+    }
+
+    public function admin_cours_supprimer($cid){//fonction de suppression cours
+        $cours = Cour::findOrFail($cid)->delete();
+        return redirect()->route('admin.cours.liste')->with('etat',"Le cours a été supprimé !");
     }
 
     /*

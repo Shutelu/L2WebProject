@@ -71,15 +71,23 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/admin/gestion/user_refus/{id}',[CompteController::class,'gestion_user_refus'])->name('admin.gestion.user_refus');//refuser une inscription
         Route::post('/admin/gestion/user_accepter_form/{id}',[CompteController::class,'gestion_user_accepter_form'])->name('admin.gestion.user_accepter_form');//formulaire acceptation
         Route::post('/admin/gestion/user_accepter/{id}',[CompteController::class,'gestions_user_accepter'])->name('admin.gestion.user_accepter');//fonction accepter
+        //gestion des utilisateurs
         Route::get('/admin/gestion/user_create_form',[CompteController::class,'gestions_user_create_form'])->name('admin.gestion.user_create_form');//formulaire creation user
         Route::post('/admin/gestion/user_create_form',[CompteController::class,'gestion_user_create']);// fonction creation user
-        Route::get('/admin/gestion/cours_list',[CompteController::class,'gestion_cours_liste'])->name('admin.gestion.cours_liste');//affichage de la liste de cours
-        Route::post('/admin/gestion/cours_list_create',[CompteController::class,'gestion_cours_create'])->name('admin.gestion.cours_create');//creation de cours
-        //gestion des utilisateurs
-        Route::post('/admin/user/{uid}/modification_form',[CompteController::class,'admin_user_modification_form'])->name('admin.user.modification_form');
-        Route::post('/admin/user/{uid}/modifier',[CompteController::class,'admin_user_modifier'])->name('admin.user.modifier');
-        Route::post('/admin/user/{uid}/suppression_form',[CompteController::class,'admin_user_suppression_form'])->name('admin.user.suppression_form');
-        Route::post('/admin/user/{uid}/supprimer',[CompteController::class,'admin_user_supprimer'])->name('admin.user.supprimer');
+        Route::post('/admin/user/{uid}/modification_form',[CompteController::class,'admin_user_modification_form'])->name('admin.user.modification_form');//formulaire de modif user
+        Route::post('/admin/user/{uid}/modifier',[CompteController::class,'admin_user_modifier'])->name('admin.user.modifier');//fonction de modif user
+        Route::post('/admin/user/{uid}/suppression_form',[CompteController::class,'admin_user_suppression_form'])->name('admin.user.suppression_form');//formulaire de suppression user
+        Route::post('/admin/user/{uid}/supprimer',[CompteController::class,'admin_user_supprimer'])->name('admin.user.supprimer');//fonction de suppression user
+        //gestion des cours
+        Route::post('/admin/cours/create',[CompteController::class,'admin_cours_create'])->name('admin.cours.create');//creation de cours
+        Route::post('/admin/cours/recherche',[CompteController::class,'admin_cours_recherche'])->name('admin.cours.cours_recherche');//recherche de cours par intitule
+        Route::post('/admin/cours/{cid}/modification_form',[CompteController::class,'admin_cours_modification_form'])->name('admin.cours.modification_form');//formulaire de modif cours
+        Route::post('/admin/cours/{cid}/modifier',[CompteController::class,'admin_cours_modifier'])->name('admin.cours.modifier');//fonction de modif cours
+        ////
+        Route::get('/admin/cours/liste',[CompteController::class,'admin_cours_liste'])->name('admin.cours.liste');//affichage de la liste de cours
+
+        Route::post('/admin/cours/{cid}/suppression_form',[CompteController::class,'admin_cours_suppression_form'])->name('admin.cours.suppression_form');//formulaire de suppression cours
+        Route::post('/admin/cours/{cid}/supprimer',[CompteController::class,'admin_cours_supprimer'])->name('admin.cours.supprimer');//fonction de suppression cours
 
     });
 

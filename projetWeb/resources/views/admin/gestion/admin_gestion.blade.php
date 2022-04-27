@@ -7,5 +7,5 @@
 
     {{-- ajout de css plus tard --}}
     <a href="{{route('admin.gestion.user_liste')}}">Gestion des utilisateurs</a> <br>
-    <a href="{{route('admin.gestion.cours_liste')}}">Gestion des cours</a>
+    <a href="{{route('admin.cours.liste')}}">Gestion des cours</a>
 @endsection
