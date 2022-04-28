@@ -38,8 +38,10 @@ class AuthenticatedSessionController extends Controller
         
         //empecher les utilisateurs de type null de se connecter
         $user = User::where('login','=',$request->login)->first();
-        if($user->type == null){
-            return redirect()->route('pageIndex')->with('etat','L\'administrateur ne vous a pas encore accepter, vous ne pouvez pas encore vous connectez !');
+        if($user){
+            if($user->type == null){
+                return redirect()->route('pageIndex')->with('etat','L\'administrateur ne vous a pas encore accepter, vous ne pouvez pas encore vous connectez !');
+            }
         }
 
         //si authentification reussi

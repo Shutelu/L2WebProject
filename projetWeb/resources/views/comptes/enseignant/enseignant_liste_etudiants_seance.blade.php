@@ -3,11 +3,14 @@
 @section('title','Liste des étudiants inscrits dans cette séances')
 
 @section('outils')
-    {{-- <a class="a_gestion_user_retour_listes" href="{{route('enseignant.page_gestion',['id'=>$enseignant_id])}}">Retour</a><hr> --}}
+    <form action="{{route('enseignant.liste.seances_ce_cours',['cid'=>$cours->id,'eid'=>$enseignant_id])}}" method="POST">
+        @csrf
+        <button class="a_gestion_user_retour_listes">Retour</button>
+    </form>
 @endsection
 
 @section('content')
-    <h1>Liste des étudiant inscrits inscrit dans cette séances</h1>
+    <h1>Liste des étudiant inscrits dans cette séances</h1>
 
     <p>Description : Vous etes sur le séance de : {{$cours->intitule}}</p>
     <table class="table-affichage-donnee">

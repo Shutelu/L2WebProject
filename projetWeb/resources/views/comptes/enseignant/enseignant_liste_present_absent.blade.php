@@ -2,6 +2,14 @@
 
 @section('title','Liste des presents/absents')
 
+@section('outils')
+    <form action="{{route('enseignant.liste.seances_ce_cours',['cid'=>$cours_id,'eid'=>$enseignant_id])}}" method="POST">
+        @csrf
+        <button class="a_gestion_user_retour_listes">Retour</button>
+    </form>
+
+@endsection
+
 @section('content')
     
     <table class="table-affichage-donnee">

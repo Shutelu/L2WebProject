@@ -43,7 +43,10 @@ class CompteController extends Controller
                         = gestions_user_accepter(request,id)
                         = gestions_user_create_form()
                         = gestion_user_create(request)
-                        = etc
+                        = admin_user_modification_form(uid)
+                        = admin_user_modifier(request,uid)
+                        = admin_user_suppression_form(uid)
+                        = admin_user_supprimer(uid)
                     # gestion des cours :
                         = admin_cours_liste()
                         = admin_cours_create(request)
@@ -75,6 +78,14 @@ class CompteController extends Controller
                     = gestionnaire_gestion_desassociation_cours_enseignant(id)
                     = gestionnaire_gestion_desa_desassociation_cours_enseignant(eid,cid)
                     = gestionnaire_gestion_liste_cours_enseignants(id)
+                    = gestionnaire_etudiant_modification_form(eid)
+                    = gestionnaire_etudiant_modifier(request,eid)
+                    = gestionnaire_etudiant_suppression_form(eid)
+                    = gestionnaire_etudiant_supprimer(eid)
+                    = gestionnaire_seance_modification_form(sid)
+                    = gestionnaire_seance_modifier(request,sid)
+                    = gestionnaire_seance_suppression_form(sid)
+                    = gestionnaire_seance_supprimer(sid)
     ===========================================================================
     */
 
@@ -158,18 +169,18 @@ class CompteController extends Controller
         return view('comptes.enseignant.enseignant_liste_inscrit_cours',['liste_etudiants'=>$liste_etudiants,'enseignant_id'=>$eid,'cours'=>$cours]);
     }
 
-    public function enseignant_liste_seances_cours($cid){//liste des seances de ce cours cid
+    public function enseignant_liste_seances_cours($cid,$eid){//liste des seances de ce cours cid
         $cours = Cour::findOrFail($cid);
         $liste_seances = $cours->seances;
 
-        return view('comptes.enseignant.enseignant_liste_seances_cours',['liste_seances'=>$liste_seances,'cours'=>$cours]);
+        return view('comptes.enseignant.enseignant_liste_seances_cours',['liste_seances'=>$liste_seances,'cours'=>$cours,'enseignant_id'=>$eid]);
     }
 
-    public function enseignant_liste_etudiant_seance($cid,$sid){//liste des etudiants pour cette seance
+    public function enseignant_liste_etudiant_seance($cid,$sid,$eid){//liste des etudiants pour cette seance
         $cours = Cour::findOrFail($cid);
         $liste_etudiants = $cours->etudiants;
 
-        return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
+        return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours,'enseignant_id'=>$eid]);
     }
 
     public function enseignant_pointage_seance_etudiant($cid, $sid, $eid){//fonction de pointage seance et etudiant
@@ -198,7 +209,7 @@ class CompteController extends Controller
         // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
     }
 
-    public function enseignant_liste_presents_absents($cid, $sid){//liste des presents absents
+    public function enseignant_liste_presents_absents($cid, $sid,$eid){//liste des presents absents
         $cours = Cour::findOrFail($cid);
         $seance = Seance::findOrFail($sid);
 
@@ -211,7 +222,7 @@ class CompteController extends Controller
         //     $i+=1;
         // }
 
-        return view('comptes.enseignant.enseignant_liste_present_absent',['liste_etudiants'=>$liste_etudiants,'liste_presents'=>$liste_presents]);
+        return view('comptes.enseignant.enseignant_liste_present_absent',['liste_etudiants'=>$liste_etudiants,'liste_presents'=>$liste_presents,'cours_id'=>$cid,'enseignant_id'=>$eid]);
     }
 
     /*
@@ -441,34 +452,62 @@ class CompteController extends Controller
             //     'mdp' => 'confirmed|nullable|min:1|max:60',
             //     'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
             // ]);
-            $request->validate([
-                'nom' => 'nullable|string|min:1|max:40',
-                'prenom' => 'nullable|string|min:1|max:40',
-                'login' => 'string|nullable|min:1|max:30|unique:users',
-                'mdp' => 'confirmed|nullable|min:1|max:60',
-                'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
+        $request->validate([
+            'nom' => 'nullable|string|min:1',
+            'prenom' => 'nullable|string|min:1',
+            'login' => 'string|nullable|min:1',
+            'mdp' => 'confirmed|nullable|min:1',
+            'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
             ]);
             // if($check->fails()){
                 //     return redirect()->back();
                 // }
                 
-                $user = User::findOrFail($uid);
-                if($request->nom != null){
-                    $user->nom = $request->nom;
-                }
+        $user = User::findOrFail($uid);
+
+        if($request->nom != null){
+            if(strlen($request->nom) <= 40){
+                $user->nom = $request->nom;
+            }
+            else{
+                return redirect()->route('admin.users.liste')->with('etat','Le nom saisi est supérieur à 40 aucune modification n\'a eu lieu !');
+            }
+        }
         if($request->prenom != null){
-            $user->prenom =$request->prenom;
+            if(strlen($request->prenom) <= 40){
+                $user->prenom =$request->prenom;
+            }
+            else{
+                return redirect()->route('admin.users.liste')->with('etat','Le prenom saisi est supérieur à 40 aucune modification n\'a eu lieu !');
+            }
         }
         if($request->login != null){
-            $user->login = $request->login;
+            //max
+            if(strlen($request->login) <= 30){
+                //unique
+                if($user->login != $request->login){
+                    $user->login = $request->login;
+                }
+                else{
+                    return redirect()->route('admin.users.liste')->with('etat','Le login existe deja, aucune modification n\'a eu lieu !');
+                }
+            }
+            else{
+                return redirect()->route('admin.users.liste')->with('etat','Le login saisi est supérieur à 30 aucune modification n\'a eu lieu !');
+            }
         }
         if($request->mdp != null){
-            $user->mdp = Hash::make($request->mdp);
+            if(strlen($request->mdp) <= 60){
+                $user->mdp = Hash::make($request->mdp);
+            }
+            else{
+                return redirect()->route('admin.users.liste')->with('etat','Le mot de passe saisi est supérieur à 60 aucune modification n\'a eu lieu !');
+            }
         }
         $user->type = $request->typeSelect;
         $user->save();
         
-        return redirect()->route('admin.cours.liste')->with('etat','L\'utilisateur a été modifié !');
+        return redirect()->route('admin.users.liste')->with('etat','L\'utilisateur a été modifié !');
         // session()->flash('etat','L\'utilisateur a été modifié !');
         // return view('admin.gestion.utilisateurs.admin_user_liste');
     }
@@ -480,7 +519,7 @@ class CompteController extends Controller
     
     public function admin_user_supprimer($uid){
         $user = User::findOrFail($uid)->delete();
-        return redirect()->route('admin.cours.liste')->with('etat','L\'Utilisateur a été supprimé !');
+        return redirect()->route('admin.users.liste')->with('etat','L\'Utilisateur a été supprimé !');
     }
     
     //gestion des cours :
@@ -740,7 +779,7 @@ class CompteController extends Controller
     }
 
     public function gestionnaire_gestion_association_cours_etudiant($id){//liste des cours pour association
-        $liste_cours = Cour::paginate(5);
+        $liste_cours = Cour::all();
         return view('comptes.gestionnaire.associations.gestionnaire_associer_cours_etudiant',['liste_cours'=>$liste_cours,'etudiant_id'=>$id]);
     }
 

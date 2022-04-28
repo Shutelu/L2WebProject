@@ -64,7 +64,7 @@
     {{-- choix pour la description --}}
     @if ($choix == 'defaut')
         <p>Description : Affichage de la liste des utilisateurs intégrale, permet l'acceptation ou le refus <br>
-        ainsi que la modification et la suppression d'un utilisateur (non disponible pour la modification ou suppression d'un autre administrateur)</p>
+        ainsi que la modification et la suppression d'un utilisateur</p>
     @endif
     @if ($choix == 'gestionnaire')
         <p>Description : Affichage de la liste de tout les gestionnaires</p>

@@ -10,8 +10,8 @@
 @endsection
 
 @section('content')
-    <h1>Liste de tout les cours</h1>
-    <p>Description : Vous êtes sur la liste de tout les cours disponibles</p>
+    <h1>Liste de tous les cours</h1>
+    <p>Description : Vous êtes sur la liste de tous les cours disponibles</p>
     <br>
     
     {{-- <span id="admin_gestion_user_create"><a href="{{route('admin.gestion.cours_create_form')}}">Crée un cours</a></span> --}}
@@ -39,4 +39,5 @@
             </tr>
         @endforeach
     </table>
+    {{$liste_cours->links()}}
 @endsection

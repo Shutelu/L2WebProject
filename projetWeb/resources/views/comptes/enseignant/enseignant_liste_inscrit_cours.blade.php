@@ -21,7 +21,6 @@
                 <td>{{$etudiant->nom}}</td>
                 <td>{{$etudiant->prenom}}</td>
                 <td>{{$etudiant->noet}}</td>
-                <td>presence</td>
             </tr>
         @endforeach
     </table>
