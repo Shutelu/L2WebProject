@@ -31,7 +31,7 @@
                         @csrf
                         <button type="submit">Pointage simple des étudiants pour cette séance</button>
                     </form>
-                    <form action="" method="POST">
+                    <form action="{{route('enseignant_pointage_multiple',['eid'=>$enseignant_id,'cid'=>$cours->id,'sid'=>$seance->id])}}" method="POST">
                         @csrf
                         <button type="submit">Pointage multiple des étudiants pour cette séance</button>
                     </form>

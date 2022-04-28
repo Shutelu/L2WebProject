@@ -26,7 +26,7 @@
                 <td>{{$etudiant->prenom}}</td>
                 <td>{{$etudiant->noet}}</td>
                 <td>
-                    <form action="{{route('enseignant.pointage.etudiant_seance',['cid'=>$cours->id,'sid'=>$seance_id,'eid'=>$etudiant->id])}}" method="POST">
+                    <form action="{{route('enseignant.pointage.etudiant_seance',['cid'=>$cours->id,'sid'=>$seance_id,'eid'=>$etudiant->id,'eeid'=>$enseignant_id])}}" method="POST">
                         @csrf
                         <button>Pointer</button>
                     </form>

@@ -57,8 +57,10 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/enseignant/liste/{cid}/etudiants_inscrits_au_cours/{eid}',[CompteController::class,'enseignant_liste_inscrit_cours'])->name('enseignant.liste.inscrit_au_cours');//liste des inscrit
     Route::post('/enseignant/liste/{cid}/enseignant/{eid}/seances_de_ce_cours',[CompteController::class,'enseignant_liste_seances_cours'])->name('enseignant.liste.seances_ce_cours');//liste des seances de ce cours
     Route::post('/enseignant/liste/{cid}/etudiant_pour_cette_seance/{sid}/enseignant/{eid}',[CompteController::class,'enseignant_liste_etudiant_seance'])->name('enseignant_liste_etudiants_de_ce_seance');//liste des etudiants pour la seance
-    Route::post('/enseignant/pointage/{cid}/seance_etudiant/{sid}/{eid}',[CompteController::class,'enseignant_pointage_seance_etudiant'])->name('enseignant.pointage.etudiant_seance');//pointage simple
+    Route::post('/enseignant/pointage/{cid}/seance_etudiant/{sid}/{eid}/enseignant/{eeid}',[CompteController::class,'enseignant_pointage_seance_etudiant'])->name('enseignant.pointage.etudiant_seance');//pointage simple
     Route::post('/enseignant/liste/{cid}/presents_absents/{sid}/enseignant/{eid}',[CompteController::class,'enseignant_liste_presents_absents'])->name('enseignant_liste_present_absent');//liste present absent
+    Route::post('/enseignant/{eid}/cours/{cid}/seance/{sid}/pointage_multiple',[CompteController::class,'enseignant_cours_seance_pointage_multiple'])->name('enseignant_pointage_multiple');//formulaire pointage multiple 
+    Route::post('/enseignant/cours/{cid}/seance/{sid}/pointer/pointage_multiple/{eid}',[CompteController::class,'enseignant_cours_seance_pointer_pointage_multiple'])->name('enseignant.pointer.pointage_multiple');//fonction de pointage multiple
 
     //===== groupe admin =====
     Route::middleware(['is_admin'])->group(function(){

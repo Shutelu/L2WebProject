@@ -29,8 +29,10 @@ class CompteController extends Controller
                     = enseignant_liste_inscrit_cours(cid,eid)
                     = enseignant_liste_seances_cours(cid)
                     = enseignant_liste_etudiant_seance(cid,sid)
-                    = enseignant_pointage_seance_etudiant(cid,sid,eid)
-                    = enseignant_liste_presents_absents(cid,sid)
+                    = enseignant_pointage_seance_etudiant(cid,sid,eid,eeid)
+                    = enseignant_liste_presents_absents(cid,sid,eid)
+                    = enseignant_cours_seance_pointage_multiple(eid,cid,sid)
+                    = enseignant_cours_seance_pointer_pointage_multiple(request,cid,sid,eid)
                 Pour Admin :
                     = admin_index()
                     = admin_page_gestion()
@@ -183,7 +185,7 @@ class CompteController extends Controller
         return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours,'enseignant_id'=>$eid]);
     }
 
-    public function enseignant_pointage_seance_etudiant($cid, $sid, $eid){//fonction de pointage seance et etudiant
+    public function enseignant_pointage_seance_etudiant($cid, $sid, $eid,$eeid){//fonction de pointage seance et etudiant
         $cours = Cour::findOrFail($cid);
         $liste_etudiants = $cours->etudiants;
 
@@ -196,7 +198,7 @@ class CompteController extends Controller
             // dd($seance->etudiants()->where('id','=',$eid)->first());
             session()->flash('etat','L\'étudiant(e) a deja été pointé(e) !');
 
-            return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
+            return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours,'enseignant_id'=>$eeid]);
             // return redirect()->back()->with('etat','ok');// marche pas car get method not supported
             // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
     
@@ -205,7 +207,7 @@ class CompteController extends Controller
         $seance->etudiants()->attach($etudiant);
         
         session()->flash('etat','L\'étudiant(e) à été pointé(e) (marqué présent(e)) pour cette séance !');
-        return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours]);
+        return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours,'enseignant_id'=>$eeid]);
         // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
     }
 
@@ -223,6 +225,44 @@ class CompteController extends Controller
         // }
 
         return view('comptes.enseignant.enseignant_liste_present_absent',['liste_etudiants'=>$liste_etudiants,'liste_presents'=>$liste_presents,'cours_id'=>$cid,'enseignant_id'=>$eid]);
+    }
+
+    public function enseignant_cours_seance_pointage_multiple($eid,$cid,$sid){//formulaire de pointage multiple
+        $cours = Cour::findOrFail($cid);
+        $liste_etudiants = $cours->etudiants;
+
+        return view('comptes.enseignant.enseignant_pointage_multiple',['liste_etudiants'=>$liste_etudiants,'cours'=>$cours,'enseignant_id'=>$eid,'seance_id'=>$sid]);
+    }
+
+    public function enseignant_cours_seance_pointer_pointage_multiple(Request $request,$cid,$sid,$eid){//fonction de pointage multiple
+        $request->validate([
+            'pointage' => 'nullable',
+        ]);
+
+        $cours = Cour::findOrFail($cid);
+        $liste_etudiants = $cours->etudiants;
+        $liste_seances = $cours->seances;
+        if($request->pointage != null){
+
+            $seance = Seance::findOrFail($sid);
+            //pour chaque etudiant
+            foreach($liste_etudiants as $etudiant){
+                //si on a cocher l'etudiant
+                if(in_array($etudiant->noet,$request->get('pointage'))){
+                    //si pas dedans
+                    if(!$seance->etudiants()->where('noet','=',$etudiant->noet)->first()){
+                        // session()->flash('etat','L\'étudiant(e) est déjà pointé(e)');
+                        // return view()
+                        $seance->etudiants()->attach($etudiant);
+                    }
+                }
+            }
+            session()->flash('etat','Les étudiant(e)s ont été pointé(e)s (marqué présent(e)s) pour cette séance !');
+            return view('comptes.enseignant.enseignant_liste_seances_cours',['liste_seances'=>$liste_seances,'cours'=>$cours,'enseignant_id'=>$eid]);
+        }
+
+        session()->flash('etat','Pointage null, aucun(e) étudiant(e) n\'a été pointé(e) !');
+        return view('comptes.enseignant.enseignant_liste_seances_cours',['liste_seances'=>$liste_seances,'cours'=>$cours,'enseignant_id'=>$eid]);
     }
 
     /*
