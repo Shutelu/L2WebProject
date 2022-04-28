@@ -497,7 +497,7 @@ class CompteController extends Controller
             'prenom' => 'nullable|string|min:1',
             'login' => 'string|nullable|min:1',
             'mdp' => 'confirmed|nullable|min:1',
-            'typeSelect' => 'required|in:enseignant,gestionnaire,admin',
+            'typeSelect' => 'required|in:enseignant,gestionnaire,admin,desactiver',
             ]);
             // if($check->fails()){
                 //     return redirect()->back();
@@ -544,7 +544,12 @@ class CompteController extends Controller
                 return redirect()->route('admin.users.liste')->with('etat','Le mot de passe saisi est supérieur à 60 aucune modification n\'a eu lieu !');
             }
         }
-        $user->type = $request->typeSelect;
+        if($request->typeSelect == 'desactiver'){
+            $user->type = NULL;
+        }
+        else{
+            $user->type = $request->typeSelect;
+        }
         $user->save();
         
         return redirect()->route('admin.users.liste')->with('etat','L\'utilisateur a été modifié !');
@@ -558,7 +563,9 @@ class CompteController extends Controller
     }
     
     public function admin_user_supprimer($uid){
-        $user = User::findOrFail($uid)->delete();
+        $user = User::findOrFail($uid);
+        $user->cours()->detach();
+        $user->delete();
         return redirect()->route('admin.users.liste')->with('etat','L\'Utilisateur a été supprimé !');
     }
     
@@ -638,6 +645,7 @@ class CompteController extends Controller
             $seance->cour()->dissociate();//1:*
             $seance->delete();
         }
+        $cours->users()->detach();
         $cours->delete();
         return redirect()->route('admin.cours.liste')->with('etat',"Le cours a été supprimé !");
     }
@@ -857,6 +865,7 @@ class CompteController extends Controller
         $etudiant = Etudiant::findOrFail($eid);
         $cours = Cour::findOrFail($cid);
 
+        $etudiant->seances()->detach();
         $etudiant->cours()->detach($cours);
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','Le cours a été désassocié à l\'étudiant(e) !');
@@ -897,7 +906,7 @@ class CompteController extends Controller
     // }
 
     public function gestionnaire_gestion_association_cours_enseignant($id){//liste des cours pour association
-        $liste_cours = Cour::paginate(5);
+        $liste_cours = Cour::all();
         return view('comptes.gestionnaire.associations.gestionnaire_associer_cours_enseignant',['liste_cours'=>$liste_cours,'enseignant_id'=>$id]);
     }
 
@@ -925,6 +934,7 @@ class CompteController extends Controller
         $enseignant = User::findOrFail($eid);
         $cours = Cour::findOrFail($cid);
 
+        $enseignant->cours()->detach();
         $enseignant->cours()->detach($cours);
 
         return redirect()->route('gestionnaire.gestion.gestion_enseignants')->with('etat','Le cours a été désassocié à l\'enseignant !');

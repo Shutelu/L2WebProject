@@ -31,6 +31,7 @@
             <option value="enseignant">Enseignant</option>
             <option value="gestionnaire">Gestionnaire</option>
             <option value="admin">Admin</option>
+            <option value="desactiver">Desactiver</option>
         </select>
         <br>
 

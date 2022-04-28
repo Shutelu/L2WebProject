@@ -29,5 +29,4 @@
             </tr>
         @endforeach
     </table>
-    {{$liste_cours->links()}}
 @endsection
