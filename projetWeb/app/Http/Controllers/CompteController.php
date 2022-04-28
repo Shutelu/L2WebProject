@@ -629,7 +629,16 @@ class CompteController extends Controller
     }
 
     public function admin_cours_supprimer($cid){//fonction de suppression cours
-        $cours = Cour::findOrFail($cid)->delete();
+        $cours = Cour::findOrFail($cid);
+        $cours->etudiants()->detach();
+        //pour enelever les seances
+        $liste_seances = $cours->seances;
+        foreach($liste_seances as $seance){
+            $seance->etudiants()->detach();//*:*
+            $seance->cour()->dissociate();//1:*
+            $seance->delete();
+        }
+        $cours->delete();
         return redirect()->route('admin.cours.liste')->with('etat',"Le cours a été supprimé !");
     }
 
@@ -963,9 +972,13 @@ class CompteController extends Controller
 
     public function gestionnaire_etudiant_supprimer($eid){//fonction de suppresion d'un etudiant
         $etudiant = Etudiant::findOrFail($eid);
+
+        $etudiant->seances()->detach();
+        $etudiant->cours()->detach();
         $etudiant->delete();
 
         return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','L\'étudiant(e) à été supprimé(e)');
+
     }
 
     public function gestionnaire_seance_modification_form($sid){//formulaire de modif seance
@@ -997,7 +1010,10 @@ class CompteController extends Controller
     }
 
     public function gestionnaire_seance_supprimer($sid){//fonction supp seance
-        $seance  = Seance::findOrFail($sid)->delete();
+        $seance  = Seance::findOrFail($sid);
+        $seance->etudiants()->detach();//*:*
+        $seance->cour()->dissociate();//1:*
+        $seance->delete();
         return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été supprimée !');
     }
 
