@@ -645,7 +645,7 @@ class CompteController extends Controller
 
     public function gestionnaire_gestion_etudiants(){//page sur la gestion des etudiants
         $etudiants_liste = Etudiant::paginate(5);
-        return view('comptes.gestionnaire..statistiques.gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
+        return view('comptes.gestionnaire.statistiques.gestionnaire_gestion_etudiant',['etudiants_liste'=>$etudiants_liste]);
     }
 
     public function gestionnaire_create_etudiant_form(){//creation d'un etudiant
@@ -935,16 +935,20 @@ class CompteController extends Controller
 
     public function gestionnaire_etudiant_modifier(Request $request,$eid){//fonction de modification d'un etudiant
         $request->validate([
-            'nom' => 'nullable|string|min:1|max:40',
-            'prenom' => 'nullable|string|min:1|max:40',
+            'nom' => 'nullable|string|min:1',
+            'prenom' => 'nullable|string|min:1',
         ]);
         
         $etudiant = Etudiant::findOrFail($eid);
         if($request->nom != null){
-            $etudiant->nom = $request->nom;
+            if(strlen($request->nom) <= 40){
+                $etudiant->nom = $request->nom;
+            }
         }
         if($request->prenom != null){
-            $etudiant->prenom = $request->prenom;
+            if(strlen($request->prenom) <= 40){
+                $etudiant->prenom = $request->prenom;
+            }
         }
         $etudiant->save();
 
