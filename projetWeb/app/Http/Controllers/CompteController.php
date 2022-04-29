@@ -895,15 +895,32 @@ class CompteController extends Controller
         return view('comptes.gestionnaire.liste_des_presences.gestionnaire_liste_presence_par_seance',['liste_etudiants'=>$liste_etudiants_present,'seance'=>$seance]);
     }
 
-    //Demander l'explication du prof pour le 2.6.3
-    // public function gestionnaire_cours_liste_presence_etudiant($cid){
-    //     $cours = Cour::findOrFail($cid);
-    //     $liste_seances = $cours->seances;
-    //     foreach($li){
+    public function gestionnaire_cours_liste_presence_etudiant($cid){//stock les etudiant au moins present dans une collection pour affichage
+        $cours = Cour::findOrFail($cid);
 
-    //     }
-    //     $liste_etudiants_present = $cours->etudiant()->where()->get();
-    // }
+        $liste_etudiants = $cours->etudiants;//presence
+        $collection = collect();//cree la collection
+        $compteur = 0;
+
+        $liste_seances = $cours->seances;
+        foreach($liste_seances as $seance){//pour chaque seances
+
+            $liste_etudiant_present = $seance->etudiants;
+            foreach($liste_etudiants as $etudiant){
+
+                if($liste_etudiant_present->contains($etudiant)){
+                    if(!$collection->contains($etudiant)){
+                        $collection[$compteur] = $etudiant;
+                        $compteur ++;
+                    }
+                }
+            }
+        }
+
+        $liste_etudiants = $collection;
+        
+        return view('comptes.gestionnaire.liste_des_presences.gestionnaire_liste_presence_par_cour',['liste_etudiants'=>$liste_etudiants,'cours'=>$cours]);
+    }
 
     public function gestionnaire_gestion_association_cours_enseignant($id){//liste des cours pour association
         $liste_cours = Cour::all();
@@ -934,7 +951,7 @@ class CompteController extends Controller
         $enseignant = User::findOrFail($eid);
         $cours = Cour::findOrFail($cid);
 
-        $enseignant->cours()->detach();
+        // $enseignant->cours()->detach();
         $enseignant->cours()->detach($cours);
 
         return redirect()->route('gestionnaire.gestion.gestion_enseignants')->with('etat','Le cours a été désassocié à l\'enseignant !');
@@ -1022,7 +1039,7 @@ class CompteController extends Controller
     public function gestionnaire_seance_supprimer($sid){//fonction supp seance
         $seance  = Seance::findOrFail($sid);
         $seance->etudiants()->detach();//*:*
-        $seance->cour()->dissociate();//1:*
+        // $seance->cour()->dissociate();//1:*
         $seance->delete();
         return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été supprimée !');
     }

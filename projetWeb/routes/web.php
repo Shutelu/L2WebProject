@@ -131,8 +131,7 @@ Route::middleware(['auth'])->group(function(){
             Route::post('/gestionnaire/etudiant/{eid}/suppression_form',[CompteController::class,'gestionnaire_etudiant_suppression_form'])->name('gestionnaire.etudiant.suppression_form');//formulaire de confirmation suppression etudiant
             Route::post('/gestionnaire/etudiant/{eid}/suppression',[CompteController::class,'gestionnaire_etudiant_supprimer'])->name('gestionnaire.etudiant.supprimer');//fonction de suppression etudiant
 
-        //Demander l'explication du prof pour le 2.6.3
-        // Route::get('/gestionnaire/cours/{cid}/liste/presence_etudiant',[CompteController::class,'gestionnaire_cours_liste_presence_etudiant'])->name('gestionnaire.liste.presence_etudiant_par_cours');
+        Route::get('/gestionnaire/cours/{cid}/liste/presence_etudiant',[CompteController::class,'gestionnaire_cours_liste_presence_etudiant'])->name('gestionnaire.liste.presence_etudiant_par_cours');
 
         //enseignants
         Route::get('/gestionnaire/gestion/liste/enseignants',[CompteController::class,'gestionnaire_gestion_liste_enseignants'])->name('gestionnaire.gestion.gestion_enseignants');//liste des enseignants
