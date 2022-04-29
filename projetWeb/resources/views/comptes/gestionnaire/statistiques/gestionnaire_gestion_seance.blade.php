@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <h1>Gestion des séances de cours</h1>
+    <h1 class="colorful-h1">Gestion des séances de cours</h1>
     <p>Description : Vous êtes sur la liste de tout les séances de cours, cette liste facilitera vos operation. </p>
 
     <br>

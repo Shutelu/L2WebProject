@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des cours</h1>
+    <h1 class="colorful-h1">Liste des cours</h1>
 
     <p>Description : Voici la liste des cours que vous pouvez associer à l'étudiant</p>
 

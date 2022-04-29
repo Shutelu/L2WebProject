@@ -3,13 +3,20 @@
 @section('title','Page de gestion pour les gestionnaires')
 
 @section('content')
-    <h1>Options de gestion pour les gestionnaires :</h1>   
+    <h1 class="colorful-h1">Options de gestion pour les gestionnaires :</h1>   
     <h2>Statistiques</h2>
-    <a href="{{route('gestionnaire.gestion.gestion_etudiant')}}">Liste des étudiants</a><br>
-    <a href="{{route('gestionnaire.gestion.gestion_cours')}}">Liste des cours</a> <br>
-    <a href="{{route('gestionnaire.gestion.gestion_seances')}}">Liste des séances de cours</a><br>
-    <a href="{{route('gestionnaire.gestion.gestion_enseignants')}}">Liste des enseignants</a><br>
-
+    <br>
+    <a href="{{route('gestionnaire.gestion.gestion_etudiant')}}" class="colorful-link">Liste des étudiants</a>
+    <br>
+    <br>
+    <a href="{{route('gestionnaire.gestion.gestion_cours')}}" class="colorful-link">Liste des cours</a> 
+    <br>
+    <br>
+    <a href="{{route('gestionnaire.gestion.gestion_seances')}}" class="colorful-link">Liste des séances de cours</a>
+    <br>
+    <br>
+    <a href="{{route('gestionnaire.gestion.gestion_enseignants')}}" class="colorful-link">Liste des enseignants</a>
+    <br>
     <br>
 
     <p>Buttons pour envoyer vers les ajouts</p>

@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des séances de ce cours</h1>
+    <h1 class="colorful-h1">Liste des séances de ce cours</h1>
 
     <p>
         Description : Vous etes sur le cours de : {{$cours->intitule}} <br>

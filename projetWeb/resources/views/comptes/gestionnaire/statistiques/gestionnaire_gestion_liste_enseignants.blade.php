@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des enseignants</h1>
+    <h1 class="colorful-h1">Liste des enseignants</h1>
     <table class="table-affichage-donnee">
         <tr>
             <th>Nom</th>

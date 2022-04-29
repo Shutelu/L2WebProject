@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire d'acceptation</h1>
+    <h1 class="colorful-h1">Formulaire d'acceptation</h1>
     <p>
        <span style="text-decoration: underline">Voulez-vous accepté :</span> <br>
         Nom : {{$user->nom}} <br>
@@ -23,11 +23,12 @@
             <option value="gestionnaire">Gestionnaire</option>
         </select>
         <br><br>
-        <button type="submit">Accepter l'utilisateur</button>
+        <button type="submit" id="colorful_button_ajout">Accepter l'utilisateur</button>
     </form>
+    <br>
     <form action="{{route('admin.gestion.user_refus',['id'=>$user->id])}}" method="POST">
         @csrf
-        <button type="submit">Refuser</button>
+        <button type="submit" id="colorful_button_refus">Refuser</button>
     </form>
 
 @endsection

@@ -9,7 +9,7 @@
 
 @section('content')
 
-    <h1>Edition des informations du compte</h1>
+    <h1 class="colorful-h1">Edition des informations du compte</h1>
 
     <form method="POST">
         @csrf

@@ -26,7 +26,7 @@
 @endsection
 
 @section('content')
-    <h1>Gestion des etudiants</h1>
+    <h1 class="colorful-h1">Gestion des etudiants</h1>
     <p>
         Description : Vous êtes sur la liste de tout les etudiants, cette liste facilitera vos operations.
     </p>

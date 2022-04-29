@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des cours à copier</h1>
+    <h1 class="colorful-h1">Liste des cours à copier</h1>
     <p>Description : copier tous les etudiants du cours vers une autre</p>
     <table class="table-affichage-donnee">
         <tr>

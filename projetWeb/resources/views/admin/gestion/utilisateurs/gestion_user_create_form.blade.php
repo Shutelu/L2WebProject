@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <h1>Page de creation d'un utilisateur</h1>
+    <h1 class="colorful-h1">Page de creation d'un utilisateur</h1>
 
     <form method="POST">
         @csrf

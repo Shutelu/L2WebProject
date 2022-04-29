@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire de suppression</h1>
+    <h1 class="colorful-h1">Formulaire de suppression</h1>
     <p>Attention : Voulez-vous vraiment supprimer la séance ?</p>
     <form action="{{route('gestionnaire.seance.supprimer',['sid'=>$sid])}}" method="POST">
         @csrf

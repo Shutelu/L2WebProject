@@ -1,0 +1,67 @@
+/* name */
+
+#colorful_button_ajout{
+    color: aliceblue;
+    padding: 5px;
+    background-color: rgb(33, 150, 29);
+    border-radius: 10px;
+    border: 2px solid aliceblue;
+    transition: 0.2s;
+}
+
+#colorful_button_ajout:hover{
+    background-color: rgb(94, 171, 206);
+    border: 2px solid rgb(216, 102, 102);
+}
+
+#colorful_button_ajout a{
+    color: aliceblue;
+    padding: 5px;
+    background-color: rgb(33, 150, 29);
+    border-radius: 10px;
+    border: 2px solid aliceblue;
+    transition: 0.2s;
+}
+
+#colorful_button_ajout a:hover{
+    background-color: rgb(94, 171, 206);
+    border: 2px solid rgb(216, 102, 102);
+}
+
+#colorful_button_refus{
+    color: aliceblue;
+    padding: 5px;
+    background-color: rgb(179, 38, 28);
+    border-radius: 10px;
+    border: 2px solid aliceblue;
+    transition: 0.2s;
+}
+
+#colorful_button_refus:hover{
+    background-color: rgb(94, 171, 206);
+    border: 2px solid rgb(216, 102, 102);
+}
+
+.colorful-link{
+    color:aliceblue;
+    background-color: cadetblue;
+    border: 1px solid white;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.colorful-link:hover{
+    color: rgb(127, 20, 199);
+    text-decoration: none;
+}
+
+.colorful-h1{
+    color: rgb(123, 211, 51);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+

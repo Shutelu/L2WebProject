@@ -4,7 +4,7 @@
 
 @section('content')
     
-    <p>Vous êtes sur la page d'accueil !</p>
+    <h1 class="colorful-h1">Vous êtes sur la page d'accueil !</h1>
     
     {{-- Affichage pour les comptes non authentifies --}}
     @guest

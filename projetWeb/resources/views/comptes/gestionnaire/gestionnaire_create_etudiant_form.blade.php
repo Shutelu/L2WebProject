@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire d'ajout d'un(e) etudiant(e)</h1>
+    <h1 class="colorful-h1">Formulaire d'ajout d'un(e) etudiant(e)</h1>
     <p>Description : Vous êtes sur la création d'un(e) étudiant(e), veillez vous être assuré d'avoir lu la notice d'utilisation avant de procéder.</p>
     <form method="POST">
         @csrf

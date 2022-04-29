@@ -23,7 +23,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste de tous les cours</h1>
+    <h1 class="colorful-h1">Liste de tous les cours</h1>
     <p>Description : Vous êtes sur la liste de tous les cours disponible.</p>
     <br>
     <h3>Création d'un cours</h3>
@@ -31,24 +31,8 @@
         @csrf
         <label for="intitule">Veillez saisir l'Intitulé du cours (nom du cours) :</label>
         <input type="text" id="intitule" name="intitule">
-        <button type="submit">Crée le cours</button>
+        <button type="submit" id="colorful_button_ajout">Crée le cours</button>
     </form>
-    {{-- <span id="admin_gestion_user_create"><a href="{{route('admin.gestion.cours_create_form')}}">Crée un cours</a></span> --}}
-    <br>
-    {{-- @foreach ($cours_liste as $cours)    
-        <div class="cours-liste-box">
-            <div class="cours-text-area">
-                <p>Intitule : {{$cours->intitule}}</p>
-                <p>Cree le : {{$cours->created_at}} </p>
-                <p>modifier le : {{$cours->updated_at}}</p>
-            </div>
-            <div class="cours-button-area">
-                <button>Modifier</button>
-                <button>Supprimer</button>
-                
-            </div>
-        </div>
-    @endforeach --}}
     <br>
     <table class="table-affichage-donnee">
         <tr>

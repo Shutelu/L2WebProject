@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste de tous les cours</h1>
+    <h1 class="colorful-h1">Liste de tous les cours</h1>
     <p>Description : Vous êtes sur la liste de tous les cours disponibles</p>
     <br>
     
@@ -29,9 +29,9 @@
                 <td>{{$lc->created_at}}</td>
                 <td>{{$lc->updated_at}}</td>
                 <td>
-                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.create_seances',['id'=>$lc->id])}}">Ajouter une séance</a></span>
-                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.association.copier_association_form',['cpid'=>$lc->id])}}">Copier les associations d'un cours</a></span>
-                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.association.etudiants.associer_form',['cid'=>$lc->id])}}">Associer des étudiants</a></span><br><br>
+                    <span class="admin_gestion_user_create" ><a href="{{route('gestionnaire.gestion.create_seances',['id'=>$lc->id])}}" id="colorful_button_ajout">Ajouter une séance</a></span>
+                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.association.copier_association_form',['cpid'=>$lc->id])}}">Copier les associations d'un cours</a></span><br><br>
+                    <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.association.etudiants.associer_form',['cid'=>$lc->id])}}">Associer des étudiants</a></span>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.association.etudiants.desassocier_form',['cid'=>$lc->id])}}">Désassocier des étudiants</a></span><br><br>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.liste_seance_de_ce_cours',['id'=>$lc->id])}}">Liste de séance pour ce cours</a></span>
                     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.liste.presence_etudiant_par_cours',['cid'=>$lc->id])}}">Liste des présences</a></span><br><br>

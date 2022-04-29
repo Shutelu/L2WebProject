@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire de modification</h1>
+    <h1 class="colorful-h1">Formulaire de modification</h1>
     <p>Vous etes sur le point de modifier l'intitule du cours de : {{$cours->intitule}}</p>
     <form action="{{route('admin.cours.modifier',['cid'=>$cours->id])}}" method="POST">
         @csrf

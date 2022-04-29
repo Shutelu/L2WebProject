@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire de creation de seances de cours</h1>
+    <h1 class="colorful-h1">Formulaire de creation de seances de cours</h1>
 
     <p>Description : Vous vous apprêtez à crée une séance pour le cours de : {{$cours->intitule}}</p>
     <form action="{{route('gestionnaire.gestion.create_seances',['id'=>$cours->id])}}" method="POST">

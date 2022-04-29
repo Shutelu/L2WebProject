@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire de suppression</h1>
+    <h1 class="colorful-h1">Formulaire de suppression</h1>
     <p>Attention : Voulez-vous vraiment supprimer l'utilisateur : {{$user->nom}} {{$user->prenom}} {{$user->login}} ?</p>
     <form action="{{route('admin.user.supprimer',['uid'=>$user->id])}}" method="POST">
         @csrf

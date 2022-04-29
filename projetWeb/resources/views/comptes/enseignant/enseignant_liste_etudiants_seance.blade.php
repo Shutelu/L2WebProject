@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des étudiant inscrits dans cette séances</h1>
+    <h1 class="colorful-h1">Liste des étudiant inscrits dans cette séances</h1>
 
     <p>Description : Vous etes sur le séance de : {{$cours->intitule}}</p>
     <table class="table-affichage-donnee">

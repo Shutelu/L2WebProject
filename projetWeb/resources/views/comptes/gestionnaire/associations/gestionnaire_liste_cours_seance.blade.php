@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des séances associés à ce cours</h1>
+    <h1 class="colorful-h1">Liste des séances associés à ce cours</h1>
     <p>
         Description : Voici la liste des séances associés à ce cours : {{$cours->intitule}} <br>
         Pour procèder à la liste des présences, la modification ou la suppression veillez-vous rendre à la page Gestion Gestionnaire/Liste des seances de cours.

@@ -3,7 +3,7 @@
 @section('title','Desassociation multiple')
 
 @section('content')
-    <h1>Desassociation multiple</h1>
+    <h1 class="colorful-h1">Desassociation multiple</h1>
 
     <form action="{{route('gestionnaire.desassociation.desa_multi',['cid'=>$cid])}}" method="POST">
         @csrf

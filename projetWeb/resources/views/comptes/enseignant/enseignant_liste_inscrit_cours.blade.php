@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des étudiant inscrits dans ce cours</h1>
+    <h1 class="colorful-h1">Liste des étudiant inscrits dans ce cours</h1>
 
     <p>Description : Vous etes sur le cours de : {{$cours->intitule}}</p>
     <table class="table-affichage-donnee">

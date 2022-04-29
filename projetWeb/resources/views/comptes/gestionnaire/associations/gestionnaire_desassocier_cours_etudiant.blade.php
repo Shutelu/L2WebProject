@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Désassociation étudiant cours</h1>
+    <h1 class="colorful-h1">Désassociation étudiant cours</h1>
 
     <table class="table-affichage-donnee">
         <tr>

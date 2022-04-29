@@ -9,7 +9,7 @@
 
 @section('content')
     
-    <h1>Formulaire de changement de mot de passe</h1>
+    <h1 class="colorful-h1">Formulaire de changement de mot de passe</h1>
     <p>Voulez-vous vraiment changer le mot de passe ?</p>
 
     <form method="POST">

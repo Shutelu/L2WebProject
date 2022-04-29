@@ -3,7 +3,7 @@
 @section('title','Association multiple')
 
 @section('content')
-    <h1>Association multiple</h1>
+    <h1 class="colorful-h1">Association multiple</h1>
     <form action="{{route('gestionnaire.association.asso_mult_fonction',['cid'=>$cid])}}" method="POST">
         @csrf
 

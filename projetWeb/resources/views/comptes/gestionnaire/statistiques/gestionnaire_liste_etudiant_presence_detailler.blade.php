@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des présences détaillée</h1>    
+    <h1 class="colorful-h1">Liste des présences détaillée</h1>    
     <p>Description : Affichage de la liste des séances ou l'étudiant est présent</p>
     <p>L'étudiant (nom/prenom/noet): {{$etudiant->nom}} {{$etudiant->prenom}} {{$etudiant->noet}}</p>
     <table class="table-affichage-donnee">

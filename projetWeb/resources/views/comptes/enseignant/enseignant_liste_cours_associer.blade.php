@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1>Liste des cours associés</h1>
+    <h1 class="colorful-h1">Liste des cours associés</h1>
 
     @php
         $total = 0

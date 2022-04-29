@@ -49,7 +49,7 @@
 @section('content')
 
     {{-- choix pour le titre --}}
-    <h1>Liste de tout les utilisateurs
+    <h1 class="colorful-h1">Liste de tout les utilisateurs
         @if ($choix == 'gestionnaire')
             Gestionnaire
         @endif
@@ -97,14 +97,16 @@
                 @if ($choix == 'defaut')
                     @if ($user->type == null)
                         <td>
-                            <form action="{{route('admin.gestion.user_accepter_form',['id'=>$user->id])}}" method="POST">
-                                @csrf
-                                <button type="submit">Accepter</button>
-                            </form>
-                            <form action="{{route('admin.gestion.user_refus',['id'=>$user->id])}}" method="POST">
-                                @csrf
-                                <button type="submit">Refuser</button>
-                            </form>
+
+                                <form action="{{route('admin.gestion.user_accepter_form',['id'=>$user->id])}}" method="POST" style="display: inline">
+                                    @csrf
+                                    <button type="submit" id="colorful_button_ajout">Accepter</button>
+                                </form>
+                                <form action="{{route('admin.gestion.user_refus',['id'=>$user->id])}}" method="POST" style="display: inline">
+                                    @csrf
+                                    <button type="submit" id="colorful_button_refus">Refuser</button>
+                                </form>
+
                         </td>
                     @else
                         <td>Déjà accepté</td>

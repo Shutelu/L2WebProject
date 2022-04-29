@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <h1>Liste des présences à cette séance</h1>    
+    <h1 class="colorful-h1">Liste des présences à cette séance</h1>    
     <p>Description : Affichage de la liste des étudiants présent à cette séances</p>
     <p>Seance de : {{$seance->cour->intitule}}</p>
     <table class="table-affichage-donnee">

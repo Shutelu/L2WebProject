@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <h1>Pointage multiple</h1>
+    <h1 class="colorful-h1">Pointage multiple</h1>
 
     
     <form action="{{route('enseignant.pointer.pointage_multiple',['cid'=>$cours->id,'sid'=>$seance_id,'eid'=>$enseignant_id])}}" method="POST">

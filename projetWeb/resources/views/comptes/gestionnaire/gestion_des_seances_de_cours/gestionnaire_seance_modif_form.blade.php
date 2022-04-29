@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <h1>Formulaire de modification</h1>
+    <h1 class="colorful-h1">Formulaire de modification</h1>
     <p>Attention : Si un champ n'est pas remplie il ne sera pas pris en compte.</p>
     
     <form action="{{route('gestionnaire.seance.modifier',['sid'=>$seance->id])}}" method="POST">
