@@ -88,6 +88,7 @@ class CompteController extends Controller
                     = gestionnaire_seance_modifier(request,sid)
                     = gestionnaire_seance_suppression_form(sid)
                     = gestionnaire_seance_supprimer(sid)
+                    = gestionnaire_association_cours_copie_form(cpid)
     ===========================================================================
     */
 
@@ -1042,6 +1043,32 @@ class CompteController extends Controller
         // $seance->cour()->dissociate();//1:*
         $seance->delete();
         return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été supprimée !');
+    }
+
+    public function gestionnaire_association_cours_copie_form($cpid){
+        // $liste_cours = Cour::whereNotIn('id','=',$cpid)->get();//on va pas copie le cours qu'on veut associer
+        // $liste_cours = Cour::whereNotIn('id',$cpid)->get();
+        $liste_cours = Cour::all();
+        $compteur = 0;
+        foreach($liste_cours as $cours){
+            if($cours->id == $cpid){
+                $liste_cours->pull($compteur);
+                return view('comptes.gestionnaire.associations.gestionnaire_association_copier_form',['liste_cours'=>$liste_cours,'cpid'=>$cpid]);
+            }
+            $compteur++;
+        }
+        return view('comptes.gestionnaire.associations.gestionnaire_association_copier_form',['liste_cours'=>$liste_cours,'cpid'=>$cpid]);
+    }
+
+    public function gestionnaire_association_cours_copier($cpid, $csid){
+        $cours_associer = Cour::findOrFail($cpid);
+        $cours_a_copier = Cour::findOrFail($csid);
+        $liste_etudiant_a_copier = $cours_a_copier->etudiants;
+        foreach($liste_etudiant_a_copier as $etudiant){
+            $cours_associer->etudiants()->attach($etudiant);
+        }
+
+        return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','Le cours a été copié !');
     }
 
 

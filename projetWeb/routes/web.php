@@ -108,7 +108,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance_form'])->name('gestionnaire.gestion.create_seances');//formulaire de creation de seances de cours
         Route::post('/gestionnaire/gestion/seance_create/{id}',[CompteController::class,'gestionnaire_create_seance'])->name('gestionnaire.gestion.create_seances');//fonction de creation de seance de cours
         Route::post('/gestionnaire/liste/seance/{sid}/presence_etudiant_par_seance',[CompteController::class,'gestionnaire_liste_presence_etudiant_par_seance'])->name('gestionnaire.liste.presence_etudiant_par_seance');
-        Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
+        
             //gestion des seances de cours
             Route::post('/gestionnaire/seance/{sid}/modification_form',[CompteController::class,'gestionnaire_seance_modification_form'])->name('gestionnaire.seance.modification_form');//formulaire de modification seance
             Route::post('/gestionnaire/seance/{sid}/modifier',[CompteController::class,'gestionnaire_seance_modifier'])->name('gestionnaire.seance.modifier');//fonction de modification seance
@@ -131,7 +131,12 @@ Route::middleware(['auth'])->group(function(){
             Route::post('/gestionnaire/etudiant/{eid}/suppression_form',[CompteController::class,'gestionnaire_etudiant_suppression_form'])->name('gestionnaire.etudiant.suppression_form');//formulaire de confirmation suppression etudiant
             Route::post('/gestionnaire/etudiant/{eid}/suppression',[CompteController::class,'gestionnaire_etudiant_supprimer'])->name('gestionnaire.etudiant.supprimer');//fonction de suppression etudiant
 
+            
+        // cours
+        Route::get('/gestionnaire/gestion/cours',[CompteController::class,'gestionnaire_gestion_cours'])->name('gestionnaire.gestion.gestion_cours');//liste des cours
         Route::get('/gestionnaire/cours/{cid}/liste/presence_etudiant',[CompteController::class,'gestionnaire_cours_liste_presence_etudiant'])->name('gestionnaire.liste.presence_etudiant_par_cours');
+        Route::get('/gestionnaire/association/cours/{cpid}/copie_form',[CompteController::class,'gestionnaire_association_cours_copie_form'])->name('gestionnaire.association.copier_association_form');
+        Route::post('/gestionnaire/association/cours/{cpid}/{csid}/copier',[CompteController::class,'gestionnaire_association_cours_copier'])->name('gestionnaire.association.fonction_copier');
 
         //enseignants
         Route::get('/gestionnaire/gestion/liste/enseignants',[CompteController::class,'gestionnaire_gestion_liste_enseignants'])->name('gestionnaire.gestion.gestion_enseignants');//liste des enseignants
