@@ -744,8 +744,8 @@ class CompteController extends Controller
             }
         }
         else if(strlen($request->nom) == 0 && strlen($request->prenom) == 0 && strlen($request->noet) > 0){//seulement le numero etudiant est entre
-            $etudiants_liste = Etudiant::where('login','=',$request->noet)->paginate(5);
-            $etudiants_liste_verif = Etudiant::where('login','=',$request->noet)->get();
+            $etudiants_liste = Etudiant::where('noet','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('noet','=',$request->noet)->get();
 
             if(count($etudiants_liste_verif) > 0){//si existe
                 session()->flash('etat','La recherche a été accepté');
@@ -767,9 +767,9 @@ class CompteController extends Controller
                 return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
             }
         }
-        else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->noet) > 0){//seulement nom et login
-            $etudiants_liste = Etudiant::where('nom','=',$request->nom)->where('login','=',$request->noet)->paginate(5);
-            $etudiants_liste_verif = Etudiant::where('nom','=',$request->nom)->where('login','=',$request->noet)->get();
+        else if(strlen($request->nom) > 0 && strlen($request->prenom) == 0 && strlen($request->noet) > 0){//seulement nom et noet
+            $etudiants_liste = Etudiant::where('nom','=',$request->nom)->where('noet','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('nom','=',$request->nom)->where('noet','=',$request->noet)->get();
 
             if(count($etudiants_liste_verif) > 0){//si existe
                 session()->flash('etat','La recherche a été accepté');
@@ -779,9 +779,9 @@ class CompteController extends Controller
                 return redirect()->route('gestionnaire.gestion.gestion_etudiant')->with('etat','La recherche a rien aboutie');
             }
         }
-        else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->noet) > 0){//seulement prenom et login
-            $etudiants_liste = Etudiant::where('prenom','=',$request->prenom)->where('login','=',$request->noet)->paginate(5);
-            $etudiants_liste_verif = Etudiant::where('prenom','=',$request->prenom)->where('login','=',$request->noet)->get();
+        else if(strlen($request->nom) == 0 && strlen($request->prenom) > 0 && strlen($request->noet) > 0){//seulement prenom et noet
+            $etudiants_liste = Etudiant::where('prenom','=',$request->prenom)->where('noet','=',$request->noet)->paginate(5);
+            $etudiants_liste_verif = Etudiant::where('prenom','=',$request->prenom)->where('noet','=',$request->noet)->get();
 
             if(count($etudiants_liste_verif) > 0){//si existe
                 session()->flash('etat','La recherche a été accepté');
@@ -1067,7 +1067,7 @@ class CompteController extends Controller
     public function gestionnaire_association_cours_copier($cpid, $csid){//fonction copie
         $cours_associer = Cour::findOrFail($cpid);
         $liste_etudiants_associer = $cours_associer->etudiants;
-        
+
         $cours_a_copier = Cour::findOrFail($csid);
         $liste_etudiant_a_copier = $cours_a_copier->etudiants;
 
