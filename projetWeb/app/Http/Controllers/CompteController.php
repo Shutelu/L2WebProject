@@ -89,6 +89,8 @@ class CompteController extends Controller
                     = gestionnaire_seance_suppression_form(sid)
                     = gestionnaire_seance_supprimer(sid)
                     = gestionnaire_association_cours_copie_form(cpid)
+                    = gestionnaire_association_cours_etudiant_associer_form(cid)
+                    = gestionnaire_association_cours_etudiant_association_multiple(request,cid)
     ===========================================================================
     */
 
@@ -1045,7 +1047,7 @@ class CompteController extends Controller
         return redirect()->route('gestionnaire.gestion.gestion_seances')->with('etat','La séance a été supprimée !');
     }
 
-    public function gestionnaire_association_cours_copie_form($cpid){
+    public function gestionnaire_association_cours_copie_form($cpid){//formulaire de copie
         // $liste_cours = Cour::whereNotIn('id','=',$cpid)->get();//on va pas copie le cours qu'on veut associer
         // $liste_cours = Cour::whereNotIn('id',$cpid)->get();
         $liste_cours = Cour::all();
@@ -1060,7 +1062,7 @@ class CompteController extends Controller
         return view('comptes.gestionnaire.associations.gestionnaire_association_copier_form',['liste_cours'=>$liste_cours,'cpid'=>$cpid]);
     }
 
-    public function gestionnaire_association_cours_copier($cpid, $csid){
+    public function gestionnaire_association_cours_copier($cpid, $csid){//fonction copie
         $cours_associer = Cour::findOrFail($cpid);
         $cours_a_copier = Cour::findOrFail($csid);
         $liste_etudiant_a_copier = $cours_a_copier->etudiants;
@@ -1069,6 +1071,40 @@ class CompteController extends Controller
         }
 
         return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','Le cours a été copié !');
+    }
+
+    public function gestionnaire_association_cours_etudiant_associer_form($cid){//formulaire association multiple
+        $liste_etudiants = Etudiant::all();
+        return view('comptes.gestionnaire.associations.gestionnaire_asso_mult_etudiant_cours',['liste_etudiants'=>$liste_etudiants,'cid'=>$cid]);
+
+    }
+
+    public function gestionnaire_association_cours_etudiant_association_multiple(Request $request,$cid){//fonction association  multiple
+        $request->validate([
+            'association' => 'nullable',
+        ]);
+
+        $cours = Cour::findOrFail($cid);
+
+        $liste_etudiants = Etudiant::all();
+        if($request->association != null){
+
+            //pour chaque etudiant
+            foreach($liste_etudiants as $etudiant){
+                //si on la cocher
+                if(in_array($etudiant->noet,$request->get('association'))){
+                    //si pas encore associer
+                    if(!$cours->etudiants()->where('id','=',$etudiant->id)->first()){
+                        $cours->etudiants()->attach($etudiant);
+                    }
+
+                }
+            }
+            return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','Association multiple reussi !');
+        }
+
+        return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','Association null, aucun(e)s étudiant(e)s n\'a été associé(e)s !');
+
     }
 
 

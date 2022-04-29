@@ -137,6 +137,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/gestionnaire/cours/{cid}/liste/presence_etudiant',[CompteController::class,'gestionnaire_cours_liste_presence_etudiant'])->name('gestionnaire.liste.presence_etudiant_par_cours');
         Route::get('/gestionnaire/association/cours/{cpid}/copie_form',[CompteController::class,'gestionnaire_association_cours_copie_form'])->name('gestionnaire.association.copier_association_form');
         Route::post('/gestionnaire/association/cours/{cpid}/{csid}/copier',[CompteController::class,'gestionnaire_association_cours_copier'])->name('gestionnaire.association.fonction_copier');
+        Route::get('/gestionnaire/association/cours/{cid}/etudiant/associer_form',[CompteController::class,'gestionnaire_association_cours_etudiant_associer_form'])->name('gestionnaire.association.etudiants.associer_form');
+        Route::post('/gestionnaire/association/cours/{cid}/etudiant/association_multiple',[CompteController::class,'gestionnaire_association_cours_etudiant_association_multiple'])->name('gestionnaire.association.asso_mult_fonction');
 
         //enseignants
         Route::get('/gestionnaire/gestion/liste/enseignants',[CompteController::class,'gestionnaire_gestion_liste_enseignants'])->name('gestionnaire.gestion.gestion_enseignants');//liste des enseignants
