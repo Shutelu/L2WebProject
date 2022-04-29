@@ -91,6 +91,8 @@ class CompteController extends Controller
                     = gestionnaire_association_cours_copie_form(cpid)
                     = gestionnaire_association_cours_etudiant_associer_form(cid)
                     = gestionnaire_association_cours_etudiant_association_multiple(request,cid)
+                    = gestionnaire_desassocier_cours_etudiant_desassocier_form(cid)
+                    = gestionnaire_desassocier_cours_etudiant_desassocier_multiple(request,cid)
     ===========================================================================
     */
 
@@ -1107,6 +1109,30 @@ class CompteController extends Controller
 
     }
 
+    public function gestionnaire_desassocier_cours_etudiant_desassocier_form($cid){//formulaire desassociation multiple
+        $cours = Cour::findOrFail($cid);
+        $liste_etudiants = $cours->etudiants;
+
+        return view('comptes.gestionnaire.associations.gestionnaire_desaso_mult',['liste_etudiants'=>$liste_etudiants,'cid'=>$cid]);
+    }
+
+    public function gestionnaire_desassocier_cours_etudiant_desassocier_multiple(Request $request,$cid){//fonction desassociation multiple
+        $request->validate([
+            'desassociation' => 'nullable',
+        ]);
+
+        $cours = Cour::findOrFail($cid);
+
+        $liste_etudiants = $cours->etudiants;
+        foreach($liste_etudiants as $etudiant){
+            if(in_array($etudiant->id,$request->get('desassociation'))){
+                $etudiant->seances()->detach();
+                $etudiant->cours()->detach($cours);
+            }
+        }
+
+        return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','Desassociation multiple reussi !');
+    }
 
 
 
