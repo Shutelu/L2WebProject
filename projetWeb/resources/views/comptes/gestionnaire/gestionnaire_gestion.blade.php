@@ -24,6 +24,13 @@
     <span class="admin_gestion_user_create"><a href="{{route('gestionnaire.gestion.gestion_cours')}}">Ajouter une séance de cours</a></span><br>
 
     <br>
-    {{-- <h2>Mode d'emploi :</h2>
-    <p>Texte</p> --}}
+    <h2>Mode d'emploi :</h2>
+    <p>
+        Gestion des étudiants -> liste des étudiants
+        <br>
+        Gestion des séances de cours -> liste des séances de cours + liste des cours
+        <br>
+        Associations des étudiants -> liste des étudiants + liste des cours
+    </p>
+
 @endsection

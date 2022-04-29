@@ -1066,10 +1066,15 @@ class CompteController extends Controller
 
     public function gestionnaire_association_cours_copier($cpid, $csid){//fonction copie
         $cours_associer = Cour::findOrFail($cpid);
+        $liste_etudiants_associer = $cours_associer->etudiants;
+        
         $cours_a_copier = Cour::findOrFail($csid);
         $liste_etudiant_a_copier = $cours_a_copier->etudiants;
+
         foreach($liste_etudiant_a_copier as $etudiant){
-            $cours_associer->etudiants()->attach($etudiant);
+            if(!$liste_etudiants_associer->contains($etudiant)){
+                $cours_associer->etudiants()->attach($etudiant);
+            }
         }
 
         return redirect()->route('gestionnaire.gestion.gestion_cours')->with('etat','Le cours a été copié !');
