@@ -27,8 +27,8 @@ class CompteController extends Controller
                 Pour Enseignant :
                     = enseignant_liste_cours_associer(id)
                     = enseignant_liste_inscrit_cours(cid,eid)
-                    = enseignant_liste_seances_cours(cid)
-                    = enseignant_liste_etudiant_seance(cid,sid)
+                    = enseignant_liste_seances_cours(cid,eid)
+                    = enseignant_liste_etudiant_seance(cid,sid,eid)
                     = enseignant_pointage_seance_etudiant(cid,sid,eid,eeid)
                     = enseignant_liste_presents_absents(cid,sid,eid)
                     = enseignant_cours_seance_pointage_multiple(eid,cid,sid)
@@ -75,6 +75,8 @@ class CompteController extends Controller
                     = gestionnaire_gestion_liste_cours_etudiants(id)
                     = gestionnaire_gestion_etudiant_liste_presence_detailler(eid)
                     = gestionnaire_gestion_liste_enseignants()
+                    = gestionnaire_liste_presence_etudiant_par_seance(sid)
+                    = gestionnaire_cours_liste_presence_etudiant(cid)
                     = gestionnaire_gestion_association_cours_enseignant(id)
                     = gestionnaire_gestion_asso_association_cours_enseignant(eid,cid)
                     = gestionnaire_gestion_desassociation_cours_enseignant(id)
@@ -88,7 +90,7 @@ class CompteController extends Controller
                     = gestionnaire_seance_modifier(request,sid)
                     = gestionnaire_seance_suppression_form(sid)
                     = gestionnaire_seance_supprimer(sid)
-                    = gestionnaire_association_cours_copie_form(cpid)
+                    = gestionnaire_association_cours_copie_form(cpid,csid)
                     = gestionnaire_association_cours_etudiant_associer_form(cid)
                     = gestionnaire_association_cours_etudiant_association_multiple(request,cid)
                     = gestionnaire_desassocier_cours_etudiant_desassocier_form(cid)
@@ -145,7 +147,7 @@ class CompteController extends Controller
             return redirect()->route('user.page_mon_compte')->with('etat','Changement de mot de passe réussi !');
         }
 
-        return redirect()->route('user.change_mdp_form')->with('etat','Il semble que l\'ancien mot de passe n\'est pas correcte');
+        return redirect()->route('user.change_mdp_form')->with('etat','Il semble que l\'ancien mot de passe ne soit pas correcte');
     }
 
     /*
@@ -211,7 +213,7 @@ class CompteController extends Controller
 
         $seance->etudiants()->attach($etudiant);
         
-        session()->flash('etat','L\'étudiant(e) à été pointé(e) (marqué présent(e)) pour cette séance !');
+        session()->flash('etat','L\'étudiant(e) à été pointé(e) pour cette séance !');
         return view('comptes.enseignant.enseignant_liste_etudiants_seance',['liste_etudiants'=>$liste_etudiants,'seance_id'=>$sid,'cours'=>$cours,'enseignant_id'=>$eeid]);
         // return redirect()->route('enseignant_liste_etudiants_de_ce_seance',['cid'=>$cid,'sid'=>$seance->id])->with('etat','L\'étudiant(e) à été pointé (marqué présent(e)) pour cette séance !');
     }
@@ -222,12 +224,6 @@ class CompteController extends Controller
 
         $liste_etudiants = $cours->etudiants;
         $liste_presents = $seance->etudiants;//liste etudiant present
-        // $tab = [];
-        // $i = 0;
-        // foreach($liste_presents as $present){
-        //     $tab[$i] = $present;
-        //     $i+=1;
-        // }
 
         return view('comptes.enseignant.enseignant_liste_present_absent',['liste_etudiants'=>$liste_etudiants,'liste_presents'=>$liste_presents,'cours_id'=>$cid,'enseignant_id'=>$eid]);
     }
@@ -262,7 +258,7 @@ class CompteController extends Controller
                     }
                 }
             }
-            session()->flash('etat','Les étudiant(e)s ont été pointé(e)s (marqué présent(e)s) pour cette séance !');
+            session()->flash('etat','Les étudiant(e)s ont été pointé(e)s pour cette séance !');
             return view('comptes.enseignant.enseignant_liste_seances_cours',['liste_seances'=>$liste_seances,'cours'=>$cours,'enseignant_id'=>$eid]);
         }
 
@@ -482,7 +478,6 @@ class CompteController extends Controller
         return redirect()->route('admin.users.liste')->with('etat','L\'utilisateur a été crée avec succès !');
     }
 
-    
     public function admin_user_modification_form($uid){//formulaire de modification user
         $user = User::findOrFail($uid);
         return view('admin.gestion.utilisateurs.admin_user_modification_form',['user'=>$user]);
