@@ -1,12 +1,12 @@
-# L2WebProject
+# L2 WebProject School
 Web programmation Project UPEC L2S4
 
 Description :
-This is one of my university project at UPEC (Université Paris-Est Créteil) in 2021-2022. The goal of this project is to create a Pronote like website.
+This is one of my university project at UPEC (Université Paris-Est Créteil) in 2021-2022. The goal of this project is to create a website that would allow teachers to mark students present or absent, there will be administrators and managers.<br>
 This project is done by using the framework LARAVEL, it contains PHP/HTML/CSS codes and files. It uses PHP version 8.1.0 and LARAVEL version 9.5.1 or higher.
 
-You will need composer https://getcomposer.org/ to open this project.
-You will also need a database to work with the project (see the SQL codes below).
+You will need composer https://getcomposer.org/ to open this project.<br>
+You will also need a database to work with the project (see the SQL codes below).<br>
 Please use sqlite https://www.sqlite.org/index.html for more simplicity (you can still use MySQL,etc..)
 
 To open and use this project correctly:
@@ -27,22 +27,20 @@ Enter "php artisan key:generate" in the CMD, Git Bash, Terminal, others that you
 Finally, you can open the web application with the internal PHP server by using the command "php artisan serve" 
 And open your favorite web browser and enter in the URL "localhost:8000/".
 
+The administrator is already created (login = admin, password = admin)
 <br>
 <br>
 
 !!! This project is already finished and will no longer be update
-
-
-Author : Changkai WANG
+<br>
+<br>
+<br>
+Author : Changkai WANG<br>
 Contact : https://www.linkedin.com/in/changkai-wang-691465236/
 <br>
 <br>
 <br>
-<br>
-
-
-
-SQL codes for the database, 
+SQL codes for the database, <br>
 Save this code into a file with .sql extension then open a CMD, Git Bash, Terminal on the location of the file 
 and enter "sqlite3 filename.sqlite < filename.sql" to create a sqlite database:
 ```
