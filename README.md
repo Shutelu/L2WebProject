@@ -1,4 +1,4 @@
-# L2ProjetWeb
+# L2WebProject
 Web programmation Project UPEC L2S4
 
 Description :
