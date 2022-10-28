@@ -2,7 +2,7 @@
 Web programmation Project UPEC L2S4
 
 **Description :**</br>
-This is one of my university project at UPEC (Université Paris-Est Créteil) in 2021-2022. The goal of this project is to create a website that would allow teachers to mark students present or absent, there will be administrators and managers.<br>
+This is one of my university projects at UPEC (Université Paris-Est Créteil) in 2021-2022. The goal of this project is to create a website that would allow teachers to mark students present or absent, there will be administrators and managers.<br>
 This project is done by using the framework LARAVEL, it contains PHP/HTML/CSS codes and files. It uses PHP version 8.1.0 and LARAVEL version 9.5.1 or higher.
 
 You will need composer https://getcomposer.org/ to open this project.<br>
