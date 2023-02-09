@@ -35,7 +35,6 @@ The administrator is already created (login = admin, password = admin)
 <br>
 <br>
 <br>
-Author : Changkai WANG<br>
 Contact : [Linkedin](https://www.linkedin.com/in/changkaiwang)
 <br>
 <br>
